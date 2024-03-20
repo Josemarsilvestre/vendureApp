@@ -32,7 +32,7 @@ Certifique-se de configurar as variáveis de ambiente corretamente para o backen
 Para iniciar o aplicativo em um emulador ou dispositivo físico, use:
 
    ```bash
-      npx expo install
+      npx expo start
    ```
 
 Isso abrirá o Metro Bundler em seu navegador padrão. A partir daí, você pode escolher executar o aplicativo em um emulador, em um dispositivo conectado ou através do Expo Go.
