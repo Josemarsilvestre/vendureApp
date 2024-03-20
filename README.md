@@ -52,4 +52,4 @@ A estrutura do projeto é organizada da seguinte forma:
 Contribuições são bem-vindas! Se encontrar bugs, problemas de desempenho ou tiver sugestões de novos recursos, sinta-se à vontade para abrir uma issue ou enviar um pull request.
 
 ## Licença
-Este projeto está licenciado sob a MIT License.
+Este projeto está licenciado sob a [MIT License](https://opensource.org/licenses/MIT).
