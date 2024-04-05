@@ -25,6 +25,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "scheme": "vendureApp-scheme",
+    "plugins": [
+      "expo-router"
+    ]
   }
 }

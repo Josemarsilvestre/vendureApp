@@ -16,7 +16,7 @@ Aprendi a importância de escolher um bom template com base nas issues, estrelas
 
 ### Objetivos para a próxima semana
 
-- ...
+- Partir para a evolução do projeto.
 
 ### Feedback/Questões para a equipa
 
