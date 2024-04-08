@@ -1,10 +1,9 @@
 import { View, Text } from 'react-native'
-import tw from 'tailwind-react-native-classnames';
 
 export default function FeedScreen() {
   return (
-    <View style={tw`flex-1 items-center justify-center bg-white`}>
-      <Text>Página Home</Text>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: "#fff" }}>
+      <Text style={{fontSize: 16}}>Página Home</Text>
     </View>
   )
 }

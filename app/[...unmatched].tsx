@@ -1,9 +1,8 @@
 import { Stack } from 'expo-router'
-import { Text, View } from 'react-native'
-import tw from 'tailwind-react-native-classnames';
+import React from 'react';
+import { Text, View, StyleSheet } from 'react-native';
 
 export default function NotFoundPage() {
-  //? Render(s)
   return (
     <>
       <Stack.Screen
@@ -12,9 +11,26 @@ export default function NotFoundPage() {
           headerBackTitleVisible: false,
         }}
       />
-      <View style={tw`flex h-full flex-col items-center justify-center py-8 gap-y-6 bg-white`}>
-        <Text style={tw`text-base font-semibold text-black`}>404 Not Found!</Text>
+      <View style={styles.container}>
+        <Text style={styles.text}>404 Not Found!</Text>
       </View>
     </>
-  )
+  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 8,
+    backgroundColor: '#fff',
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#000',
+  },
+});
+

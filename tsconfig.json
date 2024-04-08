@@ -2,9 +2,20 @@
     "extends": "@tsconfig/react-native/tsconfig.json",
     "compilerOptions": {
         "baseUrl": ".",
+        "jsx": "react-native",
+        "esModuleInterop": true,
+        "strict": true,
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+        "noEmit": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "exclude": ["node_modules", "babel.config.js", "metro.config.js", "jest.config.js"]
+}
+
+/**
         "paths": {
             "@/*": ["./*"]
-        }
-    },
-    "exclude": ["node_modules"]
-}
+        },*/
