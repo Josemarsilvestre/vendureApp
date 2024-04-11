@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, TouchableOpacity, TouchableOpacityProps, ViewStyle, StyleProp, StyleSheet } from 'react-native';
 import Loading from '../loading/Loading'
-import { ScaledSheet, moderateScale, scale } from "react-native-size-matters";
+import { moderateScale } from "react-native-size-matters";
 
 interface ButtonProps extends TouchableOpacityProps {
   isLoading?: boolean;
@@ -50,31 +50,31 @@ const SubmitModalBtn: React.FC<SubmitModalBtnProps> = ({ children, ...restProps 
 
 const styles = StyleSheet.create({
   button: {
-    paddingVertical: 12,
-    paddingHorizontal: 24,
+    paddingVertical: moderateScale(12),
+    paddingHorizontal: moderateScale(24),
     backgroundColor: "#212B36",
-    borderRadius: 8,
+    borderRadius: moderateScale(8),
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 15,
+    marginBottom: moderateScale(15)
   },
   buttonText: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
     color: '#fff',
   },
   roundedButton: {
-    borderRadius: 20,
+    borderRadius: moderateScale(20),
   },
   loginButton: {
     marginHorizontal: 'auto',
-    borderRadius: 24,
-    width: 120,
+    borderRadius: moderateScale(24),
+    width: moderateScale(120),
   },
   submitButton: {
     width: '100%',
-    maxWidth: 280,
+    maxWidth: moderateScale(280),
     marginHorizontal: 'auto',
-    borderRadius: 12,
+    borderRadius: moderateScale(12),
   },
 });
 

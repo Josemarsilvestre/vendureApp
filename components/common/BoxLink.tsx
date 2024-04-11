@@ -1,21 +1,22 @@
 import React from 'react';
 import { Link } from 'expo-router';
-import { Text, TouchableOpacity, View, StyleSheet, ViewStyle } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet, ViewStyle } from 'react-native';
+import { moderateScale, scale } from "react-native-size-matters";
 import Icons from './Icons';
 
 interface BoxLinkProps {
   children: React.ReactNode;
   path: string;
   name: string;
-  style?: ViewStyle; // Adicionamos a propriedade de estilo opcional
+  style?: ViewStyle; // Propriedade de estilo opcional
 }
 
 const BoxLink: React.FC<BoxLinkProps> = ({ children, path, name, style }) => {
   return (
     <Link asChild href={path}>
       <TouchableOpacity style={[styles.container, style]}>
-        {children}
-        <Text style={styles.name}>{name}</Text>
+        {children} 
+        <Text style={styles.name}>{name}</Text> 
         <Icons.MaterialIcons name="keyboard-arrow-right" size={24} style={styles.icon} />
       </TouchableOpacity>
     </Link>
@@ -25,20 +26,25 @@ const BoxLink: React.FC<BoxLinkProps> = ({ children, path, name, style }) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 4,
-    paddingHorizontal: 16,
-    borderBottomWidth: 1,
+    paddingVertical: moderateScale(4),
+    paddingHorizontal: moderateScale(16),
+    borderBottomWidth: moderateScale(1),
     borderBottomColor: '#ccc',
   },
   name: {
     flex: 1,
-    marginLeft: 12,
-    fontSize: 14,
+    marginLeft: moderateScale(35),
+    marginTop: moderateScale(-24.5),
+    marginRight: moderateScale(50),
+    fontSize: moderateScale(17),
     color: '#333',
   },
   icon: {
+    flex: 1,
     color: '#333',
+    marginLeft: moderateScale(304),
+    marginTop: moderateScale(-24.5),
+    marginBottom: moderateScale(35)
   },
 });
 

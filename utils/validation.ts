@@ -1,16 +1,16 @@
 import * as Yup from 'yup'
 
 export const logInSchema = Yup.object().shape({
-  email: Yup.string().required('E-mail da conta obrigatório').email('Por favor, insira um e-mail válido'),
-  password: Yup.string().required('Por favor, insira a senha de login\n').min(6, 'A senha deve ter no mínimo 6 caracteres'),
+  username: Yup.string().required('Nome de utilizador obrigatório'),
+  password: Yup.string().required('Por favor, insira a senha de login\n').min(4, 'A senha deve ter no mínimo 4 caracteres'),
 })
 
 export const registerSchema = Yup.object().shape({
-  name: Yup.string().required('Por favor, insira o nome da conta').min(3, 'O nome da conta deve ter no mínimo três caracteres'),
-  email: Yup.string().required('E-mail da conta obrigatório').email('Por favor, insira um e-mail válido'),
-  password: Yup.string().required('Por favor, insira a senha de login').min(6, 'A senha deve ter no mínimo 6 caracteres'),
+  username: Yup.string().required('Nome de utilizador obrigatório').min(3, 'No mínimo três caracteres'),
+  email: Yup.string().required('Email obrigatório'),
+  password: Yup.string().required('Senha de login obrigatória').min(4, 'A senha deve ter no mínimo 4 caracteres'),
   confirmPassword: Yup.string()
-    .required('Por favor, insira a confirmação da senha\n')
+    .required('Confirmação da senha obrigatória\n')
     .oneOf([Yup.ref('password')], 'A confirmação da senha está incorreta'),
 })
 //.oneOf([Yup.ref('password'), null], 'A confirmação da senha está incorreta'),

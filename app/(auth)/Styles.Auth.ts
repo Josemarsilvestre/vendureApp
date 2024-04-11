@@ -1,15 +1,23 @@
-import { ScaledSheet, moderateScale, scale } from "react-native-size-matters";
+import { ScaledSheet, moderateScale, scale} from "react-native-size-matters";
 
 export default ScaledSheet.create({
-  SpacebetweenWalls_Login: {
+  scroolViewContainer: {
     margin: moderateScale(18),
     justifyContent: "center",
     marginTop: moderateScale(100)
   },
-  title_login:{
+  formContainer: {
+    width: '100%',
+    paddingHorizontal: moderateScale(8),
+    paddingVertical: moderateScale(6),
+  },
+  title:{
     color: "#212B36", 
     fontWeight: "bold", 
     marginBottom: moderateScale(10)
+  },
+  fieldsContainer: {
+    marginTop: moderateScale(10),
   },
   SpaceInput: {
     marginBottom: moderateScale(-7),
@@ -20,15 +28,31 @@ export default ScaledSheet.create({
     borderRadius: moderateScale(6),
     backgroundColor: '#f9f9f9',
   },
-  linkText:{
-    backgroundColor: "#212B36",
-    borderRadius: 5,
-    padding: moderateScale(2),
-    marginTop: moderateScale(15),
-    fontSize: moderateScale(14)
+  View_img: {
+    marginBottom: moderateScale(30),
+    marginTop: moderateScale(-60),
+    alignItems: "center"
   },
-  link: {
-    color: 'blue',
-    fontSize: moderateScale(12),
+  View_img2: {
+    marginBottom: moderateScale(20),
+    marginTop: moderateScale(-90),
+    alignItems: "center"
+  },
+  img: {
+    width: scale(150),
+    height: scale(150)
+  },
+  TouchableOpacitybtn: {
+    paddingVertical: moderateScale(12),
+    paddingHorizontal: moderateScale(24),
+    backgroundColor: "#fff",
+    borderRadius: moderateScale(8),
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: moderateScale(15),
+  },
+  TouchableOpacitybtnText: {
+    fontSize: moderateScale(16),
+    color: '#212B36',
   },
 });

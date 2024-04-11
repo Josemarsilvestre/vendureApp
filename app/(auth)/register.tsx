@@ -2,15 +2,17 @@ import React from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { router, Stack } from 'expo-router';
 import { useForm } from 'react-hook-form';
-import { ScrollView, Text, View, StyleSheet } from 'react-native';
+import { ScrollView, View, TouchableOpacity, Image, KeyboardAvoidingView, Platform } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { Text } from "react-native-paper"
 
 import { Button } from '../../components/common/Buttons';
 import TextField from '../../components/common/TextField';
-import { registerSchema } from '../../utils';
-import StylesText from './Styles.Auth'
+import { registerSchema } from '../../utils/validation';
+import styles from './Styles.Auth'
 
 type RegisterFormData = {
-  name: string;
+  username: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -23,7 +25,7 @@ export default function RegisterScreen() {
     control,
   } = useForm<RegisterFormData>({
     resolver: yupResolver(registerSchema),
-    defaultValues: { name: '', email: '', password: '', confirmPassword: '' },
+    defaultValues: { username: '', email: '', password: '', confirmPassword: '' },
   });
 
   const onSubmit = (data: RegisterFormData) => {
@@ -31,25 +33,50 @@ export default function RegisterScreen() {
   };
 
   const handleJumpLogin = () => {
-    router.push('/login');
+    router.back()
   };
 
+  const keyboardBehavior = Platform.OS === 'ios' ? 'padding' : undefined;
+
   return (
-    <ScrollView>
-      <View style={StylesText.SpacebetweenWalls_Login}>
-      <Stack.Screen
-        options={{
-          title: 'Resgiste-se',
-          headerBackTitleVisible: false,
-        }}
-      />
-      
-          <Text style={styles.title}>Registar</Text>
+    <KeyboardAvoidingView
+      behavior={keyboardBehavior}
+      style={{ flex: 1 }}>
+      <ScrollView>
+        <View style={styles.scroolViewContainer}>
+          <Stack.Screen
+            options={{
+              title: 'Resgiste-se',
+              headerBackTitleVisible: false,
+              headerTintColor: '#212B36',
+              headerStyle: {
+                backgroundColor: '#f0f0f0',
+              },
+              headerLeft: () => (
+                <Ionicons
+                  name="arrow-back"
+                  size={28}
+                  color="#000"
+                  onPress={() => {
+                    router.back()
+                  }}
+                />
+              ),
+            }}
+          />
+          <View style={styles.View_img2}>
+            <Image
+              style={styles.img}
+              source={require("../../assets/sign_up.png")}
+              resizeMode="cover"
+            />
+          </View>
+          <Text variant="titleLarge" style={styles.title}>Registar</Text>
           <View style={styles.fieldsContainer}>
             <TextField
-              errors={errors.name?.message}
+              errors={errors.username?.message}
               placeholder="Nome de utilizador"
-              name="name"
+              name="username"
               control={control}
             />
             <TextField
@@ -78,44 +105,11 @@ export default function RegisterScreen() {
               Criar conta
             </Button>
           </View>
-          <Button onPress={handleJumpLogin}>
-              Iniciar Sessão
-          </Button> 
+          <TouchableOpacity style={styles.TouchableOpacitybtn} onPress={handleJumpLogin}>
+            <Text style={styles.TouchableOpacitybtnText}>Iniciar Sessão</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingTop: 10,
-  },
-  formContainer: {
-    width: '100%',
-    paddingHorizontal: 8,
-    paddingVertical: 6,
-  },
-  title: {
-    marginTop: 56,
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  fieldsContainer: {
-    marginTop: 10,
-  },
-  linkContainer: {
-    flexDirection: 'row',
-    marginTop: 10,
-  },
-  linkText: {
-    marginRight: 2,
-    color: '#333',
-    fontSize: 12,
-  },
-  link: {
-    color: 'blue',
-    fontSize: 12,
-  },
-});

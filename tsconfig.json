@@ -10,12 +10,9 @@
         "resolveJsonModule": true,
         "noEmit": true,
         "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true
+        "noImplicitAny": false,
+        "forceConsistentCasingInFileNames": true,
+        "types": ["node"]
     },
     "exclude": ["node_modules", "babel.config.js", "metro.config.js", "jest.config.js"]
 }
-
-/**
-        "paths": {
-            "@/*": ["./*"]
-        },*/

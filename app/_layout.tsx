@@ -5,12 +5,12 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <Stack>
-      <Stack.Screen
+        <Stack.Screen
           name="(main)/(tabs)"
           options={{
             headerShown: false
           }}
-      />
+        />
       </Stack>
     </SafeAreaProvider>
   )

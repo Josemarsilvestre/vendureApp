@@ -1,9 +1,12 @@
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
+import { moderateScale } from "react-native-size-matters";
 
 export default function FeedScreen() {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: "#fff" }}>
-      <Text style={{fontSize: 16}}>Página Home</Text>
-    </View>
+    <ScrollView>
+      <View style={{alignItems: "center", justifyContent: "center", marginTop: moderateScale(300)}}>
+        <Text style={{ fontSize: moderateScale(16) }}>Página Home</Text>
+      </View>
+    </ScrollView>
   )
 }
