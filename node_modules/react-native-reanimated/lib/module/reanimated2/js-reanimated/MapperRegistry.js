@@ -1,0 +1,109 @@
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+export default class MapperRegistry {
+  constructor(module) {
+    _defineProperty(this, "sortedMappers", []);
+    _defineProperty(this, "mappers", new Map());
+    _defineProperty(this, "_module", void 0);
+    _defineProperty(this, "updatedSinceLastExecute", false);
+    this._module = module;
+  }
+  startMapper(mapper) {
+    this.mappers.set(mapper.id, mapper);
+    this.updatedSinceLastExecute = true;
+    return mapper.id;
+  }
+  stopMapper(id) {
+    this.mappers.delete(id);
+    this.updatedSinceLastExecute = true;
+  }
+  execute() {
+    if (this.updatedSinceLastExecute) {
+      this.updateOrder();
+      this.updatedSinceLastExecute = false;
+    }
+    for (let i = 0, len = this.sortedMappers.length; i < len; ++i) {
+      const mapper = this.sortedMappers[i];
+      if (mapper.dirty) {
+        mapper.execute();
+      }
+    }
+  }
+  updateOrder() {
+    const nodes = [...this.mappers.values()].map(mapper => new Node(mapper));
+    const mappersById = {};
+    this.mappers.forEach(mapper => {
+      mappersById[mapper.id] = mapper;
+    });
+
+    // create a graph from array of nodes
+    for (let i = 0, nodesLen = nodes.length; i < nodesLen; ++i) {
+      const node = nodes[i];
+      if (node.mapper.outputs.length === 0) {
+        continue;
+      }
+      for (let j = 0; j < nodesLen; ++j) {
+        const restNode = nodes[j];
+        if (i === j || restNode.mapper.inputs.length === 0) {
+          continue;
+        }
+        for (let outi = 0, outputsLen = node.mapper.outputs.length; outi < outputsLen; ++outi) {
+          for (let resti = 0, restLen = restNode.mapper.inputs.length; resti < restLen; ++resti) {
+            if (node.mapper.outputs[outi]._id === restNode.mapper.inputs[resti]._id) {
+              node.children.push(restNode);
+            }
+          }
+        }
+      }
+    }
+    const post = {};
+    let postCounter = 1;
+    const dfs = node => {
+      const index = nodes.indexOf(node);
+      if (index === -1) {
+        // this node has already been handled
+        return;
+      }
+      ++postCounter;
+      nodes.splice(index, 1);
+      if (node.children.length === 0 && nodes.length > 0) {
+        post[node.mapper.id] = postCounter++;
+        dfs(nodes[0]);
+        return;
+      }
+      for (let i = 0, len = node.children.length; i < len; ++i) {
+        dfs(node.children[i]);
+      }
+      post[node.mapper.id] = postCounter++;
+    };
+    while (nodes.length) dfs(nodes[0]);
+    const postArray = Object.keys(post).map(key => {
+      const num = parseInt(key);
+      return [num, post[num]];
+    });
+    postArray.sort((a, b) => {
+      return b[1] - a[1];
+    });
+
+    // clear sorted mappers
+    this.sortedMappers = [];
+    for (let i = 0, len = postArray.length; i < len; ++i) {
+      const [id] = postArray[i];
+      this.sortedMappers.push(mappersById[id]);
+    }
+  }
+  get needRunOnRender() {
+    return this.updatedSinceLastExecute;
+  }
+}
+class Node {
+  constructor(mapper) {
+    let children = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+    _defineProperty(this, "mapper", void 0);
+    _defineProperty(this, "children", void 0);
+    this.mapper = mapper;
+    this.children = children;
+  }
+}
+//# sourceMappingURL=MapperRegistry.js.map
