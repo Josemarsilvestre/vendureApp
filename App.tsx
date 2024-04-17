@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { StatusBar } from 'react-native';
 import { ApolloProvider } from '@apollo/client';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -11,6 +12,7 @@ export default function App() {
         <NavigationContainer>
             <ApolloProvider client={client}>
                 <Provider>
+                    <StatusBar barStyle="dark-content" />
                     <MainStackNavigator />
                 </Provider>
             </ApolloProvider>
