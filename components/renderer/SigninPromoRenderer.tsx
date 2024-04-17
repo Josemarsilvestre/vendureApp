@@ -1,12 +1,13 @@
 import React from 'react';
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
-import { router } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function SigninPromoRenderer(){
 
   const handleJumpLogin = () => {
-    router.push('/login');
+    //const navigation = useNavigation();
+    //navigation.navigate('LoginScreen');
   };
 
   return (

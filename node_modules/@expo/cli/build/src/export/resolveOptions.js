@@ -1,0 +1,63 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.resolvePlatformOption = resolvePlatformOption;
+exports.resolveOptionsAsync = resolveOptionsAsync;
+var _config = require("@expo/config");
+var _platformBundlers = require("../start/server/platformBundlers");
+var _errors = require("../utils/errors");
+function resolvePlatformOption(platformBundlers, platform1 = [
+    "all"
+]) {
+    const platformsAvailable = Object.fromEntries(Object.entries(platformBundlers).filter(([, bundler])=>bundler === "metro"
+    ));
+    if (!Object.keys(platformsAvailable).length) {
+        throw new _errors.CommandError(`No platforms are configured to use the Metro bundler in the project Expo config.`);
+    }
+    const assertPlatformBundler = (platform)=>{
+        if (!platformsAvailable[platform]) {
+            throw new _errors.CommandError("BAD_ARGS", `Platform "${platform}" is not configured to use the Metro bundler in the project Expo config.`);
+        }
+        return platform;
+    };
+    const knownPlatforms = [
+        "android",
+        "ios",
+        "web"
+    ];
+    const assertPlatformIsKnown = (platform)=>{
+        if (!knownPlatforms.includes(platform)) {
+            throw new _errors.CommandError(`Unsupported platform "${platform}". Options are: ${knownPlatforms.join(",")},all`);
+        }
+        return platform;
+    };
+    return platform1// Expand `all` to all available platforms.
+    .map((platform)=>platform === "all" ? Object.keys(platformsAvailable) : platform
+    ).flat()// Remove duplicated platforms
+    .filter((platform, index, list)=>list.indexOf(platform) === index
+    )// Assert platforms are valid
+    .map((platform)=>assertPlatformIsKnown(platform)
+    ).map((platform)=>assertPlatformBundler(platform)
+    );
+}
+async function resolveOptionsAsync(projectRoot, args) {
+    const { exp  } = (0, _config).getConfig(projectRoot, {
+        skipPlugins: true,
+        skipSDKVersionRequirement: true
+    });
+    const platformBundlers = (0, _platformBundlers).getPlatformBundlers(exp);
+    var ref;
+    return {
+        platforms: resolvePlatformOption(platformBundlers, args["--platform"]),
+        outputDir: (ref = args["--output-dir"]) != null ? ref : "dist",
+        minify: !args["--no-minify"],
+        clear: !!args["--clear"],
+        dev: !!args["--dev"],
+        maxWorkers: args["--max-workers"],
+        dumpAssetmap: !!args["--dump-assetmap"],
+        dumpSourcemap: !!args["--dump-sourcemap"]
+    };
+}
+
+//# sourceMappingURL=resolveOptions.js.map

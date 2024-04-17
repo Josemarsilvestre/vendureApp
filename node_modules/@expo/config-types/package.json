@@ -1,0 +1,46 @@
+{
+  "name": "@expo/config-types",
+  "version": "49.0.0",
+  "description": "Types for the Expo config object app.config.ts",
+  "types": "build/ExpoConfig.d.ts",
+  "main": "build/ExpoConfig.js",
+  "scripts": {
+    "watch": "tsc --watch --preserveWatchOutput",
+    "build": "tsc",
+    "generate": "ts-node ./scripts/generate.ts",
+    "prepare": "yarn run clean && yarn build",
+    "clean": "rimraf build ./tsconfig.tsbuildinfo",
+    "lint": "eslint . && npx prettier --write src/ExpoConfig.ts",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/expo/expo.git",
+    "directory": "packages/@expo/config-types"
+  },
+  "keywords": [
+    "json",
+    "app.json",
+    "app.config.js",
+    "react-native",
+    "expo",
+    "react"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/expo/expo/issues"
+  },
+  "homepage": "https://github.com/expo/expo/tree/main/packages/@expo/config-types#readme",
+  "files": [
+    "build"
+  ],
+  "devDependencies": {
+    "@expo/babel-preset-cli": "^0.2.24",
+    "json-schema-to-typescript": "^10.0.0",
+    "ts-node": "^10.9.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "fa5ecca8251986b9f197cc14074eec0ab6dfb6db"
+}

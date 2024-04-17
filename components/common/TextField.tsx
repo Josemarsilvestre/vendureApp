@@ -3,7 +3,7 @@ import { useController, Control, FieldValues } from 'react-hook-form';
 import { TextInput, View, StyleSheet, KeyboardTypeOptions } from 'react-native';
 import { Text } from 'react-native-paper';
 import DisplayError from './DisplayError';
-import StylesText from '../../app/(auth)/Styles.Auth';
+import StylesText from '../auth/Styles.Auth';
 
 interface TextFieldProps {
   label?: string;
@@ -12,13 +12,12 @@ interface TextFieldProps {
   type?: 'text' | 'number' | 'email' | 'password';
   control: Control<any>;
   placeholder?: string;
-  direction?: 'rtl' | 'ltr';
   keyboardType?: KeyboardTypeOptions;
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
   username?: string;
 }
 
-const TextField: React.FC<TextFieldProps> = ({ label, errors, name, type = 'text', control, placeholder, direction, keyboardType, autoCapitalize, username }) => {
+const TextField: React.FC<TextFieldProps> = ({ label, errors, name, type = 'text', control, placeholder, keyboardType, autoCapitalize, username }) => {
   const { field } = useController({ name, control });
 
   const onChangeHandler = (value: string) => {

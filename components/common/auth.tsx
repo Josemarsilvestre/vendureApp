@@ -1,15 +1,17 @@
-import React, { useContext} from 'react';
-import LoginScreen from '../../app/(auth)/login';
-import { Context } from "../../src/context/authContext";
+import React from 'react';
+import LoginScreen from '../auth/login';
+import { useAuth } from "../../api/authContextApollo";
 
 interface AuthWrapper {
   children: React.ReactNode;
 }
 
 export default function AuthScreen({ children }: AuthWrapper) {
-  const { state } = useContext(Context);
+  const { isLogged, setIsLogged } = useAuth();
 
   return (
-    <>{state.isLogged ? <>{children}</> : <LoginScreen />}</>
+    <>
+      {isLogged ? <>{children}</> : <LoginScreen />}
+    </>
   );
 }

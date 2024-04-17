@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'expo-router';
+//import { Link } from 'expo-router';
 import { Text, TouchableOpacity, StyleSheet, ViewStyle } from 'react-native';
-import { moderateScale, scale } from "react-native-size-matters";
+import { moderateScale } from "react-native-size-matters";
 import Icons from './Icons';
 
 interface BoxLinkProps {
@@ -11,15 +11,15 @@ interface BoxLinkProps {
   style?: ViewStyle; // Propriedade de estilo opcional
 }
 
-const BoxLink: React.FC<BoxLinkProps> = ({ children, path, name, style }) => {
+const BoxLink: React.FC<BoxLinkProps> = ({ children, name, style }) => {
   return (
-    <Link asChild href={path}>
+    //<Link asChild href={path}>
       <TouchableOpacity style={[styles.container, style]}>
         {children} 
         <Text style={styles.name}>{name}</Text> 
         <Icons.MaterialIcons name="keyboard-arrow-right" size={24} style={styles.icon} />
       </TouchableOpacity>
-    </Link>
+    //</Link>
   );
 };
 
