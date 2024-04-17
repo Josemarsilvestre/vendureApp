@@ -1,11 +1,19 @@
 import * as React from 'react';
-import ApolloProviderWrapper from './api/ApolloProviderWrapper'
-import TabsLayout from './components/Mytabs'
+import { ApolloProvider } from '@apollo/client';
+import { NavigationContainer } from '@react-navigation/native';
+
+import { Provider } from './src/context/authContext';
+import client from './src/api/client';
+import MainStackNavigator from './components/MyStack';
 
 export default function App() {
     return (
-        <ApolloProviderWrapper>
-            <TabsLayout />
-        </ApolloProviderWrapper>
+        <NavigationContainer>
+            <ApolloProvider client={client}>
+                <Provider>
+                    <MainStackNavigator />
+                </Provider>
+            </ApolloProvider>
+        </NavigationContainer>
     );
 }

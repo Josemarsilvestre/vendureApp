@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { View, ScrollView, TouchableOpacity, Image, Alert } from 'react-native';
 import { Text } from "react-native-paper"
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@apollo/client';
 import NetInfo, { NetInfoState } from "@react-native-community/netinfo";
-import { useNavigation } from '@react-navigation/native';
 
-import { LOGIN_MUTATION } from '../../api/mutation'
+import { LOGIN_MUTATION } from '../../src/api/mutation'
 import { Button } from '../common/Buttons';
 import TextField from '../common/TextField';
 import { logInSchema } from '../../utils/validation';
+import { Context } from '../../src/context/authContext';
 import styles from './Styles.Auth'
-import RegisterScreen from './register';
 
 type LoginFormData = {
   username: string;
@@ -20,12 +19,12 @@ type LoginFormData = {
 };
 
 interface LoginScreenProps {
-  setIsLogged: (isLogged: boolean) => void;
+  navigation: any;
 }
 
-export default function LoginScreen() {
-  //const router = useRouter();
+export default function LoginScreen({ navigation }: LoginScreenProps) {
   const [isConnected, setIsConnected] = useState<boolean | null>(true);
+  const { setIsLogged } = useContext(Context);
 
   const {
     handleSubmit,
@@ -56,8 +55,8 @@ export default function LoginScreen() {
       try {
         const { login } = data;
         if (login.__typename === "CurrentUser") {
-          //setIsLogged(true);
-          //router.replace('/profile');
+          setIsLogged(true);
+          navigation.navigate('Profile')
         } else {
           Alert.alert("Erro", "Utilizador ou senha inválidos.");
         }
@@ -85,10 +84,9 @@ export default function LoginScreen() {
     }
   };
 
-  const handleJumpLogin = () => {
-    //const navigation = useNavigation()
-    //navigation.navigate("RegisterScreen");
-  };
+  function hangleJunpimg() {
+
+  }
 
   return (
     <ScrollView>
@@ -120,7 +118,15 @@ export default function LoginScreen() {
             <Button onPress={handleSubmit(onSubmit)}>
               Login
             </Button>
-            <TouchableOpacity style={styles.TouchableOpacitybtn} onPress={handleJumpLogin}>
+            <TouchableOpacity
+              style={styles.TouchableOpacitybtn}
+              onPress={() => {
+                navigation.setOptions({
+                  name: 'Register',
+                  params: { navigation },
+                });
+                navigation.navigate('Register');
+              }}>
               <Text style={styles.TouchableOpacitybtnText}>Registe-se</Text>
             </TouchableOpacity>
           </View>

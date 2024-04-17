@@ -1,12 +1,11 @@
 import React from 'react';
-import { Link, Stack } from 'expo-router';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { moderateScale } from "react-native-size-matters";
 
-import Icons from '../../../components/common/Icons';
-import BoxLink from '../../../components/common/BoxLink';
-import AuthScreen from '../../../components/common/auth';
+import Icons from '../common/Icons';
+import BoxLink from '../common/BoxLink';
+import AuthScreen from '../common/auth';
 
 export default function ProfileScreen() {
     const insets = useSafeAreaInsets();
@@ -57,16 +56,16 @@ export default function ProfileScreen() {
                     <View style={styles.userInfoContainer}>
                         <View style={styles.textContainer}>
                             <Text style={styles.name}>Josemar Silvestre</Text>
-                            <Text style={styles.platform}>Normal Client</Text>
+                            <Text style={styles.platform}>Cliente Normal</Text>
                         </View>
-                        <Link href="/profile/personal-info">
+                        <TouchableOpacity>
                             <Icons.Feather
                                 name="edit"
                                 size={30}
                                 color="black"
                                 style={styles.icon}
                             />
-                        </Link>
+                        </TouchableOpacity>
                     </View>
 
                     <View style={styles.linkContainer}>
@@ -100,7 +99,7 @@ const styles = StyleSheet.create({
     },
     name: {
         fontSize: moderateScale(20),
-        fontWeight: 'bold',
+        fontWeight: 'bold'
     },
     platform: {
         fontSize: moderateScale(16),
@@ -108,10 +107,9 @@ const styles = StyleSheet.create({
     },
     linkContainer: {
         marginTop: moderateScale(35),
-        paddingHorizontal: moderateScale(16),
+        paddingHorizontal: moderateScale(10),
     },
     icon: {
-        color: 'gray',
-        marginRight: moderateScale(300),
+        color: 'gray'
     },
 });

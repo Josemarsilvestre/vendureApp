@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
@@ -6,13 +6,13 @@ import { ScrollView, View, TouchableOpacity, KeyboardAvoidingView, Platform, Ale
 import NetInfo, { NetInfoState } from "@react-native-community/netinfo";
 import { Text } from "react-native-paper"
 
-import { REGISTER_MUTATION } from '../../api/mutation'
+import { REGISTER_MUTATION } from '../../src/api/mutation'
 import { Button } from '../common/Buttons';
 import TextField from '../common/TextField';
 import { registerSchema } from '../../utils/validation';
-import client from '../../api/client';
+import { Context } from '../../src/context/authContext';
+import client from '../../src/api/client';
 import styles from './Styles.Auth'
-import { useNavigation } from '@react-navigation/native';
 
 type RegisterFormData = {
   emailAddress: string;
@@ -22,17 +22,20 @@ type RegisterFormData = {
   confirmPassword: string;
 };
 
+interface RegisterScreenProps {
+  navigation: any;
+}
 
-export default function RegisterScreen() {
+export default function RegisterScreen({navigation}:RegisterScreenProps) {
   const [isConnected, setIsConnected] = useState<boolean | null>(true);
-  //const { setIsLogged } = useLocalSearchParams()
+  const { setIsLogged } = useContext(Context);
 
   const {
     handleSubmit,
     formState: { errors },
     control,
   } = useForm<RegisterFormData>({
-    //resolver: yupResolver(registerSchema),
+    resolver: yupResolver(registerSchema),
     defaultValues: { emailAddress: '', firstName: '', lastName: '', password: '', confirmPassword: '' },
   });
 
@@ -57,8 +60,8 @@ export default function RegisterScreen() {
       const { registerCustomerAccount } = data;
 
       if (registerCustomerAccount.__typename === "Success") {
-        //setIsLogged(true);
-        //router.push('/profile');
+        setIsLogged(true);
+        navigation.navigate('Profile')
       } else {
         switch (registerCustomerAccount.__typename) {
           case "MissingPasswordError":
@@ -96,10 +99,6 @@ export default function RegisterScreen() {
     } catch (error) {
       Alert.alert("Erro", "Ocorreu um erro ao fazer login. Por favor, tente novamente.");
     }
-  };
-
-  const handleJumpLogin = () => {
-    const navigation = useNavigation()
   };
 
   const keyboardBehavior = Platform.OS === 'ios' ? 'padding' : undefined;
@@ -150,7 +149,7 @@ export default function RegisterScreen() {
               Criar conta
             </Button>
           </View>
-          <TouchableOpacity style={styles.TouchableOpacitybtn} onPress={handleJumpLogin}>
+          <TouchableOpacity style={styles.TouchableOpacitybtn} onPress={() => navigation.goBack()}>
             <Text style={styles.TouchableOpacitybtnText}>Iniciar Sessão</Text>
           </TouchableOpacity>
         </View>
