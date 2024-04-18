@@ -53,7 +53,7 @@ export default function ProfileScreen({navigation}) {
                             <Text style={styles.name}>Josemar Silvestre</Text>
                             <Text style={styles.platform}>beemote@vendure.io</Text>
                         </View>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={()=> navigation.navigate("Edit")}>
                             <Icons.Feather
                                 name="edit"
                                 size={30}

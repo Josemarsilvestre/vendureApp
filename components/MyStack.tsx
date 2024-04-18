@@ -1,6 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation  } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 
 import LoginScreen from "./auth/login";
@@ -11,6 +11,7 @@ import FavoriteScreen from "./profile/favorite";
 import UserHistoryScreen from "./profile/user-history";
 import PersonalInfoScreen from "./profile/personal-info";
 import AddressScreen from "./profile/address";
+import EditeScreen from "./profile/edit";
 
 const Stack = createStackNavigator();
 
@@ -19,7 +20,7 @@ export default function MainStackNavigator() {
 
     return (
         <Stack.Navigator
-            screenOptions={{ headerShown: false }}>
+            screenOptions={{ headerShown: false}}>
             <Stack.Screen
                 name="TabNavigator"
                 component={TabNavigator}
@@ -42,6 +43,23 @@ export default function MainStackNavigator() {
                     headerStyle: {
                         backgroundColor: '#f0f0f0',
                     },
+                    headerLeft: () => (
+                        <Ionicons
+                            name="arrow-back"
+                            size={28}
+                            color="#000"
+                            style={{ marginLeft: 16 }}
+                            onPress={() => navigation.goBack()}
+                        />
+                    ),
+                }}
+            />
+            <Stack.Screen
+                name="Edit"
+                component={EditeScreen}
+                options={{
+                    title: 'Editar',
+                    headerShown: true,
                     headerLeft: () => (
                         <Ionicons
                             name="arrow-back"
