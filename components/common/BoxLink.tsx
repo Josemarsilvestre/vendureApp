@@ -8,11 +8,12 @@ interface BoxLinkProps {
   path: string;
   name: string;
   style?: ViewStyle;
+  navigation: any;
 }
 
-const BoxLink: React.FC<BoxLinkProps> = ({ children, name, style, path }) => {
+const BoxLink: React.FC<BoxLinkProps> = ({ children, name, style, path, navigation }) => {
   return (
-      <TouchableOpacity style={[styles.container, style]} onPress={() => path}>
+      <TouchableOpacity style={[styles.container, style]} onPress={() => navigation.navigate(path)}>
         {children} 
         <Text style={styles.name}>{name}</Text> 
         <Icons.MaterialIcons name="keyboard-arrow-right" size={24} style={styles.icon} />

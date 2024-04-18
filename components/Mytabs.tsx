@@ -15,6 +15,7 @@ export default function TabNavigator() {
 
   return (
     <Tab.Navigator
+      initialRouteName="Index"
       screenOptions={{
         tabBarActiveTintColor: '#000000',
         tabBarActiveBackgroundColor: '#f0f0f0',

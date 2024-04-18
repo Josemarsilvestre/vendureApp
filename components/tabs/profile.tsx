@@ -7,47 +7,42 @@ import Icons from '../common/Icons';
 import BoxLink from '../common/BoxLink';
 import AuthScreen from '../common/auth';
 
-export default function ProfileScreen() {
+export default function ProfileScreen({navigation}) {
     const insets = useSafeAreaInsets();
 
     const profilePaths = [
-        {
-            name: 'Pedidos',
-            Icon: Icons.SimpleLineIcons,
-            IconName: 'handbag',
-            path: '/profile/orders',
-        },
-        {
-            name: 'Favoritos',
-            Icon: Icons.Feather,
-            IconName: 'heart',
-            path: '/profile/lists',
-        },
-        {
-            name: 'Comentários',
-            Icon: Icons.FontAwesome5,
-            IconName: 'comment',
-            path: '/profile/reviews',
-        },
-        {
-            name: 'Morada',
-            Icon: Icons.MaterialIcons,
-            IconName: 'location-city',
-            path: '/profile/addresses',
-        },
-        {
-            name: 'Histórico de compras',
-            Icon: Icons.AntDesign,
-            IconName: 'shoppingcart',
-            path: '/profile/user-history',
-        },
-        {
-            name: 'Informações da conta',
-            Icon: Icons.AntDesign,
-            IconName: 'user',
-            path: '/profile/personal-info',
-        },
-    ];
+    {
+        name: 'Informações da conta',
+        Icon: Icons.FontAwesome5,
+        IconName: 'user',
+        path: "Information_account",
+    },
+    {
+        name: 'Histórico de compras',
+        Icon: Icons.AntDesign,
+        IconName: 'shoppingcart',
+        path: "History",
+    },
+    {
+        name: 'Moradas',
+        Icon: Icons.MaterialIcons,
+        IconName: 'location-city',
+        path: "Address",
+    },
+    {
+        name: 'Pedidos',
+        Icon: Icons.SimpleLineIcons,
+        IconName: 'handbag',
+        path: "Orders",
+    },
+    {
+        name: 'Favoritos',
+        Icon: Icons.Feather,
+        IconName: 'heart',
+        path: "Favorite",
+    },   
+];
+
 
     return (
         <AuthScreen>
@@ -70,7 +65,7 @@ export default function ProfileScreen() {
 
                     <View style={styles.linkContainer}>
                         {profilePaths.map((item, index) => (
-                            <BoxLink key={index} path={item.path} name={item.name}>
+                            <BoxLink key={index} path={item.path} name={item.name} navigation={navigation}>
                                 <item.Icon name={item.IconName} size={24} style={styles.icon} />
                             </BoxLink>
                         ))}
