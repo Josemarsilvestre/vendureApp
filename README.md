@@ -1,6 +1,6 @@
 # Aplicação de E-Commerce com React Native, GraphQL e TypeScript
 
-Bem-vindo à aplicação de comércio eletrônico desenvolvida em React Native, com GraphQL como tecnologia de backend, inspirada no Vendure. Esta aplicação permite aos usuários visualizar produtos, adicionar itens ao carrinho e efetuar compras.
+Bem-vindo à aplicação de comércio eletrônico desenvolvida em React Native inspirada no Vendure. Esta aplicação permite aos utiizadores visualizar produtos, adicionar itens ao carrinho e efetuar compras.
 
 ## Requisitos do Sistema
    - Node.js (v14.x ou superior)
@@ -42,10 +42,9 @@ Isso abrirá o Metro Bundler em seu navegador padrão. A partir daí, você pode
 A estrutura do projeto é organizada da seguinte forma:
 
    - /assets: Recursos estáticos como imagens e fontes.
-   - /components: Componentes reutilizáveis em toda a aplicação.
-   - /screens: Telas da aplicação, como tela inicial, detalhes do produto, carrinho, etc.
-   - /navigation: Configuração da navegação da aplicação usando React Navigation.
-   - /graphql: Consultas e mutações GraphQL.
+   - /components: Componentes reutilizáveis em toda a aplicação e páginas de navegação.
+   - /reports: relatório semanal da aplicação.
+   - /src: Configuração da api, mutation e context que a aplicação utiliza.
    - /utils: Funções utilitárias para tarefas comuns.
 
 ## Contribuição
