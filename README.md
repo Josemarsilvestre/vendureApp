@@ -1,4 +1,4 @@
-# Aplicação de E-Commerce com React Native e GraphQL
+# Aplicação de E-Commerce com React Native, GraphQL e TypeScript
 
 Bem-vindo à aplicação de comércio eletrônico desenvolvida em React Native, com GraphQL como tecnologia de backend, inspirada no Vendure. Esta aplicação permite aos usuários visualizar produtos, adicionar itens ao carrinho e efetuar compras.
 
