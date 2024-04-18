@@ -12,6 +12,7 @@ import TextField from '../common/TextField';
 import { logInSchema } from '../../utils/validation';
 import { Context } from '../../src/context/authContext';
 import styles from './Styles.Auth'
+import { moderateScale } from 'react-native-size-matters';
 
 type LoginFormData = {
   username: string;
@@ -91,16 +92,11 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
   return (
     <ScrollView>
       <View style={styles.scroolViewContainer}>
-        <View style={styles.View_img}>
-          <Image
-            style={styles.img}
-            source={require("../../assets/sign_in.png")}
-            resizeMode="cover"
-          />
+        <View style={{justifyContent: 'center', alignItems: 'center', marginBottom: moderateScale(50)}}>
+          <Text variant="titleLarge" style={styles.title}>Vendure App</Text>
         </View>
-
         <View style={styles.formContainer}>
-          <Text variant="titleLarge" style={styles.title}>Iniciar Sessão</Text>
+          <Text variant="titleMedium" style={styles.title}>Iniciar Sessão</Text>
           <View style={styles.fieldsContainer}>
             <TextField
               errors={errors.username?.message}

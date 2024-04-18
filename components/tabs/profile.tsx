@@ -56,7 +56,7 @@ export default function ProfileScreen() {
                     <View style={styles.userInfoContainer}>
                         <View style={styles.textContainer}>
                             <Text style={styles.name}>Josemar Silvestre</Text>
-                            <Text style={styles.platform}>Cliente Normal</Text>
+                            <Text style={styles.platform}>beemote@vendure.io</Text>
                         </View>
                         <TouchableOpacity>
                             <Icons.Feather
