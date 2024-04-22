@@ -3,15 +3,22 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { useNavigation  } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 
+//Auth Pages
 import LoginScreen from "./auth/login";
 import RegisterScreen from "./auth/register";
+
 import TabNavigator from "./Mytabs";
-import OrderScreen from "./profile/orders";
-import FavoriteScreen from "./profile/favorite";
-import UserHistoryScreen from "./profile/user-history";
-import PersonalInfoScreen from "./profile/personal-info";
-import AddressScreen from "./profile/address";
-import EditeScreen from "./profile/edit";
+
+//Profile Screen
+import OrderScreen from "./tab_profile/orders";
+import FavoriteScreen from "./tab_profile/favorite";
+import UserHistoryScreen from "./tab_profile/user-history";
+import PersonalInfoScreen from "./tab_profile/personal-info";
+import AddressScreen from "./tab_profile/address";
+import EditeScreen from "./tab_profile/edit";
+
+//Search
+import SerachScreen from "./pages/search";
 
 const Stack = createStackNavigator();
 
@@ -144,6 +151,23 @@ export default function MainStackNavigator() {
                 component={FavoriteScreen}
                 options={{
                     title: 'Favoritos',
+                    headerShown: true,
+                    headerLeft: () => (
+                        <Ionicons
+                            name="arrow-back"
+                            size={28}
+                            color="#000"
+                            style={{ marginLeft: 16 }}
+                            onPress={() => navigation.goBack()}
+                        />
+                    ),
+                }}
+            />
+            <Stack.Screen
+                name="Search"
+                component={SerachScreen}
+                options={{
+                    title: 'Pesquisar...',
                     headerShown: true,
                     headerLeft: () => (
                         <Ionicons

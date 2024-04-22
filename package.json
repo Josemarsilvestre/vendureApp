@@ -16,6 +16,7 @@
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/stack": "^6.3.29",
+    "@shopify/flash-list": "^1.4.3",
     "@types/yup": "^0.32.0",
     "expo": "^49.0.22",
     "expo-secure-store": "~12.3.1",
