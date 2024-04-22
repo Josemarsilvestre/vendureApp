@@ -9,12 +9,12 @@ import {
   Dimensions,
 } from "react-native";
 import { useQuery } from "@apollo/client";
-import { moderateScale } from "react-native-size-matters";
+import { moderateScale, scale } from "react-native-size-matters";
 
 import { GET_ALL_COLLECTIONS_QUERY } from "../../src/api/category";
 
 const { width } = Dimensions.get("window");
-const itemWidth = moderateScale(180);
+const itemWidth = moderateScale(180)
 const numColumns = Math.floor(width / itemWidth);
 
 interface Category {
