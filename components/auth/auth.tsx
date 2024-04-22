@@ -13,7 +13,7 @@ export default function AuthScreen({ children }: AuthWrapper) {
 
   return (
     <>
-      {state.isLogged ? <>{children}</> : <LoginScreen navigation={navigation}/>} {/**Children = Page Profile */}
+      {state.isLogged ? <>{children}</> : <LoginScreen navigation={navigation}/>}
     </>
   );
 }

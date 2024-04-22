@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { View, ViewStyle } from 'react-native';
+import { View, ViewStyle, StyleSheet } from 'react-native';
+import { moderateScale } from 'react-native-size-matters';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -42,18 +43,18 @@ const Loading: React.FC<LoadingProps> = ({ style }) => {
   }, []);
 
   return (
-    <View style={[{ width: 80, height: 24, position: 'relative' }, style]}>
+    <View style={[styles.constainer, style]}>
         <Animated.View
-        style={[{ width: 13, height: 13, backgroundColor: 'white', borderRadius: 13/2, position: 'absolute', top: '15%', left: 8 }, animatedOnePointStyles]}
+        style={[styles.AnimatedStyle, { left: 8 }, animatedOnePointStyles]}
         />
         <Animated.View
-        style={[{ width: 13, height: 13, backgroundColor: 'white', borderRadius: 13/2, position: 'absolute', top: '15%', left: 8 }, animatedTwoPointStyles]}
+        style={[styles.AnimatedStyle, { left: 8 }, animatedTwoPointStyles]}
         />
         <Animated.View
-        style={[{ width: 13, height: 13, backgroundColor: 'white', borderRadius: 13/2, position: 'absolute', top: '15%', left: 32 }, animatedThreePointStyles]}
+        style={[styles.AnimatedStyle, { left: 32 }, animatedThreePointStyles]}
         />
         <Animated.View
-        style={[{ width: 13, height: 13, backgroundColor: 'white', borderRadius: 13/2, position: 'absolute', top: '15%', left: 56 }, animatedFourPointStyles]}
+        style={[styles.AnimatedStyle, { left: 56 }, animatedFourPointStyles]}
         />
     </View>
 
@@ -61,3 +62,19 @@ const Loading: React.FC<LoadingProps> = ({ style }) => {
 }
 
 export default Loading;
+
+const styles = StyleSheet.create({
+  constainer:{
+    width: moderateScale(80), 
+    height: moderateScale(24), 
+    position: 'relative'
+  },
+  AnimatedStyle:{
+    width: moderateScale(13), 
+    height: moderateScale(13), 
+    backgroundColor: 'white', 
+    borderRadius: moderateScale(13/2), 
+    position: 'absolute', 
+    top: '15%'
+  }
+})
