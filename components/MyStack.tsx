@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import LoginScreen from "./auth/login";
 import RegisterScreen from "./auth/register";
-import TabNavigator from "./MyTabs";
+import TabNavigator from "./Mytabs";
 import OrderScreen from "./profile/orders";
 import FavoriteScreen from "./profile/favorite";
 import UserHistoryScreen from "./profile/user-history";
