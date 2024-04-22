@@ -36,7 +36,7 @@ export default function CategoryScreen({ navigation }) {
 
   useEffect(() => {
     if (data && data.collections && data.collections.items.length > 0) {
-      const levelOneCategory = data.collections.items[0];
+      const levelOneCategory = data.collections.items;
       setActiveMinCat(levelOneCategory);
     }
   }, [data]);
