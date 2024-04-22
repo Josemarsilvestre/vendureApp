@@ -114,36 +114,3 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-
-/**<ScrollView style={styles.subCategoryList}>
-          <View style={styles.subCategoryContainer}>
-            {activeMinCat &&
-              data &&
-              data.collections.items
-                .map((levelTwoCategory: Category) => (
-                  <View key={levelTwoCategory.id}>
-                    <TouchableOpacity
-                      style={styles.subCategoryItem}
-                      onPress={() => navigation.push('/products', { category: levelTwoCategory.id })}
-                    >
-                      <Text style={styles.subCategoryText}>{levelTwoCategory.name}</Text>
-                    </TouchableOpacity>
-
-                    <View style={styles.subCategoryImageContainer}>
-                      {data.collections.items
-                        .map((levelThreeCategory: Category) => (
-                          <TouchableOpacity
-                            style={styles.subCategoryImageItem}
-                            key={levelThreeCategory.id}
-                            onPress={() => navigation.push('/products', { category: levelThreeCategory.id })}
-                          >
-                            <Text style={styles.subCategoryText}>
-                              {levelThreeCategory.name}
-                            </Text>
-                          </TouchableOpacity>
-                        ))}
-                    </View>
-                  </View>
-                ))}
-          </View>
-        </ScrollView> */
