@@ -85,10 +85,6 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
     }
   };
 
-  function hangleJunpimg() {
-
-  }
-
   return (
     <ScrollView>
       <View style={styles.scroolViewContainer}>

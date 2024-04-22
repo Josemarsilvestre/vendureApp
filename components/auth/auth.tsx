@@ -1,5 +1,5 @@
 import React, { useContext} from 'react';
-import LoginScreen from '../auth/login';
+import LoginScreen from './login';
 import { Context } from '../../src/context/authContext';
 import { useNavigation } from '@react-navigation/native';
 
@@ -13,7 +13,7 @@ export default function AuthScreen({ children }: AuthWrapper) {
 
   return (
     <>
-      {state.isLogged ? <>{children}</> : <LoginScreen navigation={navigation}/>}
+      {state.isLogged ? <>{children}</> : <LoginScreen navigation={navigation}/>} {/**Children = Page Profile */}
     </>
   );
 }

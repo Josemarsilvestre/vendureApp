@@ -5,7 +5,7 @@ import { moderateScale } from "react-native-size-matters";
 
 import Icons from '../common/Icons';
 import BoxLink from '../common/BoxLink';
-import AuthScreen from '../common/auth';
+import AuthScreen from '../auth/auth';
 
 export default function ProfileScreen({navigation}) {
     const insets = useSafeAreaInsets();
