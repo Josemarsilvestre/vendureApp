@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from "react-native";
 import { useQuery } from "@apollo/client";
-import { moderateScale, scale } from "react-native-size-matters";
+import { moderateScale } from "react-native-size-matters";
 
 import { GET_ALL_COLLECTIONS_QUERY } from "../../src/api/category";
 
@@ -20,6 +20,7 @@ const numColumns = Math.floor(width / itemWidth);
 interface Category {
   id: string;
   name: string;
+  slug: string;
   assets: {
     source: string;
   };
@@ -29,6 +30,7 @@ export default function CategoryScreen({ navigation }) {
   const [activeMinCat, setActiveMinCat] = useState<Category>({
     id: "",
     name: "",
+    slug: "",
     assets: { source: "" },
   });
 
@@ -43,6 +45,7 @@ export default function CategoryScreen({ navigation }) {
 
   const handleActive = (cat: Category) => {
     setActiveMinCat(cat);
+    navigation.navigate("CategorySection")
   };
 
   return (
@@ -56,8 +59,7 @@ export default function CategoryScreen({ navigation }) {
                 style={[
                   styles.categoryItem,
                   {
-                    backgroundColor:
-                      activeMinCat.id === category.id ? "#fff" : "#f0f0f0",
+                    backgroundColor: activeMinCat.id === category.id ? "#fff" : "#f0f0f0",
                     width: itemWidth,
                   },
                 ]}

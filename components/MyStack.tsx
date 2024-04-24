@@ -18,7 +18,11 @@ import AddressScreen from "./tab_profile/address";
 import EditeScreen from "./tab_profile/edit";
 
 //Search
-import SerachScreen from "./pages/search";
+import SerachScreen from "./tab_category/search";
+
+//Products
+import ProductScreen from "./common_pages/product";
+import CategorySectionScreen from "./common_pages/category_section";
 
 const Stack = createStackNavigator();
 
@@ -168,6 +172,40 @@ export default function MainStackNavigator() {
                 component={SerachScreen}
                 options={{
                     title: 'Pesquisar...',
+                    headerShown: true,
+                    headerLeft: () => (
+                        <Ionicons
+                            name="arrow-back"
+                            size={28}
+                            color="#000"
+                            style={{ marginLeft: 16 }}
+                            onPress={() => navigation.goBack()}
+                        />
+                    ),
+                }}
+            />
+            <Stack.Screen
+                name="Products"
+                component={ProductScreen}
+                options={{
+                    title: 'Produto',
+                    headerShown: true,
+                    headerLeft: () => (
+                        <Ionicons
+                            name="arrow-back"
+                            size={28}
+                            color="#000"
+                            style={{ marginLeft: 16 }}
+                            onPress={() => navigation.goBack()}
+                        />
+                    ),
+                }}
+            />
+            <Stack.Screen
+                name="CategorySection"
+                component={CategorySectionScreen}
+                options={{
+                    title: 'Categoria',
                     headerShown: true,
                     headerLeft: () => (
                         <Ionicons

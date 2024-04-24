@@ -6,21 +6,10 @@ export const GET_ALL_COLLECTIONS_QUERY = gql`
       items {
         id
         name
+        slug
         assets {
           source
         }
-      }
-    }
-  }
-`;
-
-export const GET_SINGLES_COLLECTION_QUERY = gql`
-  query GetSingleCollection($collectionId: ID!) {
-    collection(id: $collectionId) {
-      id
-      name
-      assets {
-        source
       }
     }
   }
