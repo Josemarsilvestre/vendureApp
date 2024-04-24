@@ -2,17 +2,14 @@ import { gql } from "@apollo/client";
 
 export const PRODUCTLIST_QUERY = gql`
   query GetProductList {
-    products(options: { take: 10 }) {
+    products(options: { take: 20 }) {
       totalItems
       items {
         id
         name
         slug
         featuredAsset {
-          preview
-          mimeType
-          width
-          height
+          source
         }
         variants {
           price

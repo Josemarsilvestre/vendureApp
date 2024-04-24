@@ -10,23 +10,30 @@ import {
 import { FlashList } from "@shopify/flash-list";
 import { useQuery } from "@apollo/client";
 
-import FeedSectionContainer from "../../common/FeedSectionContainer";
-import { GET_BANNER_1_QUERY } from "../../../src/api/home";
+import FeedSectionContainer from "../common/FeedSectionContainer";
+import ProductPrice from "../product/ProductPrice";
 
 interface Product {
   id: string;
   name: string;
+  slug: string;
   featuredAsset: {
-    source: string;
+    source;
   };
+  variants: {
+    price: number;
+    stockLevel: number;
+  }[];
 }
 
 export interface BannerProps {
   navigation: any;
+  query: any;
+  title: string;
 }
 
-const BannerOne: React.FC<BannerProps> = ({ navigation }) => {
-  const { data, loading, error } = useQuery(GET_BANNER_1_QUERY);
+const Banner: React.FC<BannerProps> = ({ navigation, query, title }) => {
+  const { data, loading, error } = useQuery(query);
 
   const windowWidth = useWindowDimensions().width;
   const imageWidth = windowWidth * 0.7;
@@ -39,7 +46,7 @@ const BannerOne: React.FC<BannerProps> = ({ navigation }) => {
     data?.collection?.productVariants?.items?.map((item) => item.product) || [];
 
   return (
-    <FeedSectionContainer title="Topics of the day">
+    <FeedSectionContainer title={title}>
       <FlashList
         data={products}
         renderItem={({ item, index }) => (
@@ -57,12 +64,25 @@ const BannerOne: React.FC<BannerProps> = ({ navigation }) => {
                 style={styles.image}
               />
             </View>
-            <Text style={styles.text}>{item.name}</Text>
+            <View>
+              <Text numberOfLines={1} ellipsizeMode="tail" style={styles.text}>
+                {item.name}
+              </Text>
+
+              <View style={styles.priceContainer}>
+                <Text style={styles.priceText}>Price: </Text>
+                <ProductPrice
+                  inStock={item.variants[0].stockLevel}
+                  price={item.variants[0].price}
+                  singleProduct={true}
+                />
+              </View>
+            </View>
           </TouchableOpacity>
         )}
         horizontal={true}
         estimatedItemSize={300}
-        estimatedListSize={{ height: 250, width: 200 }}
+        estimatedListSize={{ height: 240, width: 200 }}
         showsHorizontalScrollIndicator={false}
       />
     </FeedSectionContainer>
@@ -71,7 +91,7 @@ const BannerOne: React.FC<BannerProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   imageContainer: {
-    height: "90%",
+    height: "80%",
     marginRight: -40,
   },
   image: {
@@ -83,8 +103,16 @@ const styles = StyleSheet.create({
     color: "#4d4d4d",
     maxWidth: 200,
     marginTop: 3,
-    textAlign: "center",
+    textAlign: "left",
+  },
+  priceText: {
+    marginRight: 5,
+    color: "#4d4d4d",
+  },
+  priceContainer: {
+    marginTop: -1,
+    flexDirection: "row",
   },
 });
 
-export default BannerOne;
+export default Banner;

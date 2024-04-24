@@ -180,7 +180,7 @@ export default function MainStackNavigator() {
         name="Search"
         component={SerachScreen}
         options={{
-          title: "Search...",
+          title: "Search",
           headerShown: true,
           headerLeft: () => (
             <Ionicons

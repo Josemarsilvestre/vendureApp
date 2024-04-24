@@ -64,11 +64,11 @@ export default function TabNavigator({ navigation }) {
             <>
               <Icons.EvilIcons
                 name="search"
-                size={30}
+                size={35}
                 color="#1F2937"
                 className="px-2 py-1"
                 onPress={() => navigation.navigate("Search")}
-                style={{ marginRight: 13 }}
+                style={{ padding: 10 }}
               />
             </>
           ),

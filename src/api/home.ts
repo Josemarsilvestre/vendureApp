@@ -46,6 +46,10 @@ export const GET_BANNER_1_QUERY = gql`
             featuredAsset {
               source
             }
+            variants {
+              price
+              stockLevel
+            }
           }
         }
       }
@@ -54,7 +58,7 @@ export const GET_BANNER_1_QUERY = gql`
 `;
 
 export const GET_BANNER_2_QUERY = gql`
-  query GetBanner1 {
+  query GetBanner2 {
     collection(slug: "equipment") {
       productVariants(options: { take: 9 }) {
         items {
@@ -63,6 +67,32 @@ export const GET_BANNER_2_QUERY = gql`
             name
             featuredAsset {
               source
+            }
+            variants {
+              price
+              stockLevel
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_BANNER_3_QUERY = gql`
+  query GetBanner3 {
+    collection(slug: "home-garden") {
+      productVariants(options: { take: 9 }) {
+        items {
+          product {
+            id
+            name
+            featuredAsset {
+              source
+            }
+            variants {
+              price
+              stockLevel
             }
           }
         }
