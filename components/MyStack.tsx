@@ -1,7 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { useNavigation  } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 
 //Auth Pages
 import LoginScreen from "./auth/login";
@@ -27,195 +27,204 @@ import CategorySectionScreen from "./common_pages/category_section";
 const Stack = createStackNavigator();
 
 export default function MainStackNavigator() {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
 
-    return (
-        <Stack.Navigator
-            screenOptions={{ headerShown: false}}>
-            <Stack.Screen
-                name="TabNavigator"
-                component={TabNavigator}
+  return (
+    <Stack.Navigator
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        animationEnabled: true,
+        onAnimatedValueUpdate: () => {},
+        gestureEnabled: true,
+        gestureDirection: "horizontal",
+        cardStyleInterpolator: ({ current: { progress } }) => ({
+          cardStyle: {
+            opacity: progress,
+          },
+        }),
+      })}
+    >
+      <Stack.Screen name="TabNavigator" component={TabNavigator} />
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={RegisterScreen}
+        options={{
+          title: "Register an account",
+          headerBackTitleVisible: false,
+          headerShown: true,
+          headerTintColor: "#212B36",
+          headerStyle: {
+            backgroundColor: "#f0f0f0",
+          },
+          headerLeft: () => (
+            <Ionicons
+              name="arrow-back"
+              size={28}
+              color="#000"
+              style={{ marginLeft: 16 }}
+              onPress={() => navigation.goBack()}
             />
-            <Stack.Screen
-                name="Login"
-                component={LoginScreen}
-                options={{
-                    headerBackTitleVisible: false
-                }}
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Edit"
+        component={EditeScreen}
+        options={{
+          title: "Information",
+          headerShown: true,
+          headerLeft: () => (
+            <Ionicons
+              name="arrow-back"
+              size={28}
+              color="#000"
+              style={{ marginLeft: 16 }}
+              onPress={() => navigation.goBack()}
             />
-            <Stack.Screen
-                name="Register"
-                component={RegisterScreen}
-                options={{
-                    title: 'Register an account',
-                    headerBackTitleVisible: false,
-                    headerShown: true,
-                    headerTintColor: '#212B36',
-                    headerStyle: {
-                        backgroundColor: '#f0f0f0',
-                    },
-                    headerLeft: () => (
-                        <Ionicons
-                            name="arrow-back"
-                            size={28}
-                            color="#000"
-                            style={{ marginLeft: 16 }}
-                            onPress={() => navigation.goBack()}
-                        />
-                    ),
-                }}
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Information_account"
+        component={PersonalInfoScreen}
+        options={{
+          title: "Account information",
+          headerShown: true,
+          headerLeft: () => (
+            <Ionicons
+              name="arrow-back"
+              size={28}
+              color="#000"
+              style={{ marginLeft: 16 }}
+              onPress={() => navigation.goBack()}
             />
-            <Stack.Screen
-                name="Edit"
-                component={EditeScreen}
-                options={{
-                    title: 'Information',
-                    headerShown: true,
-                    headerLeft: () => (
-                        <Ionicons
-                            name="arrow-back"
-                            size={28}
-                            color="#000"
-                            style={{ marginLeft: 16 }}
-                            onPress={() => navigation.goBack()}
-                        />
-                    ),
-                }}
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="History"
+        component={UserHistoryScreen}
+        options={{
+          title: "History",
+          headerShown: true,
+          headerLeft: () => (
+            <Ionicons
+              name="arrow-back"
+              size={28}
+              color="#000"
+              style={{ marginLeft: 16 }}
+              onPress={() => navigation.goBack()}
             />
-            <Stack.Screen
-                name="Information_account"
-                component={PersonalInfoScreen}
-                options={{
-                    title: 'Account information',
-                    headerShown: true,
-                    headerLeft: () => (
-                        <Ionicons
-                            name="arrow-back"
-                            size={28}
-                            color="#000"
-                            style={{ marginLeft: 16 }}
-                            onPress={() => navigation.goBack()}
-                        />
-                    ),
-                }}
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Address"
+        component={AddressScreen}
+        options={{
+          title: "Address",
+          headerShown: true,
+          headerLeft: () => (
+            <Ionicons
+              name="arrow-back"
+              size={28}
+              color="#000"
+              style={{ marginLeft: 16 }}
+              onPress={() => navigation.goBack()}
             />
-            <Stack.Screen
-                name="History"
-                component={UserHistoryScreen}
-                options={{
-                    title: 'History',
-                    headerShown: true,
-                    headerLeft: () => (
-                        <Ionicons
-                            name="arrow-back"
-                            size={28}
-                            color="#000"
-                            style={{ marginLeft: 16 }}
-                            onPress={() => navigation.goBack()}
-                        />
-                    ),
-                }}
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Orders"
+        component={OrderScreen}
+        options={{
+          title: "Orders",
+          headerShown: true,
+          headerLeft: () => (
+            <Ionicons
+              name="arrow-back"
+              size={28}
+              color="#000"
+              style={{ marginLeft: 16 }}
+              onPress={() => navigation.goBack()}
             />
-            <Stack.Screen
-                name="Address"
-                component={AddressScreen}
-                options={{
-                    title: 'Address',
-                    headerShown: true,
-                    headerLeft: () => (
-                        <Ionicons
-                            name="arrow-back"
-                            size={28}
-                            color="#000"
-                            style={{ marginLeft: 16 }}
-                            onPress={() => navigation.goBack()}
-                        />
-                    ),
-                }}
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Favorite"
+        component={FavoriteScreen}
+        options={{
+          title: "Favorite",
+          headerShown: true,
+          headerLeft: () => (
+            <Ionicons
+              name="arrow-back"
+              size={28}
+              color="#000"
+              style={{ marginLeft: 16 }}
+              onPress={() => navigation.goBack()}
             />
-            <Stack.Screen
-                name="Orders"
-                component={OrderScreen}
-                options={{
-                    title: 'Orders',
-                    headerShown: true,
-                    headerLeft: () => (
-                        <Ionicons
-                            name="arrow-back"
-                            size={28}
-                            color="#000"
-                            style={{ marginLeft: 16 }}
-                            onPress={() => navigation.goBack()}
-                        />
-                    ),
-                }}
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Search"
+        component={SerachScreen}
+        options={{
+          title: "Search...",
+          headerShown: true,
+          headerLeft: () => (
+            <Ionicons
+              name="arrow-back"
+              size={28}
+              color="#000"
+              style={{ marginLeft: 16 }}
+              onPress={() => navigation.goBack()}
             />
-            <Stack.Screen
-                name="Favorite"
-                component={FavoriteScreen}
-                options={{
-                    title: 'Favorite',
-                    headerShown: true,
-                    headerLeft: () => (
-                        <Ionicons
-                            name="arrow-back"
-                            size={28}
-                            color="#000"
-                            style={{ marginLeft: 16 }}
-                            onPress={() => navigation.goBack()}
-                        />
-                    ),
-                }}
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Products"
+        component={ProductScreen}
+        options={{
+          headerShown: true,
+          headerLeft: () => (
+            <Ionicons
+              name="arrow-back"
+              size={28}
+              color="#000"
+              style={{ marginLeft: 16 }}
+              onPress={() => navigation.goBack()}
             />
-            <Stack.Screen
-                name="Search"
-                component={SerachScreen}
-                options={{
-                    title: 'Search...',
-                    headerShown: true,
-                    headerLeft: () => (
-                        <Ionicons
-                            name="arrow-back"
-                            size={28}
-                            color="#000"
-                            style={{ marginLeft: 16 }}
-                            onPress={() => navigation.goBack()}
-                        />
-                    ),
-                }}
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="CategorySection"
+        component={CategorySectionScreen}
+        options={{
+          headerShown: true,
+          headerLeft: () => (
+            <Ionicons
+              name="arrow-back"
+              size={28}
+              color="#000"
+              style={{ marginLeft: 16 }}
+              onPress={() => navigation.goBack()}
             />
-            <Stack.Screen
-                name="Products"
-                component={ProductScreen}
-                options={{
-                    headerShown: true,
-                    headerLeft: () => (
-                        <Ionicons
-                            name="arrow-back"
-                            size={28}
-                            color="#000"
-                            style={{ marginLeft: 16 }}
-                            onPress={() => navigation.goBack()}
-                        />
-                    ),
-                }}
-            />
-            <Stack.Screen
-                name="CategorySection"
-                component={CategorySectionScreen}
-                options={{
-                    headerShown: true,
-                    headerLeft: () => (
-                        <Ionicons
-                            name="arrow-back"
-                            size={28}
-                            color="#000"
-                            style={{ marginLeft: 16 }}
-                            onPress={() => navigation.goBack()}
-                        />
-                    ),
-                }}
-            />
-        </Stack.Navigator>
-    );
-};
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
