@@ -92,7 +92,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
           <Text variant="titleLarge" style={styles.title}>Vendure App</Text>
         </View>
         <View style={styles.formContainer}>
-          <Text variant="titleMedium" style={styles.title}>Iniciar Sessão</Text>
+          <Text variant="titleMedium" style={styles.title}>Sign in</Text>
           <View style={styles.fieldsContainer}>
             <TextField
               errors={errors.username?.message}
@@ -119,7 +119,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
                 });
                 navigation.navigate('Register');
               }}>
-              <Text style={styles.TouchableOpacitybtnText}>Registe-se</Text>
+              <Text style={styles.TouchableOpacitybtnText}>Register</Text>
             </TouchableOpacity>
           </View>
         </View>

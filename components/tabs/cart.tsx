@@ -13,14 +13,13 @@ export default function CartScreen({ navigation }) {
       {state.isLogged ?
         <View style={styles.scroolViewContainer}>
           <View style={styles.text_view}>
-            <Text style={[styles.text_, { marginBottom: moderateScale(20), fontWeight: 'bold' }]}>Carrinho</Text>
-            <Text style={styles.text_}>Faça compras para aproveitar o melhor da app</Text>
+            <Text style={styles.text_}>Make purchases to get the best out of the app</Text>
           </View>
         </View>
         :
         <View style={styles.scroolViewContainer}>
           <View style={styles.text_view}>
-            <Text style={styles.text_}>Faça Login para aceder ao carrinho</Text>
+            <Text style={styles.text_}>Log in to access the cart</Text>
           </View>
           <View style={{marginTop: moderateScale(40)}}>
             <Button onPress={() => navigation.navigate('Profile')}>

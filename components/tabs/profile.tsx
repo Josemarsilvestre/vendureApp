@@ -12,31 +12,31 @@ export default function ProfileScreen({navigation}) {
 
     const profilePaths = [
     {
-        name: 'Informações da conta',
+        name: 'Account information',
         Icon: Icons.FontAwesome5,
         IconName: 'user',
         path: "Information_account",
     },
     {
-        name: 'Histórico de compras',
+        name: 'History',
         Icon: Icons.AntDesign,
         IconName: 'shoppingcart',
         path: "History",
     },
     {
-        name: 'Moradas',
+        name: 'Address',
         Icon: Icons.MaterialIcons,
         IconName: 'location-city',
         path: "Address",
     },
     {
-        name: 'Pedidos',
+        name: 'Orders',
         Icon: Icons.SimpleLineIcons,
         IconName: 'handbag',
         path: "Orders",
     },
     {
-        name: 'Favoritos',
+        name: 'Favorites',
         Icon: Icons.Feather,
         IconName: 'heart',
         path: "Favorite",

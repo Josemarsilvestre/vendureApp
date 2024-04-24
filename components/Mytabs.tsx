@@ -56,7 +56,7 @@ export default function TabNavigator({ navigation }) {
         name="Category"
         component={CategoryScreen}
         options={{
-          title: "Categoria",
+          title: "Category",
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="category" size={24} color={color} />
           ),
@@ -78,7 +78,7 @@ export default function TabNavigator({ navigation }) {
         name="Cart"
         component={CartScreen}
         options={{
-          title: "Carrinho",
+          title: "Cart",
           tabBarIcon: ({ color }) => (
             <Feather name="shopping-cart" size={24} color={color} />
           ),
@@ -88,7 +88,7 @@ export default function TabNavigator({ navigation }) {
         name="Profile"
         component={ProfileScreen}
         options={{
-          title: "Conta",
+          title: "Account",
           tabBarIcon: ({ color }) => (
             <FontAwesome name="user" size={24} color={color} />
           ),

@@ -7,9 +7,9 @@ const EmptySearchList: React.FC = () => {
     <View style={styles.container}>
       <View style={styles.infoContainer}>
         <View style={styles.textContainer}>
-          <Text>Nenhum resultado encontrado</Text>
+          <Text>No results found</Text>
         </View>
-        <Text style={styles.text}>Use mais palavras-chave ou verifique os atributos de entrada</Text>
+        <Text style={styles.text}>Use more keywords or check input attributes</Text>
       </View>
     </View>
   );

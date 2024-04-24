@@ -47,7 +47,7 @@ export default function MainStackNavigator() {
                 name="Register"
                 component={RegisterScreen}
                 options={{
-                    title: 'Registe-se',
+                    title: 'Sign up',
                     headerBackTitleVisible: false,
                     headerShown: true,
                     headerTintColor: '#212B36',
@@ -69,7 +69,7 @@ export default function MainStackNavigator() {
                 name="Edit"
                 component={EditeScreen}
                 options={{
-                    title: 'Editar',
+                    title: 'Information',
                     headerShown: true,
                     headerLeft: () => (
                         <Ionicons
@@ -86,7 +86,7 @@ export default function MainStackNavigator() {
                 name="Information_account"
                 component={PersonalInfoScreen}
                 options={{
-                    title: 'Informações da conta',
+                    title: 'Account information',
                     headerShown: true,
                     headerLeft: () => (
                         <Ionicons
@@ -103,7 +103,7 @@ export default function MainStackNavigator() {
                 name="History"
                 component={UserHistoryScreen}
                 options={{
-                    title: 'Histórico',
+                    title: 'History',
                     headerShown: true,
                     headerLeft: () => (
                         <Ionicons
@@ -120,7 +120,7 @@ export default function MainStackNavigator() {
                 name="Address"
                 component={AddressScreen}
                 options={{
-                    title: 'Morada',
+                    title: 'Address',
                     headerShown: true,
                     headerLeft: () => (
                         <Ionicons
@@ -137,7 +137,7 @@ export default function MainStackNavigator() {
                 name="Orders"
                 component={OrderScreen}
                 options={{
-                    title: 'Pedidos',
+                    title: 'Orders',
                     headerShown: true,
                     headerLeft: () => (
                         <Ionicons
@@ -154,7 +154,7 @@ export default function MainStackNavigator() {
                 name="Favorite"
                 component={FavoriteScreen}
                 options={{
-                    title: 'Favoritos',
+                    title: 'Favorite',
                     headerShown: true,
                     headerLeft: () => (
                         <Ionicons
@@ -171,7 +171,7 @@ export default function MainStackNavigator() {
                 name="Search"
                 component={SerachScreen}
                 options={{
-                    title: 'Pesquisar...',
+                    title: 'Search...',
                     headerShown: true,
                     headerLeft: () => (
                         <Ionicons
@@ -188,7 +188,7 @@ export default function MainStackNavigator() {
                 name="Products"
                 component={ProductScreen}
                 options={{
-                    title: 'Produto',
+                    title: 'Products',
                     headerShown: true,
                     headerLeft: () => (
                         <Ionicons
@@ -205,7 +205,7 @@ export default function MainStackNavigator() {
                 name="CategorySection"
                 component={CategorySectionScreen}
                 options={{
-                    title: 'Categoria',
+                    title: 'Category',
                     headerShown: true,
                     headerLeft: () => (
                         <Ionicons

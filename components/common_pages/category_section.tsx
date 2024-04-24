@@ -5,7 +5,7 @@ export default function CategorySectionScreen() {
   return (
     <ScrollView>
       <View style={{alignItems: "center", justifyContent: "center", marginTop: moderateScale(300)}}>
-        <Text style={{ fontSize: moderateScale(16) }}>Página de Categoria</Text>
+        <Text style={{ fontSize: moderateScale(16) }}>Category Page</Text>
       </View>
     </ScrollView>
   )

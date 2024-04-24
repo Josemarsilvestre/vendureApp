@@ -4,7 +4,7 @@ export const GET_SLIDERS = gql`
   query GetSliders {
     collection(slug: "furniture") {
       productVariants(
-        options: { take: 4, filter: { name: { notContains: "Balloon" } } }
+        options: { take: 5, filter: { name: { notContains: "Balloon" } } }
       ) {
         items {
           product {

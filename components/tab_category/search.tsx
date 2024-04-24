@@ -73,7 +73,7 @@ export default function SerachScreen({navigation}) {
             keyboardType="default"
             value={search}
             onChangeText={handleChange}
-            placeholder="Pesquisar..."
+            placeholder="Search..."
           />
           <Pressable style={styles.closeIcon} onPress={handleRemoveSearch}>
             <Icons.AntDesign name="close" size={14} color="#999" />

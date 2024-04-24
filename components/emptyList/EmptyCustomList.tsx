@@ -6,7 +6,7 @@ const EmptyCustomList = () => {
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.text}>Dados ainda não estão prontos</Text>
+        <Text style={styles.text}>Data isn't ready yet</Text>
       </View>
     </View>
   );

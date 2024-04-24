@@ -3,8 +3,8 @@ import { View, Image, StyleSheet, useWindowDimensions, TouchableOpacity, Text } 
 import { FlashList } from "@shopify/flash-list";
 import { useQuery } from "@apollo/client";
 
-import FeedSectionContainer from "../common/FeedSectionContainer";
-import { GET_BANNER_2_QUERY } from "../../src/api/home";
+import FeedSectionContainer from "../../common/FeedSectionContainer";
+import { GET_BANNER_2_QUERY } from "../../../src/api/home";
 
 interface Product {
   id: string;
@@ -31,7 +31,7 @@ const BannerTwo: React.FC<BannerProps> = ({ navigation }) => {
   const products: Product[] = data?.collection?.productVariants?.items?.map(item => item.product) || [];
 
   return (
-    <FeedSectionContainer title="Recomendados">
+    <FeedSectionContainer title="Recommended">
       <FlashList
         data={products}
         renderItem={({ item, index }) => (
@@ -51,7 +51,7 @@ const BannerTwo: React.FC<BannerProps> = ({ navigation }) => {
         )}
         horizontal={true}
         estimatedItemSize={300}
-        estimatedListSize={{ height: 310, width: 200 }}
+        estimatedListSize={{ height: 300, width: 200 }}
         showsHorizontalScrollIndicator={false}
       />
     </FeedSectionContainer>

@@ -5,7 +5,7 @@ export default function ProductScreen() {
   return (
     <ScrollView>
       <View style={{alignItems: "center", justifyContent: "center", marginTop: moderateScale(300)}}>
-        <Text style={{ fontSize: moderateScale(16) }}>Página do Produto</Text>
+        <Text style={{ fontSize: moderateScale(16) }}>Product Page</Text>
       </View>
     </ScrollView>
   )

@@ -29,7 +29,7 @@ const Categories: React.FC<CategoriesProps> = ({ navigation }) => {
   const categories: Category[] = data?.collections?.items || [];
 
   return (
-    <FeedSectionContainer title="Categoria">
+    <FeedSectionContainer title="Category">
       <FlashList
         data={categories}
         horizontal

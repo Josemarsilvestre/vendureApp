@@ -109,7 +109,7 @@ export default function RegisterScreen({navigation}:RegisterScreenProps) {
       style={{ flex: 1 }}>
       <ScrollView>
         <View style={styles.scroolViewContainer}>
-          <Text variant="titleLarge" style={styles.title}>Registar</Text>
+          <Text variant="titleLarge" style={styles.title}>Register an account</Text>
           <View style={styles.fieldsContainer}>
             <TextField
               errors={errors.emailAddress?.message}
@@ -121,36 +121,36 @@ export default function RegisterScreen({navigation}:RegisterScreenProps) {
             />
             <TextField
               errors={errors.firstName?.message}
-              placeholder="Primeiro nome"
+              placeholder="First name"
               name="firstName"
               control={control}
             />
             <TextField
               errors={errors.lastName?.message}
-              placeholder="Último nome"
+              placeholder="Last name"
               name="lastName"
               control={control}
             />
             <TextField
               errors={errors.password?.message}
               type="password"
-              placeholder="Palavra-passe"
+              placeholder="Password"
               name="password"
               control={control}
             />
             <TextField
               errors={errors.confirmPassword?.message}
               type="password"
-              placeholder="Confirme a palavra-passe"
+              placeholder="Confirm password"
               name="confirmPassword"
               control={control}
             />
             <Button onPress={handleSubmit(onSubmit)}>
-              Criar conta
+              Register
             </Button>
           </View>
           <TouchableOpacity style={styles.TouchableOpacitybtn} onPress={() => navigation.goBack()}>
-            <Text style={styles.TouchableOpacitybtnText}>Iniciar Sessão</Text>
+            <Text style={styles.TouchableOpacitybtnText}>Login</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
