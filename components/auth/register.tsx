@@ -109,7 +109,7 @@ export default function RegisterScreen({navigation}:RegisterScreenProps) {
       style={{ flex: 1 }}>
       <ScrollView>
         <View style={styles.scroolViewContainer}>
-          <Text variant="titleLarge" style={styles.title}>Register an account</Text>
+          <Text variant="titleLarge" style={styles.title}>Sign up</Text>
           <View style={styles.fieldsContainer}>
             <TextField
               errors={errors.emailAddress?.message}

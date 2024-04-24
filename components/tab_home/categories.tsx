@@ -37,10 +37,9 @@ const Categories: React.FC<CategoriesProps> = ({ navigation }) => {
           <TouchableOpacity
             style={styles.categoryItem}
             onPress={() => {
-              navigation.setOptions({
-                title: item.name,
+              navigation.navigate("CategorySection", {
+                categoryName: item.name
               });
-              navigation.navigate("CategorySection", { category: item.slug });
             }}
           >
             <View style={styles.imageContainer}>

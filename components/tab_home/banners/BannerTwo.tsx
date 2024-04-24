@@ -37,10 +37,7 @@ const BannerTwo: React.FC<BannerProps> = ({ navigation }) => {
         renderItem={({ item, index }) => (
           <TouchableOpacity
             onPress={() => {
-              navigation.setOptions({
-                title: item.name,
-              });
-              navigation.navigate("Products", { category: item.name });
+              navigation.navigate("Products", { productName: item.name });
             }}
           >
             <View style={[styles.imageContainer, { width: imageWidth }]} key={item.id}>

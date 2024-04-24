@@ -14,7 +14,7 @@ import { moderateScale } from "react-native-size-matters";
 import { GET_ALL_COLLECTIONS_QUERY } from "../../src/api/category";
 
 const { width } = Dimensions.get("window");
-const itemWidth = moderateScale(180)
+const itemWidth = moderateScale(180);
 const numColumns = Math.floor(width / itemWidth);
 
 interface Category {
@@ -45,7 +45,9 @@ export default function CategoryScreen({ navigation }) {
 
   const handleActive = (cat: Category) => {
     setActiveMinCat(cat);
-    navigation.navigate("CategorySection")
+    navigation.navigate("CategorySection", {
+      categoryName: cat.name
+    });
   };
 
   return (

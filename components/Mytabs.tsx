@@ -40,7 +40,7 @@ export default function TabNavigator({ navigation }) {
         name="Index"
         component={FeedScreen}
         options={{
-          title: "Home",
+          tabBarLabel: "Home",
           tabBarIcon: ({ color }) => (
             <Entypo name="home" size={24} color={color} />
           ),

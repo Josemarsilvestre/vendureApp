@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Image, StyleSheet, useWindowDimensions, TouchableOpacity, Text } from "react-native";
+import {
+  View,
+  Image,
+  StyleSheet,
+  useWindowDimensions,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { useQuery } from "@apollo/client";
 
@@ -28,7 +35,8 @@ const BannerOne: React.FC<BannerProps> = ({ navigation }) => {
     return null;
   }
 
-  const products: Product[] = data?.collection?.productVariants?.items?.map(item => item.product) || [];
+  const products: Product[] =
+    data?.collection?.productVariants?.items?.map((item) => item.product) || [];
 
   return (
     <FeedSectionContainer title="Topics of the day">
@@ -37,14 +45,17 @@ const BannerOne: React.FC<BannerProps> = ({ navigation }) => {
         renderItem={({ item, index }) => (
           <TouchableOpacity
             onPress={() => {
-              navigation.setOptions({
-                title: item.name,
-              });
-              navigation.navigate("Products", { category: item.name });
+              navigation.navigate("Products", { productName: item.name });
             }}
           >
-            <View style={[styles.imageContainer, { width: imageWidth }]} key={item.id}>
-              <Image source={{ uri: item.featuredAsset.source || '' }} style={styles.image} />
+            <View
+              style={[styles.imageContainer, { width: imageWidth }]}
+              key={item.id}
+            >
+              <Image
+                source={{ uri: item.featuredAsset.source || "" }}
+                style={styles.image}
+              />
             </View>
             <Text style={styles.text}>{item.name}</Text>
           </TouchableOpacity>
@@ -56,7 +67,7 @@ const BannerOne: React.FC<BannerProps> = ({ navigation }) => {
       />
     </FeedSectionContainer>
   );
-}
+};
 
 const styles = StyleSheet.create({
   imageContainer: {

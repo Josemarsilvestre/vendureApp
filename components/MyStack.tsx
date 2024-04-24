@@ -47,7 +47,7 @@ export default function MainStackNavigator() {
                 name="Register"
                 component={RegisterScreen}
                 options={{
-                    title: 'Sign up',
+                    title: 'Register an account',
                     headerBackTitleVisible: false,
                     headerShown: true,
                     headerTintColor: '#212B36',
@@ -188,7 +188,6 @@ export default function MainStackNavigator() {
                 name="Products"
                 component={ProductScreen}
                 options={{
-                    title: 'Products',
                     headerShown: true,
                     headerLeft: () => (
                         <Ionicons
@@ -205,7 +204,6 @@ export default function MainStackNavigator() {
                 name="CategorySection"
                 component={CategorySectionScreen}
                 options={{
-                    title: 'Category',
                     headerShown: true,
                     headerLeft: () => (
                         <Ionicons
