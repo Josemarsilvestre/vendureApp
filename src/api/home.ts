@@ -47,7 +47,7 @@ export const GET_BANNER_1_QUERY = gql`
               source
             }
             variants {
-              price
+              priceWithTax
               stockLevel
             }
           }
@@ -69,7 +69,7 @@ export const GET_BANNER_2_QUERY = gql`
               source
             }
             variants {
-              price
+              priceWithTax
               stockLevel
             }
           }
@@ -91,7 +91,7 @@ export const GET_BANNER_3_QUERY = gql`
               source
             }
             variants {
-              price
+              priceWithTax
               stockLevel
             }
           }

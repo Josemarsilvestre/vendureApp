@@ -21,7 +21,7 @@ interface Product {
     source;
   };
   variants: {
-    price: number;
+    priceWithTax: number;
     stockLevel: number;
   }[];
 }
@@ -73,7 +73,7 @@ const Banner: React.FC<BannerProps> = ({ navigation, query, title }) => {
                 <Text style={styles.priceText}>Price: </Text>
                 <ProductPrice
                   inStock={item.variants[0].stockLevel}
-                  price={item.variants[0].price}
+                  price={item.variants[0].priceWithTax}
                   singleProduct={true}
                 />
               </View>
@@ -82,7 +82,7 @@ const Banner: React.FC<BannerProps> = ({ navigation, query, title }) => {
         )}
         horizontal={true}
         estimatedItemSize={300}
-        estimatedListSize={{ height: 240, width: 200 }}
+        estimatedListSize={{ height: 260, width: 200 }}
         showsHorizontalScrollIndicator={false}
       />
     </FeedSectionContainer>
