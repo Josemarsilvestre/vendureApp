@@ -20,9 +20,11 @@ interface Product {
   featuredAsset: {
     source;
   };
+  description: string;
   variants: {
     priceWithTax: number;
     stockLevel: number;
+    sku: string;
   }[];
 }
 
@@ -52,7 +54,7 @@ const Banner: React.FC<BannerProps> = ({ navigation, query, title }) => {
         renderItem={({ item, index }) => (
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("Products", { productName: item.name });
+              navigation.navigate("Products", { product: item });
             }}
           >
             <View

@@ -46,9 +46,11 @@ export const GET_BANNER_1_QUERY = gql`
             featuredAsset {
               source
             }
+            description
             variants {
               priceWithTax
               stockLevel
+              sku
             }
           }
         }
@@ -68,9 +70,11 @@ export const GET_BANNER_2_QUERY = gql`
             featuredAsset {
               source
             }
+            description
             variants {
               priceWithTax
               stockLevel
+              sku
             }
           }
         }
@@ -90,9 +94,11 @@ export const GET_BANNER_3_QUERY = gql`
             featuredAsset {
               source
             }
+            description
             variants {
               priceWithTax
               stockLevel
+              sku
             }
           }
         }

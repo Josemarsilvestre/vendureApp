@@ -26,9 +26,11 @@ interface Product {
   featuredAsset: {
     source;
   };
+  description
   variants: {
     price: number;
     stockLevel: number;
+    sku;
   }[];
 }
 
@@ -102,7 +104,7 @@ export default function SerachScreen({ navigation }) {
                       <TouchableOpacity
                         onPress={() =>
                           navigation.navigate("Products", {
-                            productName: item.name,
+                            product: item,
                           })
                         }
                         style={styles.itemContainer}

@@ -11,25 +11,12 @@ export const PRODUCTLIST_QUERY = gql`
         featuredAsset {
           source
         }
+        description
         variants {
           price
           stockLevel
+          sku
         }
-      }
-    }
-  }
-`;
-
-export const SINGLE_PRODUCT_DETAIL_QUERY = gql`
-  query GetProductDetail($productId: ID!) {
-    product(id: $productId) {
-      id
-      name
-      slug
-      description
-      variants {
-        price
-        stockLevel
       }
     }
   }

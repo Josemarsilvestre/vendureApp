@@ -6,7 +6,7 @@ import { ScrollView, View, TouchableOpacity, KeyboardAvoidingView, Platform, Ale
 import NetInfo, { NetInfoState } from "@react-native-community/netinfo";
 import { Text } from "react-native-paper"
 
-import { REGISTER_MUTATION } from '../../src/api/mutation'
+import { REGISTER_MUTATION } from '../../src/api/auth'
 import { Button } from '../common/Buttons';
 import TextField from '../common/TextField';
 import { registerSchema } from '../../utils/validation';

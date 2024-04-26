@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@apollo/client';
 import NetInfo, { NetInfoState } from "@react-native-community/netinfo";
 
-import { LOGIN_MUTATION } from '../../src/api/mutation'
+import { LOGIN_MUTATION } from '../../src/api/auth'
 import { Button } from '../common/Buttons';
 import TextField from '../common/TextField';
 import { logInSchema } from '../../utils/validation';
