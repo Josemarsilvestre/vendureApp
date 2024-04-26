@@ -28,7 +28,7 @@ interface Product {
   };
   description
   variants: {
-    price: number;
+    priceWithTax: number;
     stockLevel: number;
     sku;
   }[];
@@ -125,7 +125,7 @@ export default function SerachScreen({ navigation }) {
                           </Text>
                           <ProductPrice
                             inStock={item.variants[0].stockLevel}
-                            price={item.variants[0].price}
+                            price={item.variants[0].priceWithTax}
                             singleProduct={true}
                           />
                         </View>

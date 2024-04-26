@@ -13,7 +13,7 @@ export const PRODUCTLIST_QUERY = gql`
         }
         description
         variants {
-          price
+          priceWithTax
           stockLevel
           sku
         }

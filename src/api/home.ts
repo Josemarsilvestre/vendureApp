@@ -47,7 +47,7 @@ export const GET_BANNER_1_QUERY = gql`
               source
             }
             description
-            variants {
+            variants { 
               priceWithTax
               stockLevel
               sku

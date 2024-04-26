@@ -14,7 +14,7 @@ Aprendi o quão importante é o inglês na programação, e a importâcia de ter
 
 ### Objetivos para a próxima semana
 
-- Na semana 6, o objetivo seria pôr o graphql a funcionar na página Home e Categoria. Primeiro, seria exibir os produtos da api do vendure, depois por todas as informações dos produtos, na página home, e separar os produtos por categorias, na página categoria.
+- Na semana 6, o objetivo seria pôr o graphql a funcionar na página Home. Primeiro, seria exibir os produtos da api do vendure, depois por todas as informações dos produtos, na página home, e criar as categorias, na página category.
 
 ### Feedback/Questões para a equipa
 
