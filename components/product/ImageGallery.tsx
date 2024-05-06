@@ -17,6 +17,7 @@ const ImageGallery: React.FC<ImageProps> = ({ product }) => {
         <Image
           source={{ uri: product.featuredAsset.source || "" }}
           style={styles.image}
+          resizeMode="cover"
         />
       </View>
     </View>

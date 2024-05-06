@@ -5,14 +5,15 @@ import { Text } from "react-native-paper"
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@apollo/client';
 import NetInfo, { NetInfoState } from "@react-native-community/netinfo";
+import { moderateScale } from 'react-native-size-matters';
 
 import { LOGIN_MUTATION } from '../../src/api/auth'
 import { Button } from '../common/Buttons';
 import TextField from '../common/TextField';
 import { logInSchema } from '../../utils/validation';
-import { Context } from '../../src/context/authContext';
+import { Context } from '../../src/context/context';
 import styles from './Styles.Auth'
-import { moderateScale } from 'react-native-size-matters';
+
 
 type LoginFormData = {
   username: string;
@@ -25,7 +26,11 @@ interface LoginScreenProps {
 
 export default function LoginScreen({ navigation }: LoginScreenProps) {
   const [isConnected, setIsConnected] = useState<boolean | null>(true);
-  const { setIsLogged } = useContext(Context);
+  const { dispatch } = useContext(Context);
+
+  const setIsLogged = (boolean: boolean) => {
+    dispatch({ type: "isLogged", payload: boolean });
+  };
 
   const {
     handleSubmit,

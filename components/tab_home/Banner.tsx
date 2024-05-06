@@ -18,7 +18,7 @@ interface Product {
   name: string;
   slug: string;
   featuredAsset: {
-    source;
+    source: string;
   };
   description: string;
   variants: {
@@ -64,6 +64,7 @@ const Banner: React.FC<BannerProps> = ({ navigation, query, title }) => {
               <Image
                 source={{ uri: item.featuredAsset.source || "" }}
                 style={styles.image}
+                resizeMode="cover"
               />
             </View>
             <View>
@@ -84,7 +85,7 @@ const Banner: React.FC<BannerProps> = ({ navigation, query, title }) => {
         )}
         horizontal={true}
         estimatedItemSize={300}
-        estimatedListSize={{ height: 260, width: 200 }}
+        estimatedListSize={{ height: 170, width: 200 }}
         showsHorizontalScrollIndicator={false}
       />
     </FeedSectionContainer>
@@ -93,17 +94,17 @@ const Banner: React.FC<BannerProps> = ({ navigation, query, title }) => {
 
 const styles = StyleSheet.create({
   imageContainer: {
-    height: "80%",
-    marginRight: -40,
+    height: "70%",
+    marginRight: -98,
   },
   image: {
-    width: "80%",
+    width: "60%",
     height: "100%",
     borderRadius: 10,
   },
   text: {
     color: "#4d4d4d",
-    maxWidth: 200,
+    maxWidth: 155,
     marginTop: 3,
     textAlign: "left",
   },

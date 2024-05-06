@@ -1,6 +1,6 @@
 import React, { useContext} from 'react';
 import LoginScreen from './login';
-import { Context } from '../../src/context/authContext';
+import { Context } from '../../src/context/context';
 import { useNavigation } from '@react-navigation/native';
 
 interface AuthWrapper {

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import { moderateScale } from "react-native-size-matters";
 
-import { Context } from '../../src/context/authContext';
+import { Context } from '../../src/context/context';
 import { Button } from '../common/Buttons';
 
 export default function CartScreen({ navigation }) {

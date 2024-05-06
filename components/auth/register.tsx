@@ -10,7 +10,7 @@ import { REGISTER_MUTATION } from '../../src/api/auth'
 import { Button } from '../common/Buttons';
 import TextField from '../common/TextField';
 import { registerSchema } from '../../utils/validation';
-import { Context } from '../../src/context/authContext';
+import { Context } from '../../src/context/context';
 import client from '../../src/api/client';
 import styles from './Styles.Auth'
 

@@ -2,13 +2,36 @@ import { gql } from "@apollo/client";
 
 export const GET_ALL_COLLECTIONS_QUERY = gql`
   query GetAllCollections {
-    collections(options: { take: 9 }) {
+    collections(options: { take: 8 }) {
       items {
         id
         name
-        slug
         assets {
           source
+        }
+        children {
+          id
+          name
+          assets {
+            source
+          }
+        }
+        productVariants(options: { take: 8 }) {
+          items {
+            product {
+              id
+              name
+              featuredAsset {
+                source
+              }
+              description
+              variants {
+                priceWithTax
+                stockLevel
+                sku
+              }
+            }
+          }
         }
       }
     }

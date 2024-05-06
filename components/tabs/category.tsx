@@ -20,35 +20,37 @@ const numColumns = Math.floor(width / itemWidth);
 interface Category {
   id: string;
   name: string;
-  slug: string;
   assets: {
     source: string;
   };
+  children: {
+    id: string;
+    name: string;
+    assets: {
+      source: string;
+    };
+  };
+  productVariants: {
+    items: {
+      product: {
+        id: string;
+        name: string;
+        featuredAsset: {
+          source: string;
+        };
+        description: string;
+        variants: {
+          priceWithTax: number;
+          stockLevel: number;
+          sku: string;
+        };
+      };
+    };
+  }[];
 }
 
 export default function CategoryScreen({ navigation }) {
-  const [activeMinCat, setActiveMinCat] = useState<Category>({
-    id: "",
-    name: "",
-    slug: "",
-    assets: { source: "" },
-  });
-
   const { data, loading, error } = useQuery(GET_ALL_COLLECTIONS_QUERY);
-
-  useEffect(() => {
-    if (data && data.collections && data.collections.items.length > 0) {
-      const levelOneCategory = data.collections.items;
-      setActiveMinCat(levelOneCategory);
-    }
-  }, [data]);
-
-  const handleActive = (cat: Category) => {
-    setActiveMinCat(cat);
-    navigation.navigate("CategorySection", {
-      categoryName: cat.name
-    });
-  };
 
   return (
     <ScrollView>
@@ -61,11 +63,14 @@ export default function CategoryScreen({ navigation }) {
                 style={[
                   styles.categoryItem,
                   {
-                    backgroundColor: activeMinCat.id === category.id ? "#fff" : "#f0f0f0",
                     width: itemWidth,
                   },
                 ]}
-                onPress={() => handleActive(category)}
+                onPress={() => {
+                  navigation.navigate("CategorySection", {
+                    category: category
+                  });
+                }}
               >
                 <View style={styles.categoryImageContainer}>
                   <Image

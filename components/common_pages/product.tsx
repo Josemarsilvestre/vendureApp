@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -14,7 +14,7 @@ import ImageGallery from "../product/ImageGallery";
 import Info from "../product/Info";
 import FreeShipping from "../product/FreeShipping";
 import Description from "../product/Description";
-import Specification from "../product/Specification";
+//import Specification from "../product/Specification";
 import Banner from "../tab_home/Banner";
 import { GET_BANNER_1_QUERY } from "../../src/api/home";
 import ProductPrice from "../product/ProductPrice";
@@ -23,18 +23,23 @@ import ProductPrice from "../product/ProductPrice";
 
 export default function ProductScreen({ route, navigation }) {
   const { product } = route.params;
+  const insets = useSafeAreaInsets();
+  const scrollViewRef = useRef<ScrollView>(null);
 
   useEffect(() => {
     navigation.setOptions({
       title: product.name || "Products",
     });
+    
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollTo({ y: 0, animated: true });
+    }
   }, [product]);
-
-  const insets = useSafeAreaInsets();
 
   return (
     <View style={styles.container}>
       <ScrollView
+        ref={scrollViewRef}
         contentContainerStyle={[
           styles.scrollContent,
           { paddingBottom: insets.bottom },

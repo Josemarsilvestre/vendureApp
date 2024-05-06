@@ -16,7 +16,7 @@ import Icons from "../common/Icons";
 import EmptySearchList from "../emptyList/EmptySearchList";
 import ProductPrice from "../product/ProductPrice";
 import ShowWrapper from "../common/ShowWrapper";
-import useDebounce from "../../hooks/useDebounce";
+//import useDebounce from "../../hooks/useDebounce";
 import { PRODUCTLIST_QUERY } from "../../src/api/product";
 
 interface Product {
@@ -34,11 +34,11 @@ interface Product {
   }[];
 }
 
-export default function SerachScreen({ navigation }) {
+export default function SearchScreen({ navigation }) {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
-  const debouncedSearch = useDebounce(search, 1200);
+  //const debouncedSearch = useDebounce(search, 1200);
 
   const windowWidth = useWindowDimensions().width;
   const imageWidth = windowWidth * 0.2;

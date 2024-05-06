@@ -10,25 +10,10 @@ export const GET_SLIDERS = gql`
           product {
             id
             name
-            featuredAsset {
+            assets {
               source
             }
           }
-        }
-      }
-    }
-  }
-`;
-
-export const GET_ALL_COLLECTIONS_QUERY = gql`
-  query GetAllCollections {
-    collections(options: { take: 9 }) {
-      items {
-        id
-        name
-        slug
-        assets {
-          source
         }
       }
     }
@@ -47,7 +32,7 @@ export const GET_BANNER_1_QUERY = gql`
               source
             }
             description
-            variants { 
+            variants {
               priceWithTax
               stockLevel
               sku

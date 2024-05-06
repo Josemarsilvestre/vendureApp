@@ -41,7 +41,7 @@ interface ItemProps {
   children?: React.ReactNode;
 }
 
-export const Item: React.FC<ItemProps> = ({ height, width, animated, style, children }) => {
+const Item: React.FC<ItemProps> = ({ height, width, animated, style, children }) => {
   return (
     <View
       style={[
@@ -51,11 +51,11 @@ export const Item: React.FC<ItemProps> = ({ height, width, animated, style, chil
           width: width,
           backgroundColor:
             animated === 'background'
-              ? 'red' // cor de fundo animada
-              : 'white', // cor de fundo padrão
+              ? 'red'
+              : 'white',
           borderRadius: 10,
-          borderWidth: animated === 'border' ? 2 : 0, // borda animada
-          borderColor: animated === 'border' ? 'red' : undefined, // cor da borda animada
+          borderWidth: animated === 'border' ? 2 : 0,
+          borderColor: animated === 'border' ? 'red' : undefined,
         },
         style,
       ]}
@@ -71,8 +71,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default {
-  Skeleton,
-  Items,
-  Item,
-};
+export { Skeleton, Items, Item };

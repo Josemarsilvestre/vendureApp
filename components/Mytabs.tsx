@@ -14,7 +14,7 @@ import CartScreen from "./tabs/cart";
 import ProfileScreen from "./tabs/profile";
 import FeedHeader from "./tab_home/FeedHeader";
 
-import { Context } from "../src/context/authContext";
+import { Context } from "../src/context/context";
 
 const Tab = createBottomTabNavigator();
 

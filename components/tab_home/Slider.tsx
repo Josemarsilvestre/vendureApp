@@ -10,7 +10,7 @@ interface ProductVariant {
   product: {
     id: string;
     name: string;
-    featuredAsset: {
+    assets: {
       source: string;
     };
   };
@@ -37,9 +37,9 @@ export default function Slider(){
       >
         {productVariants.map((variant: ProductVariant) => (
           <View key={variant.product.id}>
-            {variant.product.featuredAsset && (
+            {variant.product.assets && (
               <Image
-                source={{ uri: variant.product.featuredAsset.source }}
+                source={{ uri: variant.product.assets[0].source }}
                 style={styles.image}
                 resizeMode="cover"
               />
