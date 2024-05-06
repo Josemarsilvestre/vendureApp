@@ -49,13 +49,14 @@ export default function ProductCard({
     <>
       <FlashList
         data={category.productVariants.items.map((item) => item.product)}
-        renderItem={({ item }: { item: Product }) => {
+        renderItem={({ item, index } : { item: Product, index: number }) => {
           return (
             <TouchableOpacity
               style={styles.container}
               onPress={() =>
                 navigation.navigate("Products", {
-                  product: item,
+                  products: category.productVariants.items.map((item) => item.product),
+                  selectedIndex: index,
                 })
               }
             >
@@ -105,6 +106,7 @@ export default function ProductCard({
     </>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

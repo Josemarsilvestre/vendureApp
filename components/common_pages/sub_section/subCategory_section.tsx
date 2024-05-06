@@ -5,21 +5,22 @@ import SubProductCard from "./subProductCard";
 import Icons from "../../common/Icons";
 
 export default function SubCategorySectionScreen({ route, navigation }) {
-  const { category, subcategory } = route.params;
+  const { category, selectedIndex } = route.params;
+  const selectedCategory = category.children[selectedIndex];
 
   useEffect(() => {
     navigation.setOptions({
-      title: subcategory.name || "SubCategory",
+      title: selectedCategory.name || "SubCategory",
     });
-  }, [category]);
+  }, [selectedCategory]);
 
   return (
     <View style={styles.container}>
       <View style={styles.infoContainer}>
-        <Text style={styles.infoText}>Todos os produtos</Text>
+        <Text style={styles.infoText}>All products</Text>
 
         <TouchableOpacity style={styles.filterContainer}>
-          <Text style={styles.infoText}>Filtrar</Text>
+          <Text style={styles.infoText}>Filter</Text>
           <Icons.AntDesign name="filter" size={24} color="#1F2937" />
         </TouchableOpacity>
       </View>
@@ -31,22 +32,6 @@ export default function SubCategorySectionScreen({ route, navigation }) {
     </View>
   );
 }
-
-/**<SubCategories category={category} navigation={navigation} />
-
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoText}>Todos os produtos</Text>
-
-        <TouchableOpacity style={styles.filterContainer}>
-          <Text style={styles.infoText}>Filtrar</Text>
-          <Icons.AntDesign name="filter" size={24} color="#1F2937" />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.content}>
-        <View style={styles.productsContainer}>
-          <ProductCard category={category} navigation={navigation} />
-        </View>
-      </View> */
 
 const styles = StyleSheet.create({
   container: {

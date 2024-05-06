@@ -15,26 +15,26 @@ import Info from "../product/Info";
 import FreeShipping from "../product/FreeShipping";
 import Description from "../product/Description";
 //import Specification from "../product/Specification";
-import Banner from "../tab_home/Banner";
-import { GET_BANNER_1_QUERY } from "../../src/api/home";
 import ProductPrice from "../product/ProductPrice";
+import Similarproducts from "../product/Similarproducts";
 //import Reviews from "./Reviews";
 //import AddToCartOperation from "./AddToCartOperation";
 
 export default function ProductScreen({ route, navigation }) {
-  const { product } = route.params;
+  const { products, selectedIndex } = route.params;
+  const selectedProduct = products[selectedIndex];
   const insets = useSafeAreaInsets();
   const scrollViewRef = useRef<ScrollView>(null);
 
   useEffect(() => {
     navigation.setOptions({
-      title: product.name || "Products",
+      title: selectedProduct.name || "Products",
     });
     
     if (scrollViewRef.current) {
       scrollViewRef.current.scrollTo({ y: 0, animated: true });
     }
-  }, [product]);
+  }, [selectedProduct]);
 
   return (
     <View style={styles.container}>
@@ -46,16 +46,16 @@ export default function ProductScreen({ route, navigation }) {
         ]}
       >
         <View style={styles.content}>
-          <ImageGallery product={product} />
-          <Text style={styles.title}>{product.name}</Text>
-          <Text>{product.variants[0].sku}</Text>
+          <ImageGallery product={selectedProduct} />
+          <Text style={styles.title}>{selectedProduct.name}</Text>
+          <Text>{selectedProduct.variants[0].sku}</Text>
           <View style={styles.divider} />
 
           <View style={styles.priceContainer}>
             <Text style={styles.header}>Price: </Text>
             <ProductPrice
-              inStock={product.variants[0].stockLevel}
-              price={product.variants[0].priceWithTax}
+              inStock={selectedProduct.variants[0].stockLevel}
+              price={selectedProduct.variants[0].priceWithTax}
               singleProduct={true}
             />
           </View>
@@ -64,10 +64,10 @@ export default function ProductScreen({ route, navigation }) {
             <Info />
             <FreeShipping />
           </View>
-          <Description product={product} />
-          <Banner
+          <Description product={selectedProduct} />
+          <Similarproducts
             navigation={navigation}
-            query={GET_BANNER_1_QUERY}
+            products={products}
             title="Similar products"
           />
           <View style={styles.divider} />
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     bottom: 28,
     left: 15,
     right: 80,
-    zIndex: 10,
+    zselectedProduct: 10,
     backgroundColor: "#1F2937",
     borderRadius: 8,
     padding: 16,
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     right: 16,
     bottom: 41,
     flexDirection: "row",
-    zIndex: 10,
+    zselectedProduct: 10,
   },
   icon: {
     marginRight: 16,

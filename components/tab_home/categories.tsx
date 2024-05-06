@@ -2,41 +2,10 @@ import React from 'react';
 import { Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { useQuery } from "@apollo/client";
+
 import { GET_ALL_COLLECTIONS_QUERY } from '../../src/api/category';
-
 import FeedSectionContainer from '../common/FeedSectionContainer';
-
-interface Category {
-  id: string;
-  name: string;
-  assets: {
-    source: string;
-  };
-  children: {
-    id: string;
-    name: string;
-    assets: {
-      source: string;
-    };
-  };
-  productVariants: {
-    items: {
-      product: {
-        id: string;
-        name: string;
-        featuredAsset: {
-          source: string;
-        };
-        description: string;
-        variants: {
-          priceWithTax: number;
-          stockLevel: number;
-          sku: string;
-        };
-      };
-    };
-  }[];
-}
+import { Category } from '../../src/interface';
 
 export interface CategoriesProps {
   navigation: any;

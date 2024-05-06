@@ -8,39 +8,46 @@ import {
   Text,
 } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import { useQuery } from "@apollo/client";
 
 import FeedSectionContainer from "../common/FeedSectionContainer";
 import ProductPrice from "../product/ProductPrice";
-import { Product } from "../../src/interface";
 
-export interface BannerProps {
+interface Product {
+  id: string;
+  name: string;
+  featuredAsset: {
+    source: string;
+  };
+  description: string;
+  variants: {
+    priceWithTax: number;
+    stockLevel: number;
+    sku: string;
+  }[];
+}
+
+export interface SimilarProductsProps {
   navigation: any;
-  query: any;
+  products: Product[];
   title: string;
 }
 
-const Banner: React.FC<BannerProps> = ({ navigation, query, title }) => {
-  const { data, loading, error } = useQuery(query);
-
+const SimilarProducts: React.FC<SimilarProductsProps> = ({
+  navigation,
+  products,
+  title,
+}) => {
   const windowWidth = useWindowDimensions().width;
   const imageWidth = windowWidth * 0.7;
-
-  if (loading || error) {
-    return null;
-  }
-
-  const products: Product[] =
-    data?.collection?.productVariants?.items?.map((item) => item.product) || [];
 
   return (
     <FeedSectionContainer title={title}>
       <FlashList
-        data={products}
-        renderItem={({ item, index }) => (
+        data={products.map((item, index) => ({ ...item, index }))}
+        renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("Products", { products, selectedIndex: index  });
+              navigation.navigate("Products", { products, selectedIndex: item.index });
             }}
           >
             <View
@@ -78,6 +85,9 @@ const Banner: React.FC<BannerProps> = ({ navigation, query, title }) => {
   );
 };
 
+
+export default SimilarProducts;
+
 const styles = StyleSheet.create({
   imageContainer: {
     height: "70%",
@@ -103,5 +113,3 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
 });
-
-export default Banner;

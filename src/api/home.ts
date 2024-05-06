@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const GET_SLIDERS = gql`
   query GetSliders {
-    collection(slug: "furniture") {
+    collection(id: "6") {
       productVariants(
         options: { take: 5, filter: { name: { notContains: "Balloon" } } }
       ) {
@@ -22,7 +22,7 @@ export const GET_SLIDERS = gql`
 
 export const GET_BANNER_1_QUERY = gql`
   query GetBanner1 {
-    collection(slug: "camera-photo") {
+    collection(id: "4") {
       productVariants(options: { take: 9 }) {
         items {
           product {
@@ -46,7 +46,7 @@ export const GET_BANNER_1_QUERY = gql`
 
 export const GET_BANNER_2_QUERY = gql`
   query GetBanner2 {
-    collection(slug: "equipment") {
+    collection(id: "8") {
       productVariants(options: { take: 9 }) {
         items {
           product {
@@ -70,7 +70,7 @@ export const GET_BANNER_2_QUERY = gql`
 
 export const GET_BANNER_3_QUERY = gql`
   query GetBanner3 {
-    collection(slug: "home-garden") {
+    collection(id: "5") {
       productVariants(options: { take: 9 }) {
         items {
           product {

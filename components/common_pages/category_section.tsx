@@ -19,10 +19,10 @@ export default function CategorySectionScreen({ route, navigation }) {
       <SubCategories category={category} navigation={navigation} />
 
       <View style={styles.infoContainer}>
-        <Text style={styles.infoText}>Todos os produtos</Text>
+        <Text style={styles.infoText}>All products</Text>
 
         <TouchableOpacity style={styles.filterContainer}>
-          <Text style={styles.infoText}>Filtrar</Text>
+          <Text style={styles.infoText}>Filter</Text>
           <Icons.AntDesign name="filter" size={24} color="#1F2937" />
         </TouchableOpacity>
       </View>

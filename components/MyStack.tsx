@@ -32,10 +32,8 @@ export default function MainStackNavigator() {
 
   return (
     <Stack.Navigator
-      screenOptions={({ route }) => ({
+      screenOptions={{
         headerShown: false,
-        animationEnabled: true,
-        onAnimatedValueUpdate: () => {},
         gestureEnabled: true,
         gestureDirection: "horizontal",
         cardStyleInterpolator: ({ current: { progress } }) => ({
@@ -43,7 +41,7 @@ export default function MainStackNavigator() {
             opacity: progress,
           },
         }),
-      })}
+      }}
     >
       <Stack.Screen name="TabNavigator" component={TabNavigator} />
       <Stack.Screen

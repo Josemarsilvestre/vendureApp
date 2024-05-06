@@ -12,20 +12,7 @@ import { FlashList } from "@shopify/flash-list";
 import ProductPrice from "../../product/ProductPrice";
 import Icons from "../../common/Icons";
 import truncate from "../../../utils/truncate";
-
-interface Product {
-  id: string;
-  name: string;
-  featuredAsset: {
-    source: string;
-  };
-  description: string;
-  variants: {
-    priceWithTax: number;
-    stockLevel: number;
-    sku: string;
-  }[];
-}
+import { Product } from "../../../src/interface";
 
 interface Category {
   productVariants: {
@@ -49,13 +36,14 @@ export default function SubProductCard({
     <>
       <FlashList
         data={category.productVariants.items.map((item) => item.product)}
-        renderItem={({ item }: { item: Product }) => {
+        renderItem={({ item, index }: { item: Product, index: number }) => {
           return (
             <TouchableOpacity
               style={styles.container}
               onPress={() =>
                 navigation.navigate("Products", {
-                  product: item,
+                  products: category.productVariants.items.map((item) => item.product),
+                  selectedIndex: index,
                 })
               }
             >
@@ -105,6 +93,7 @@ export default function SubProductCard({
     </>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

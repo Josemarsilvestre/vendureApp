@@ -37,12 +37,8 @@ interface Product {
 export default function SearchScreen({ navigation }) {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-
-  //const debouncedSearch = useDebounce(search, 1200);
-
   const windowWidth = useWindowDimensions().width;
   const imageWidth = windowWidth * 0.2;
-
   const { data, loading, error, fetchMore } = useQuery(PRODUCTLIST_QUERY, {
     variables: { take: 10 },
   });
@@ -99,12 +95,13 @@ export default function SearchScreen({ navigation }) {
                 <FlashList
                   data={data?.products.items}
                   showsVerticalScrollIndicator={false}
-                  renderItem={({ item }: { item: Product }) => (
+                  renderItem={({ item, index }: { item: Product, index: number }) => (
                     <View key={item.id} style={styles.productItem}>
                       <TouchableOpacity
                         onPress={() =>
                           navigation.navigate("Products", {
-                            product: item,
+                            products: data?.products.items,
+                            selectedIndex: index,
                           })
                         }
                         style={styles.itemContainer}
@@ -144,6 +141,7 @@ export default function SearchScreen({ navigation }) {
     </>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
