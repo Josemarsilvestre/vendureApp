@@ -16,7 +16,7 @@ export default function CategorySectionScreen({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <SubCategories category={category} navigation={navigation} />
+      {/**<SubCategories category={category} navigation={navigation} /> */}
 
       <View style={styles.infoContainer}>
         <Text style={styles.infoText}>All products</Text>
@@ -42,7 +42,8 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingHorizontal: 1,
+    paddingHorizontal: 2,
+    marginBottom: 10
   },
   productsContainer: {
     flex: 1,

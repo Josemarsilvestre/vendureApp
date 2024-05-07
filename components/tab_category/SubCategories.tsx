@@ -26,14 +26,13 @@ export default function SubCategories({
       {category.children !== null && category.children.length > 0 ? (
         <FlashList
           data={category.children}
-          renderItem={({ item, index }: { item: SubCategory, index: number }) => {
+          renderItem={({ item }: { item: SubCategory }) => {
             return (
               <TouchableOpacity
                 style={styles.categoryItem}
                 onPress={() => {
-                  navigation.navigate("SubCategorySection", {
-                    category: category,
-                    selectedIndex: index
+                  navigation.navigate("CategorySection", {
+                    category: category
                   });
                 }}
                 key={item.id}

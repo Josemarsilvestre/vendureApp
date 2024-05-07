@@ -12,20 +12,7 @@ import { FlashList } from "@shopify/flash-list";
 import ProductPrice from "./ProductPrice";
 import Icons from "../common/Icons";
 import truncate from "../../utils/truncate";
-
-interface Product {
-  id: string;
-  name: string;
-  featuredAsset: {
-    source: string;
-  };
-  description: string;
-  variants: {
-    priceWithTax: number;
-    stockLevel: number;
-    sku: string;
-  }[];
-}
+import { Product } from "../../src/interface";
 
 interface Category {
   productVariants: {
@@ -45,76 +32,79 @@ export default function ProductCard({
   const windowWidth = useWindowDimensions().width;
   const imageWidth = windowWidth * 0.7;
 
+  const products = category.productVariants.items.map((item) => item.product);
+
   return (
-    <>
-      <FlashList
-        data={category.productVariants.items.map((item) => item.product)}
-        renderItem={({ item, index } : { item: Product, index: number }) => {
-          return (
-            <TouchableOpacity
-              style={styles.container}
-              onPress={() =>
-                navigation.navigate("Products", {
-                  products: category.productVariants.items.map((item) => item.product),
-                  selectedIndex: index,
-                })
-              }
-            >
-              <View style={styles.cardContent} key={item.id}>
-                <View style={[styles.imageContainer, { width: imageWidth }]}>
-                  <Image
-                    source={{
-                      uri: item.featuredAsset.source || "",
-                    }}
-                    style={styles.image}
-                    resizeMode="cover"
-                  />
+    <FlashList
+      data={products}
+      renderItem={({ item, index }: { item: Product; index: number }) => {
+        return (
+          <TouchableOpacity
+            style={styles.container}
+            onPress={() =>
+              navigation.navigate("Products", {
+                products: products,
+                selectedIndex: index,
+              })
+            }
+          >
+            <View style={styles.cardContent} key={item.id}>
+              <View style={[styles.imageContainer, { width: imageWidth }]}>
+                <Image
+                  source={{
+                    uri: item.featuredAsset.source || "",
+                  }}
+                  style={styles.image}
+                  resizeMode="cover"
+                />
+              </View>
+              <View style={styles.infoContainer}>
+                <Text
+                  numberOfLines={2}
+                  ellipsizeMode="tail"
+                  style={styles.title}
+                >
+                  {item.name}
+                </Text>
+                <View style={styles.ratingContainer}>
+                  <View style={styles.rating}>
+                    <Text style={styles.ratingText}>Rate</Text>
+                    <Icons.AntDesign
+                      name="star"
+                      size={16}
+                      style={styles.starIcon}
+                    />
+                  </View>
                 </View>
-                <View style={styles.infoContainer}>
-                  <Text style={styles.title}>{truncate(item.name, 70)}</Text>
-                  <View style={styles.ratingContainer}>
-                    <View style={styles.rating}>
-                      <Text style={styles.ratingText}>Rate</Text>
-                      <Icons.AntDesign
-                        name="star"
-                        size={16}
-                        style={styles.starIcon}
-                      />
-                    </View>
-                  </View>
-                  <View style={styles.priceContainer}>
-                    {item.variants[0].stockLevel !== 0 ? (
-                      <ProductPrice
-                        inStock={item.variants[0].stockLevel}
-                        price={item.variants[0].priceWithTax}
-                        singleProduct={true}
-                      />
-                    ) : (
-                      <Text style={styles.notAvailableText}>
-                        Não disponível
-                      </Text>
-                    )}
-                  </View>
+                <View style={styles.priceContainer}>
+                  {item.variants[0].stockLevel !== 0 ? (
+                    <ProductPrice
+                      inStock={item.variants[0].stockLevel}
+                      price={item.variants[0].priceWithTax}
+                      singleProduct={true}
+                    />
+                  ) : (
+                    <Text style={styles.notAvailableText}>Não disponível</Text>
+                  )}
                 </View>
               </View>
-            </TouchableOpacity>
-          );
-        }}
-        estimatedItemSize={900}
-        showsVerticalScrollIndicator={false}
-      />
-    </>
+            </View>
+          </TouchableOpacity>
+        );
+      }}
+      estimatedItemSize={900}
+      showsVerticalScrollIndicator={false}
+    />
   );
 }
 
-
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 16,
+    paddingVertical: 20,
     borderBottomWidth: 1,
     borderBottomColor: "#E5E7EB",
     position: "relative",
-    marginBottom: 20,
+    marginBottom: 9,
   },
   absolute: {
     position: "absolute",
@@ -133,7 +123,7 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   image: {
-    width: "60%",
+    width: "70%",
     height: "100%",
     borderRadius: 10,
   },
@@ -157,19 +147,19 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flex: 1,
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
   title: {
     fontSize: 16,
     color: "#374151",
-    lineHeight: 22,
+    lineHeight: 17,
     height: 42,
-    textAlign: "right"
+    textAlign: "right",
   },
   ratingContainer: {
     flexDirection: "row",
     alig: "center",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
   rating: {
     flexDirection: "row",
@@ -185,7 +175,7 @@ const styles = StyleSheet.create({
   priceContainer: {
     flexDirection: "row",
     alig: "center",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
   notAvailableText: {
     fontSize: 14,

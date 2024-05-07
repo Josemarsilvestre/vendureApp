@@ -23,7 +23,6 @@ import SearchScreen from "./tab_category/search";
 //Products
 import ProductScreen from "./common_pages/product";
 import CategorySectionScreen from "./common_pages/category_section";
-import SubCategorySectionScreen from "./common_pages/sub_section/subCategory_section";
 
 const Stack = createStackNavigator();
 
@@ -211,22 +210,6 @@ export default function MainStackNavigator() {
       <Stack.Screen
         name="CategorySection"
         component={CategorySectionScreen}
-        options={{
-          headerShown: true,
-          headerLeft: () => (
-            <Ionicons
-              name="arrow-back"
-              size={28}
-              color="#000"
-              style={{ marginLeft: 16 }}
-              onPress={() => navigation.goBack()}
-            />
-          ),
-        }}
-      />
-      <Stack.Screen
-        name="SubCategorySection"
-        component={SubCategorySectionScreen}
         options={{
           headerShown: true,
           headerLeft: () => (
