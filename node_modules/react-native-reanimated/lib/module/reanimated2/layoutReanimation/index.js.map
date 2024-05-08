@@ -1,1 +1,0 @@
-{"version":3,"names":[],"sources":["index.ts"],"sourcesContent":["import './animationsManager';\nexport * from './animationBuilder';\nexport * from './defaultAnimations';\nexport * from './defaultTransitions';\nexport * from './sharedTransitions';\n"],"mappings":"AAAA,OAAO,qBAAqB;AAC5B,cAAc,oBAAoB;AAClC,cAAc,qBAAqB;AACnC,cAAc,sBAAsB;AACpC,cAAc,qBAAqB"}

@@ -1,8 +1,8 @@
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
-import { VENDURE_URL } from '@env';
+import { API_URL } from '@env';
 
 const httpLink = new HttpLink({
-  uri: process.env.VENDURE_URL,
+  uri: process.env.API_URL,
 });
 
 const client = new ApolloClient({

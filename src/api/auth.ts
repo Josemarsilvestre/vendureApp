@@ -1,7 +1,60 @@
-import { gql } from "@apollo/client";
+import { graphql } from "../gql";
 
-export const LOGIN_MUTATION = gql`
-  mutation ($username: String!, $password: String!) {
+interface LoginData {
+  login: {
+    __typename: "CurrentUser";
+    id: string;
+    identifier: string;
+    channels: {
+      token: string;
+    }[];
+  } | {
+    __typename: "InvalidCredentialsError";
+    errorCode: string;
+    message: string;
+  };
+}
+
+interface RegisterData {
+  registerCustomerAccount: {
+    __typename: "Success";
+    success: boolean;
+  } | {
+    __typename: "MissingPasswordError";
+    errorCode: string;
+    message: string;
+  } | {
+    __typename: "PasswordValidationError";
+    errorCode: string;
+    message: string;
+    validationErrorMessage: string;
+  } | {
+    __typename: "NativeAuthStrategyError";
+    errorCode: string;
+    message: string;
+  };
+}
+
+interface VerifyData {
+  verifyCustomerAccount: 
+    | {
+      __typename: "CurrentUser";
+      id: string;
+      identifier: string;
+      channels: {
+        token: string;
+      }[];
+    }
+    | {
+      __typename: "VerificationTokenInvalidError" | "VerificationTokenExpiredError" | "MissingPasswordError" | "PasswordValidationError" | "PasswordAlreadySetError" | "NativeAuthStrategyError";
+      errorCode: string;
+      message: string;
+    };
+}
+
+
+export const LOGIN_MUTATION = graphql(`
+  mutation Login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
       ... on CurrentUser {
         id
@@ -24,10 +77,10 @@ export const LOGIN_MUTATION = gql`
       }
     }
   }
-`;
+`);
 
-export const REGISTER_MUTATION = gql`
-  mutation (
+export const REGISTER_MUTATION = graphql(`
+  mutation Register(
     $emailAddress: String!
     $firstName: String!
     $lastName: String!
@@ -59,10 +112,10 @@ export const REGISTER_MUTATION = gql`
       }
     }
   }
-`;
+`);
 
-export const VERIFY_CUSTOMER = gql`
-mutation($token: String!, $password: String) {
+export const VERIFY_CUSTOMER = graphql(`
+mutation VerifyCustomer($token: String!, $password: String) {
   verifyCustomerAccount(token: $token, password: $password) {
     ... on CurrentUser {
       id
@@ -97,4 +150,4 @@ mutation($token: String!, $password: String) {
     }
   }
 }
-`;
+`);

@@ -28,7 +28,11 @@ interface RegisterScreenProps {
 
 export default function RegisterScreen({navigation}:RegisterScreenProps) {
   const [isConnected, setIsConnected] = useState<boolean | null>(true);
-  const { setIsLogged } = useContext(Context);
+  const { dispatch } = useContext(Context);
+  
+  const setIsLogged = (boolean: boolean) => {
+    dispatch({ type: "isLogged", payload: boolean });
+  };
 
   const {
     handleSubmit,

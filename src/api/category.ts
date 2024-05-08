@@ -1,6 +1,6 @@
-import { gql } from "@apollo/client";
+import { graphql } from "../gql";
 
-export const GET_ALL_COLLECTIONS_QUERY = gql`
+export const GET_ALL_COLLECTIONS_QUERY = graphql(`
   query GetAllCollections {
     collections(options: { take: 9 }) {
       items {
@@ -36,10 +36,10 @@ export const GET_ALL_COLLECTIONS_QUERY = gql`
       }
     }
   }
-`;
+`);
 
-export const GET_ALL_COLLECTIONS_ONLY_QUERY = gql`
-  query GetAllCollections {
+export const GET_ALL_COLLECTIONS_ONLY_QUERY = graphql(`
+  query GetAllCollections2 {
     collections(options: { take: 8 }) {
       items {
         id
@@ -74,4 +74,4 @@ export const GET_ALL_COLLECTIONS_ONLY_QUERY = gql`
       }
     }
   }
-`;
+`);

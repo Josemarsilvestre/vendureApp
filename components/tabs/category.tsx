@@ -19,9 +19,8 @@ export default function CategoryScreen({ navigation }) {
     collections: { items: Category[] };
   }>(GET_ALL_COLLECTIONS_QUERY);
 
-  if (loading || error) {
-    return <Text>Error...</Text>;
-  }
+  if (loading) return <Text>loading...</Text>;
+  if(error) return <Text>Erro: {error.message}</Text>;
 
   const { width } = Dimensions.get("window");
   const itemWidth = moderateScale(180);
@@ -69,9 +68,10 @@ export default function CategoryScreen({ navigation }) {
   );
 }
 
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   categoryList: {
     backgroundColor: "#f0f0f0",

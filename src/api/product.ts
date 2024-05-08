@@ -1,6 +1,6 @@
-import { gql } from "@apollo/client";
+import { graphql } from "../gql";
 
-export const PRODUCTLIST_QUERY = gql`
+export const PRODUCTLIST_QUERY = graphql(`
   query GetProductList {
     products(options: { take: 20 }) {
       totalItems
@@ -20,4 +20,4 @@ export const PRODUCTLIST_QUERY = gql`
       }
     }
   }
-`;
+`);

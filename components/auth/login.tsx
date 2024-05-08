@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
-import { View, ScrollView, TouchableOpacity, Image, Alert } from "react-native";
+import { View, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { Text } from "react-native-paper";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@apollo/client";
@@ -79,18 +79,19 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
   const onSubmit = async (data: LoginFormData) => {
     try {
       const { username, password } = data;
-
+  
       if (isConnected !== null && isConnected) {
         const response = await login({ variables: { username, password } });
-
-        if (response.data && response.data.login && response.data.login.channels && response.data.login.channels.length > 0) {
-          const token = response.data.login.channels[0].token;
-          const passw = password;
-
-          //console.log("Token de acesso:", token);
-          //console.log("Password:", passw);
-
-          await save(token, passw);
+  
+        if (response.data && response.data.login && response.data.login.__typename === "CurrentUser") {
+          const channels = response.data.login.channels;
+          
+          if (channels && channels.length > 0) {
+            const token = channels[0].token;
+            const passw = password;
+  
+            await save(token, passw);
+          }
         }
       } else {
         Alert.alert(
@@ -102,6 +103,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
       console.error(error);
     }
   };
+  
 
   async function save(token: string, password: string) {
     try {
