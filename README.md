@@ -1,6 +1,6 @@
 # Aplicação de E-Commerce com React Native, GraphQL e TypeScript
 
-Bem-vindo à aplicação de comércio eletrônico desenvolvida em React Native inspirada no Vendure. Esta aplicação permite aos utiizadores visualizar produtos, adicionar itens ao carrinho e efetuar compras.
+Bem-vindo à aplicação de comércio eletrônico desenvolvida em React Native inspirada no Vendure. Esta aplicação permite aos utilizadores visualizar produtos, adicionar itens ao carrinho e efetuar compras.
 
 ## Requisitos do Sistema
    - Node.js (v14.x ou superior)
