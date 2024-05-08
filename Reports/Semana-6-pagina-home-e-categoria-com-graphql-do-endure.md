@@ -14,7 +14,7 @@ Aprendi a usar melhor a api do vendure, com graphql.
 
 ### Objetivos para a próxima semana
 
-- Na semana 7, O objetivo seria exibir os produtos na página de cada categoria, adicionar os produtos no carrinho, em favoritos, editar os dados do utilizador, método de pagamento, melhorar o pesquisar e termino a aplicação. 
+- Na semana 7, O objetivo seria exibir os produtos na página de cada categoria, adicionar os produtos no carrinho, em favoritos, editar os dados do utilizador, método de pagamento, melhorar o pesquisar. 
 
 ### Feedback/Questões para a equipa
 

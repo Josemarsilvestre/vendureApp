@@ -78,9 +78,11 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
       const { username, password } = data;
 
       if (isConnected !== null && isConnected) {
-        await login({
-          variables: { username, password },
-        });
+        const response = await login({ variables: { username, password } });
+        const token = response.data.login.channels[0].token;
+        const passw = password
+        console.log('Token de acesso:', token);
+        console.log('Password:', passw);
       } else {
         Alert.alert("Erro", "Sem conexão à Internet. Por favor, verifique sua conexão e tente novamente.");
       }
