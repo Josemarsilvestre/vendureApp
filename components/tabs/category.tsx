@@ -20,7 +20,7 @@ export default function CategoryScreen({ navigation }) {
   }>(GET_ALL_COLLECTIONS_QUERY);
 
   if (loading || error) {
-    return null;
+    return <Text>Error...</Text>;
   }
 
   const { width } = Dimensions.get("window");

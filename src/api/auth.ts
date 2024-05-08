@@ -62,36 +62,39 @@ export const REGISTER_MUTATION = gql`
 `;
 
 export const VERIFY_CUSTOMER = gql`
-  mutation VerifyCustomerAccount($token: String!, $password: String) {
-    verifyCustomerAccount(token: $token, password: $password) {
-      ... on CurrentUser {
-        id
-        # Outros campos do usuário que você deseja recuperar
-      }
-      ... on VerificationTokenInvalidError {
-        errorCode
-        message
-      }
-      ... on VerificationTokenExpiredError {
-        errorCode
-        message
-      }
-      ... on MissingPasswordError {
-        errorCode
-        message
-      }
-      ... on PasswordValidationError {
-        errorCode
-        message
-      }
-      ... on PasswordAlreadySetError {
-        errorCode
-        message
-      }
-      ... on NativeAuthStrategyError {
-        errorCode
-        message
+mutation($token: String!, $password: String) {
+  verifyCustomerAccount(token: $token, password: $password) {
+    ... on CurrentUser {
+      id
+      identifier
+      channels {
+        token
       }
     }
+    ... on VerificationTokenInvalidError {
+      errorCode
+      message
+    }
+    ... on VerificationTokenExpiredError {
+      errorCode
+      message
+    }
+    ... on MissingPasswordError {
+      errorCode
+      message
+    }
+    ... on PasswordValidationError {
+      errorCode
+      message
+    }
+    ... on PasswordAlreadySetError {
+      errorCode
+      message
+    }
+    ... on NativeAuthStrategyError {
+      errorCode
+      message
+    }
   }
+}
 `;

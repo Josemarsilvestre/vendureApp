@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useForm } from 'react-hook-form';
-import { View, ScrollView, TouchableOpacity, Image, Alert } from 'react-native';
-import { Text } from "react-native-paper"
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation } from '@apollo/client';
+import React, { useState, useEffect, useContext } from "react";
+import { useForm } from "react-hook-form";
+import { View, ScrollView, TouchableOpacity, Image, Alert } from "react-native";
+import { Text } from "react-native-paper";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useMutation } from "@apollo/client";
 import NetInfo, { NetInfoState } from "@react-native-community/netinfo";
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale } from "react-native-size-matters";
+import * as SecureStore from "expo-secure-store";
 
-import { LOGIN_MUTATION } from '../../src/api/auth'
-import { Button } from '../common/Buttons';
-import TextField from '../common/TextField';
-import { logInSchema } from '../../utils/validation';
-import { Context } from '../../src/context/context';
-import styles from './Styles.Auth'
-
+import { LOGIN_MUTATION } from "../../src/api/auth";
+import { Button } from "../common/Buttons";
+import TextField from "../common/TextField";
+import { logInSchema } from "../../utils/validation";
+import { Context } from "../../src/context/context";
+import styles from "./Styles.Auth";
 
 type LoginFormData = {
   username: string;
@@ -38,7 +38,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
     control,
   } = useForm<LoginFormData>({
     resolver: yupResolver(logInSchema),
-    defaultValues: { username: '', password: '' },
+    defaultValues: { username: "", password: "" },
   });
 
   useEffect(() => {
@@ -62,13 +62,16 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
         const { login } = data;
         if (login.__typename === "CurrentUser") {
           setIsLogged(true);
-          navigation.navigate('Profile')
+          navigation.navigate("Profile");
         } else {
           Alert.alert("Erro", "Utilizador ou senha inválidos.");
         }
       } catch (error) {
         console.error(error);
-        Alert.alert("Erro", "Ocorreu um erro ao fazer login. Por favor, tente novamente.");
+        Alert.alert(
+          "Erro",
+          "Ocorreu um erro ao fazer login. Por favor, tente novamente."
+        );
       }
     },
   });
@@ -79,27 +82,55 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
 
       if (isConnected !== null && isConnected) {
         const response = await login({ variables: { username, password } });
-        const token = response.data.login.channels[0].token;
-        const passw = password
-        console.log('Token de acesso:', token);
-        console.log('Password:', passw);
+
+        if (response.data && response.data.login && response.data.login.channels && response.data.login.channels.length > 0) {
+          const token = response.data.login.channels[0].token;
+          const passw = password;
+
+          //console.log("Token de acesso:", token);
+          //console.log("Password:", passw);
+
+          await save(token, passw);
+        }
       } else {
-        Alert.alert("Erro", "Sem conexão à Internet. Por favor, verifique sua conexão e tente novamente.");
+        Alert.alert(
+          "Erro",
+          "Sem conexão à Internet. Por favor, verifique sua conexão e tente novamente."
+        );
       }
     } catch (error) {
       console.error(error);
-      Alert.alert("Erro", "Ocorreu um erro ao fazer login. Por favor, tente novamente.");
     }
   };
+
+  async function save(token: string, password: string) {
+    try {
+      await SecureStore.setItemAsync("token", token);
+      await SecureStore.setItemAsync("password", password);
+      console.log("Token e senha salvos com sucesso.");
+    } catch (error) {
+      console.error("Erro ao salvar o token e a senha:", error);
+    }
+  }
 
   return (
     <ScrollView>
       <View style={styles.scroolViewContainer}>
-        <View style={{justifyContent: 'center', alignItems: 'center', marginBottom: moderateScale(50)}}>
-          <Text variant="titleLarge" style={styles.title}>Vendure App</Text>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: moderateScale(50),
+          }}
+        >
+          <Text variant="titleLarge" style={styles.title}>
+            Vendure App
+          </Text>
         </View>
         <View style={styles.formContainer}>
-          <Text variant="titleMedium" style={styles.title}>Sign in</Text>
+          <Text variant="titleMedium" style={styles.title}>
+            Sign in
+          </Text>
           <View style={styles.fieldsContainer}>
             <TextField
               errors={errors.username?.message}
@@ -114,18 +145,17 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
               name="password"
               control={control as any}
             />
-            <Button onPress={handleSubmit(onSubmit)}>
-              Login
-            </Button>
+            <Button onPress={handleSubmit(onSubmit)}>Login</Button>
             <TouchableOpacity
               style={styles.TouchableOpacitybtn}
               onPress={() => {
                 navigation.setOptions({
-                  name: 'Register',
+                  name: "Register",
                   params: { navigation },
                 });
-                navigation.navigate('Register');
-              }}>
+                navigation.navigate("Register");
+              }}
+            >
               <Text style={styles.TouchableOpacitybtnText}>Register</Text>
             </TouchableOpacity>
           </View>
