@@ -41,5 +41,13 @@ export interface Product {
     priceWithTax: number;
     stockLevel: number;
     sku: string;
-  }[];
+  }
+}
+
+export interface Customer {
+  id: string;
+  firstName: string;
+  lastName: string;
+  emailAddress: string;
+  phoneNumber?: string | null;
 }

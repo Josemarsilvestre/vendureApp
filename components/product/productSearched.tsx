@@ -8,33 +8,53 @@ import {
   StyleSheet,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useQuery } from "@apollo/client";
 
 import Icons from "../common/Icons";
-import ImageGallery from "../product/ImageGallery";
-import Info from "../product/Info";
-import FreeShipping from "../product/FreeShipping";
-import Description from "../product/Description";
-import ProductPrice from "../product/ProductPrice";
-import Similarproducts from "../product/Similarproducts";
-//import Reviews from "./Reviews";
-//import AddToCartOperation from "./AddToCartOperation";
+import ImageGallery from "./ImageGallery";
+import Info from "./Info";
+import FreeShipping from "./FreeShipping";
+import Description from "./Description";
+import ProductPrice from "./ProductPrice";
+import Similarproducts from "./Similarproducts";
+import { PRODUCTLIST_QUERY } from "../../src/api/product";
 
-export default function ProductScreen({ route, navigation }) {
-  const { products, selectedIndex } = route.params;
-  const selectedProduct = products[selectedIndex];
+export default function ProductSearchedScreen({ route, navigation }) {
+  const { productId } = route.params;
+  const { data, loading, error } = useQuery(PRODUCTLIST_QUERY, {
+    variables: { id: productId },
+  });
 
   const insets = useSafeAreaInsets();
   const scrollViewRef = useRef<ScrollView>(null);
 
   useEffect(() => {
-    navigation.setOptions({
-      title: selectedProduct.name || "Products",
-    });
+    if (
+      !loading &&
+      !error &&
+      data &&
+      data.products &&
+      data.products.items.length > 0
+    ) {
+      navigation.setOptions({
+        title: data.products.items[0].name || "Loading...",
+      });
+    }
 
     if (scrollViewRef.current) {
       scrollViewRef.current.scrollTo({ y: 0, animated: true });
     }
-  }, [selectedProduct]);
+  }, [navigation, scrollViewRef, data, loading, error]);
+
+  if (error || !data || !data.products || data.products.items.length === 0) {
+    return null;
+  }
+
+  const product = data.products.items[0];
+
+  if (!product.featuredAsset || !product.featuredAsset.source) {
+    return <Text>Error: Product image not found!</Text>;
+  }
 
   return (
     <View style={styles.container}>
@@ -46,27 +66,26 @@ export default function ProductScreen({ route, navigation }) {
         ]}
       >
         <View style={styles.content}>
-          <ImageGallery product={selectedProduct.featuredAsset.source} />
-          <Text style={styles.title}>{selectedProduct.name}</Text>
-          <Text>{selectedProduct.variants[0].sku}</Text>
+          <ImageGallery product={product.featuredAsset.source} />
+          <Text style={styles.title}>{product.name}</Text>
+          <Text>{product.variants[0].sku}</Text>
           <View style={styles.divider} />
 
           <View style={styles.priceContainer}>
             <Text style={styles.header}>Price: </Text>
-            <ProductPrice price={selectedProduct.variants[0].priceWithTax} />
+            <ProductPrice price={product.variants[0].priceWithTax} />
           </View>
 
           <View style={styles.infoContainer}>
             <Info />
             <FreeShipping />
           </View>
-          <Description product={selectedProduct} />
-          <Similarproducts
+          <Description product={product} />
+          {/**          <Similarproducts
             navigation={navigation}
-            products={products}
+            products={product.collections[0].id}
             title="Similar products"
-          />
-          <View style={styles.divider} />
+          /> */}
           <Text style={styles.reviewText}>Recent reviews</Text>
         </View>
       </ScrollView>
@@ -145,13 +164,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 16,
     alignItems: "center",
-    justifyContent: 'center'
+    justifyContent: "center",
   },
   addToCartButtonText: {
     color: "#FFF",
     fontSize: 16,
     fontWeight: "bold",
-    marginRight: 5
+    marginRight: 5,
   },
   iconContainer: {
     position: "absolute",
@@ -160,6 +179,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   icon: {
-    marginRight: 16
+    marginRight: 16,
   },
 });

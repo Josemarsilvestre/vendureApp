@@ -15,7 +15,6 @@ import FavoriteScreen from "./tab_profile/favorite";
 import UserHistoryScreen from "./tab_profile/user-history";
 import PersonalInfoScreen from "./tab_profile/personal-info";
 import AddressScreen from "./tab_profile/address";
-import EditeScreen from "./tab_profile/edit";
 
 //Search
 import SearchScreen from "./tab_category/search";
@@ -23,6 +22,8 @@ import SearchScreen from "./tab_category/search";
 //Products
 import ProductScreen from "./common_pages/product";
 import CategorySectionScreen from "./common_pages/category_section";
+import SettingScreen from "./tab_profile/settings";
+import ProductSearchedScreen from "./product/productSearched";
 
 const Stack = createStackNavigator();
 
@@ -73,10 +74,10 @@ export default function MainStackNavigator() {
         }}
       />
       <Stack.Screen
-        name="Edit"
-        component={EditeScreen}
+        name="Settings"
+        component={SettingScreen}
         options={{
-          title: "Information",
+          title: "Settings",
           headerShown: true,
           headerLeft: () => (
             <Ionicons
@@ -179,6 +180,23 @@ export default function MainStackNavigator() {
         component={SearchScreen}
         options={{
           title: "Search",
+          headerShown: true,
+          headerLeft: () => (
+            <Ionicons
+              name="arrow-back"
+              size={28}
+              color="#000"
+              style={{ marginLeft: 16 }}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="ProductSearched"
+        component={ProductSearchedScreen}
+        options={{
+          title: "Loading...",
           headerShown: true,
           headerLeft: () => (
             <Ionicons

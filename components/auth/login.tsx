@@ -109,7 +109,6 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
     try {
       await SecureStore.setItemAsync("token", token);
       await SecureStore.setItemAsync("password", password);
-      console.log("Token e senha salvos com sucesso.");
     } catch (error) {
       console.error("Erro ao salvar o token e a senha:", error);
     }

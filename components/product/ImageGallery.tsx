@@ -3,11 +3,7 @@ import { View, Image, StyleSheet, Text } from "react-native";
 import { moderateScale } from "react-native-size-matters";
 
 interface ImageProps {
-  product: {
-    featuredAsset: {
-      source: string;
-    };
-  };
+  product: string;
 }
 
 const ImageGallery: React.FC<ImageProps> = ({ product }) => {
@@ -15,7 +11,7 @@ const ImageGallery: React.FC<ImageProps> = ({ product }) => {
     <View style={styles.container}>
       <View style={styles.wrapper}>
         <Image
-          source={{ uri: product.featuredAsset.source || "" }}
+          source={{ uri: product || "" }}
           style={styles.image}
           resizeMode="cover"
         />

@@ -1,13 +1,11 @@
 import { graphql } from "../gql";
 
 export const PRODUCTLIST_QUERY = graphql(`
-  query GetProductList {
-    products(options: { take: 20 }) {
-      totalItems
+  query GetProductList($id: String!) {
+    products(options: { take: 1, filter: { id: { eq: $id } } }) {
       items {
         id
         name
-        slug
         featuredAsset {
           source
         }
@@ -17,6 +15,30 @@ export const PRODUCTLIST_QUERY = graphql(`
           stockLevel
           sku
         }
+        collections {
+          id
+        }
+      }
+    }
+  }
+`);
+
+export const SEARCH_QUERY = graphql(`
+  query Search($term: String!) {
+    search(input: { term: $term }) {
+      totalItems
+      items {
+        productId
+        productName
+        productAsset {
+          preview
+        }
+        priceWithTax {
+          ... on SinglePrice {
+            value
+          }
+        }
+        score
       }
     }
   }

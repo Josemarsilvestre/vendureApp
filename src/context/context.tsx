@@ -1,4 +1,4 @@
-// authContext.tsx
+import * as React from 'react';
 import createContext from "./createContext";
 
 interface AuthState {

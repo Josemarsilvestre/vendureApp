@@ -38,23 +38,16 @@ export const GET_ALL_COLLECTIONS_QUERY = graphql(`
   }
 `);
 
-export const GET_ALL_COLLECTIONS_ONLY_QUERY = graphql(`
-  query GetAllCollections2 {
-    collections(options: { take: 8 }) {
+export const GET_SIMILAR_COLLECTION = graphql(`
+  query GetSimilarCollections($ep: String!) {
+    collections(options: { take: 1, filter: { id: { eq: $ep } } }) {
       items {
         id
         name
         assets {
           source
         }
-        children {
-          id
-          name
-          assets {
-            source
-          }
-        }
-        productVariants(options: { take: 8 }) {
+        productVariants(options: { take: 9 }) {
           items {
             product {
               id

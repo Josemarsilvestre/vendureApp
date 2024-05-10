@@ -5,14 +5,12 @@ import { moderateScale } from 'react-native-size-matters';
 import formatNumber from '../../utils/formatNumber';
 
 interface ProductPriceProps {
-  singleProduct: boolean;
-  inStock: number;
   price: number;
 }
 
-const ProductPrice: React.FC<ProductPriceProps> = ({ singleProduct, inStock, price }) => {
+const ProductPrice: React.FC<ProductPriceProps> = ({ price }) => {
   return (
-    <View style={[styles.container, singleProduct && styles.columnReverse]}>
+    <View style={[styles.container && styles.columnReverse]}>
       <View style={styles.priceContainer}>
         <Text style={styles.priceText}>
           {formatNumber(price)}

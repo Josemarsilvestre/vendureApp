@@ -5,14 +5,15 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  useWindowDimensions,
+  useWindowDimensions
 } from "react-native";
 import { FlashList } from "@shopify/flash-list";
+import { moderateScale } from "react-native-size-matters";
 
 import ProductPrice from "./ProductPrice";
 import Icons from "../common/Icons";
-import truncate from "../../utils/truncate";
 import { Product } from "../../src/interface";
+import { Button } from "../common/Buttons";
 
 interface Category {
   productVariants: {
@@ -44,7 +45,7 @@ export default function ProductCard({
             onPress={() =>
               navigation.navigate("Products", {
                 products: products,
-                selectedIndex: index,
+                selectedIndex: index
               })
             }
           >
@@ -66,26 +67,22 @@ export default function ProductCard({
                 >
                   {item.name}
                 </Text>
-                <View style={styles.ratingContainer}>
-                  <View style={styles.rating}>
-                    <Text style={styles.ratingText}>Rate</Text>
-                    <Icons.AntDesign
-                      name="star"
-                      size={16}
-                      style={styles.starIcon}
-                    />
-                  </View>
-                </View>
                 <View style={styles.priceContainer}>
                   {item.variants[0].stockLevel !== 0 ? (
-                    <ProductPrice
-                      inStock={item.variants[0].stockLevel}
-                      price={item.variants[0].priceWithTax}
-                      singleProduct={true}
-                    />
+                    <ProductPrice price={item.variants[0].priceWithTax} />
                   ) : (
                     <Text style={styles.notAvailableText}>Não disponível</Text>
                   )}
+                </View>
+                <View style={styles.AddContainer}>
+                  <Button style={styles.addButton}>
+                    <Text style={styles.addButtonText}>Add to cart{' '}</Text>
+                    <Icons.Feather
+                      name="shopping-cart"
+                      size={12}
+                      style={styles.addButtonIcon}
+                    />
+                  </Button>
                 </View>
               </View>
             </View>
@@ -114,7 +111,6 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     flexDirection: "row",
-    alig: "center",
     paddingHorizontal: 12,
     gap: 12,
   },
@@ -123,7 +119,7 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   image: {
-    width: "70%",
+    width: "80%",
     height: "100%",
     borderRadius: 10,
   },
@@ -141,10 +137,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#D1D5DB",
   },
-  plusIcon: {
-    width: 10,
-    height: 10,
-  },
   infoContainer: {
     flex: 1,
     justifyContent: "flex-end",
@@ -156,30 +148,37 @@ const styles = StyleSheet.create({
     height: 42,
     textAlign: "right",
   },
-  ratingContainer: {
+  AddContainer: {
     flexDirection: "row",
-    alig: "center",
     justifyContent: "flex-end",
+    marginTop: 3,
   },
-  rating: {
+  addButton: {
     flexDirection: "row",
-    alig: "center",
+    paddingVertical: moderateScale(10),
+    paddingHorizontal: moderateScale(15),
+    backgroundColor: "#334255",
+    borderRadius: moderateScale(8),
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: moderateScale(1),
   },
-  ratingText: {
+  addButtonText: {
     fontSize: 14,
-    color: "#6B7280",
+    color: "#fff",
   },
-  starIcon: {
+  addButtonIcon: {
     color: "#F59E0B",
   },
   priceContainer: {
     flexDirection: "row",
-    alig: "center",
     justifyContent: "flex-end",
+    marginTop: 2
   },
   notAvailableText: {
     fontSize: 14,
     color: "#6B7280",
     height: 24,
-  },
+  }
 });
+

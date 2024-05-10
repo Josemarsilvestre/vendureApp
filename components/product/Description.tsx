@@ -15,7 +15,6 @@ const Description: React.FC<DescriptionProps> = ({ product }) => {
       <View style={styles.container}>
         <Text style={styles.text}>{product.description}</Text>
       </View>
-      <View style={styles.sectionDivideY}/>
     </View>
   )
 }

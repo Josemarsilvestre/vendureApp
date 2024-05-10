@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Image,
   useWindowDimensions,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import { useQuery } from "@apollo/client";
 import { FlashList } from "@shopify/flash-list";
@@ -16,49 +16,23 @@ import Icons from "../common/Icons";
 import EmptySearchList from "../emptyList/EmptySearchList";
 import ProductPrice from "../product/ProductPrice";
 import ShowWrapper from "../common/ShowWrapper";
-//import useDebounce from "../../hooks/useDebounce";
-import { PRODUCTLIST_QUERY } from "../../src/api/product";
-
-interface Product {
-  id: string;
-  name: string;
-  slug: string;
-  featuredAsset: {
-    source;
-  };
-  description
-  variants: {
-    priceWithTax: number;
-    stockLevel: number;
-    sku;
-  }[];
-}
+import { SEARCH_QUERY } from "../../src/api/product";
 
 export default function SearchScreen({ navigation }) {
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
   const windowWidth = useWindowDimensions().width;
   const imageWidth = windowWidth * 0.2;
-  const { data, loading, error, fetchMore } = useQuery(PRODUCTLIST_QUERY, {
-    variables: { take: 10 },
+
+  const { data, loading, error, fetchMore } = useQuery(SEARCH_QUERY, {
+    variables: { term: search },
   });
 
   const handleChange = (value: string) => {
     setSearch(value);
   };
 
-  const onEndReachedThreshold = () => {
-    if (!data.products.hasNextPage) return;
-    fetchMore({
-      variables: {
-        page: data.products.page + 1,
-      },
-    });
-  };
-
   const handleRemoveSearch = () => {
     setSearch("");
-    setPage(1);
   };
 
   return (
@@ -86,54 +60,60 @@ export default function SearchScreen({ navigation }) {
             refetch={() => fetchMore({ variables: { take: 20 } })}
             isFetching={loading}
             isSuccess={!loading && !!data}
-            dataLength={data ? data.products.totalItems : 0}
+            dataLength={data ? data.search.totalItems : 0}
             emptyComponent={<EmptySearchList />}
             type="list"
           >
             <View style={styles.innerList}>
-              {data?.products.items.length > 0 && (
-                <FlashList
-                  data={data?.products.items}
-                  showsVerticalScrollIndicator={false}
-                  renderItem={({ item, index }: { item: Product, index: number }) => (
-                    <View key={item.id} style={styles.productItem}>
-                      <TouchableOpacity
-                        onPress={() =>
-                          navigation.navigate("Products", {
-                            products: data?.products.items,
-                            selectedIndex: index,
-                          })
-                        }
-                        style={styles.itemContainer}
-                      >
-                        <View style={styles.imageContainer}>
-                          <Image
-                            source={{ uri: item.featuredAsset.source || "" }}
-                            style={styles.image}
+              <FlashList
+                data={data?.search.items}
+                showsVerticalScrollIndicator={false}
+                renderItem={({ item, index }) => (
+                  <View key={item.productId} style={styles.productItem}>
+                    <TouchableOpacity
+                      style={styles.itemContainer}
+                      onPress={() =>
+                        navigation.navigate("ProductSearched", {
+                          productId: item.productId,
+                        })
+                      }
+                    >
+                      <View style={styles.imageContainer}>
+                        <Image
+                          source={{ uri: item.productAsset?.preview || "" }}
+                          style={styles.image}
+                        />
+                      </View>
+                      <View style={styles.textContainer}>
+                        <Text
+                          numberOfLines={3}
+                          ellipsizeMode="tail"
+                          style={styles.title}
+                        >
+                          {item.productName}
+                        </Text>
+                        <View style={styles.rating}>
+                          <Text style={styles.ratingText}>{item.score}</Text>
+                          <Icons.AntDesign
+                            name="star"
+                            size={15}
+                            style={styles.starIcon}
                           />
                         </View>
-                        <View style={styles.textContainer}>
-                          <Text
-                            numberOfLines={3}
-                            ellipsizeMode="tail"
-                            style={styles.title}
-                          >
-                            {item.name}
-                          </Text>
-                          <ProductPrice
-                            inStock={item.variants[0].stockLevel}
-                            price={item.variants[0].priceWithTax}
-                            singleProduct={true}
-                          />
-                        </View>
-                      </TouchableOpacity>
-                    </View>
-                  )}
-                  onEndReached={onEndReachedThreshold}
-                  onEndReachedThreshold={0}
-                  estimatedItemSize={200}
-                />
-              )}
+                        <ProductPrice
+                          price={
+                            item.priceWithTax.__typename === "SinglePrice"
+                              ? item.priceWithTax.value
+                              : 0
+                          }
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                )}
+                onEndReachedThreshold={0}
+                estimatedItemSize={200}
+              />
             </View>
           </ShowWrapper>
         </View>
@@ -141,7 +121,6 @@ export default function SearchScreen({ navigation }) {
     </>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -173,7 +152,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   innerList: {
-    flex: 1
+    flex: 1,
   },
   productItem: {
     paddingVertical: 10,
@@ -204,14 +183,25 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     width: "100%",
     paddingHorizontal: 10,
-    marginTop: -60
+    marginTop: -60,
   },
   title: {
     fontSize: 16,
     paddingBottom: 5,
     color: "#333",
-    textAlign: 'right'
+    textAlign: "right",
   },
+  rating: {
+    flexDirection: "row",
+  },
+  ratingText: {
+    fontSize: 14,
+    color: "#6B7280",
+  },
+  starIcon: {
+    color: "#F59E0B",
+    marginTop: 2
+  },  
   priceContainer: {
     flexDirection: "row",
     alignItems: "flex-end",

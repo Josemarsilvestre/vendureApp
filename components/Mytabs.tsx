@@ -66,7 +66,6 @@ export default function TabNavigator({ navigation }) {
                 name="search"
                 size={35}
                 color="#1F2937"
-                className="px-2 py-1"
                 onPress={() => navigation.navigate("Search")}
                 style={{ padding: 10 }}
               />

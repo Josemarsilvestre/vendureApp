@@ -2,14 +2,12 @@ import React, { useContext, useEffect} from 'react';
 import LoginScreen from './login';
 import { Context } from '../../src/context/context';
 import { useNavigation } from '@react-navigation/native';
-import * as SecureStore from "expo-secure-store";
 
-interface AuthWrapper {
+interface AuthScreenProps {
   children: React.ReactNode;
 }
 
-
-export default function AuthScreen({ children }: AuthWrapper) {
+export default function AuthScreen({ children }: AuthScreenProps) {
   const { state } = useContext(Context);
   const navigation = useNavigation()
 

@@ -40,7 +40,10 @@ const Banner: React.FC<BannerProps> = ({ navigation, query, title }) => {
         renderItem={({ item, index }) => (
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("Products", { products, selectedIndex: index  });
+              navigation.navigate("Products", {
+                products,
+                selectedIndex: index
+              });
             }}
           >
             <View
@@ -60,11 +63,7 @@ const Banner: React.FC<BannerProps> = ({ navigation, query, title }) => {
 
               <View style={styles.priceContainer}>
                 <Text style={styles.priceText}>Price: </Text>
-                <ProductPrice
-                  inStock={item.variants[0].stockLevel}
-                  price={item.variants[0].priceWithTax}
-                  singleProduct={true}
-                />
+                <ProductPrice price={item.variants[0].priceWithTax} />
               </View>
             </View>
           </TouchableOpacity>

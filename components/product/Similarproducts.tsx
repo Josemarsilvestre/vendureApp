@@ -11,20 +11,7 @@ import { FlashList } from "@shopify/flash-list";
 
 import FeedSectionContainer from "../common/FeedSectionContainer";
 import ProductPrice from "../product/ProductPrice";
-
-interface Product {
-  id: string;
-  name: string;
-  featuredAsset: {
-    source: string;
-  };
-  description: string;
-  variants: {
-    priceWithTax: number;
-    stockLevel: number;
-    sku: string;
-  }[];
-}
+import { Product } from "../../src/interface";
 
 export interface SimilarProductsProps {
   navigation: any;
@@ -68,9 +55,7 @@ const SimilarProducts: React.FC<SimilarProductsProps> = ({
               <View style={styles.priceContainer}>
                 <Text style={styles.priceText}>Price: </Text>
                 <ProductPrice
-                  inStock={item.variants[0].stockLevel}
                   price={item.variants[0].priceWithTax}
-                  singleProduct={true}
                 />
               </View>
             </View>
@@ -84,9 +69,6 @@ const SimilarProducts: React.FC<SimilarProductsProps> = ({
     </FeedSectionContainer>
   );
 };
-
-
-export default SimilarProducts;
 
 const styles = StyleSheet.create({
   imageContainer: {
@@ -113,3 +95,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
 });
+
+export default SimilarProducts;
