@@ -39,8 +39,13 @@ export default function ProductCard({
   const products = category.productVariants.items.map((item) => item.product);
   const [addedToCartMap, setAddedToCartMap] = useState<{
     [key: string]: boolean;
-  }>({});
-  const [addToCart, { loading, error }] = useMutation(ADD_TO_CART);
+  }>(
+    products.reduce((acc, curr) => {
+      acc[curr.id] = false;
+      return acc;
+    }, {})
+  );
+  const [addToCart] = useMutation(ADD_TO_CART);
   const { refetch } = useQuery(SHOW_ORDER);
 
   const handleAddToCart = (product: Product) => {
