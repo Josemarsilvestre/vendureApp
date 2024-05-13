@@ -22,7 +22,7 @@ import { ADD_TO_CART, SHOW_ORDER } from "../../src/api/graphql/cart";
 //import AddToCartOperation from "./AddToCartOperation";
 
 export default function ProductScreen({ route, navigation }) {
-  const { products, selectedIndex } = route.params;
+  const { products, selectedIndex, productVariantId } = route.params;
   const selectedProduct = products[selectedIndex];
 
   const insets = useSafeAreaInsets();
@@ -47,7 +47,7 @@ export default function ProductScreen({ route, navigation }) {
   const { refetch } = useQuery(SHOW_ORDER);
 
   const handleAddToCart = (product: Product) => {
-    addToCart({ variables: { id_: product.id, quantity_: 1 } });
+    addToCart({ variables: { id_: productVariantId, quantity_: 1 } });
     refetch()
 
     setAddedToCartMap((prevState) => ({

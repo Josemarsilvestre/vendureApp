@@ -21,6 +21,7 @@ import { SHOW_ORDER } from "../../src/api/graphql/cart";
 interface Category {
   productVariants: {
     items: {
+      id: string;
       product: Product;
     }[];
   };
@@ -37,6 +38,7 @@ export default function ProductCard({
   const imageWidth = windowWidth * 0.7;
 
   const products = category.productVariants.items.map((item) => item.product);
+  
   const [addedToCartMap, setAddedToCartMap] = useState<{
     [key: string]: boolean;
   }>(
@@ -48,19 +50,19 @@ export default function ProductCard({
   const [addToCart] = useMutation(ADD_TO_CART);
   const { refetch } = useQuery(SHOW_ORDER);
 
-  const handleAddToCart = (product: Product) => {
-    addToCart({ variables: { id_: product.id, quantity_: 1 } });
+  const handleAddToCart = (itemId: string) => {
+    addToCart({ variables: { id_: itemId, quantity_: 1 } });
     refetch();
 
     setAddedToCartMap((prevState) => ({
       ...prevState,
-      [product.id]: true,
+      [itemId]: true,
     }));
 
     setTimeout(() => {
       setAddedToCartMap((prevState) => ({
         ...prevState,
-        [product.id]: false,
+        [itemId]: false,
       }));
     }, 3000);
   };
@@ -76,6 +78,7 @@ export default function ProductCard({
               navigation.navigate("Products", {
                 products: products,
                 selectedIndex: index,
+                productVariantId: category.productVariants.items[index].id
               })
             }
           >
@@ -117,7 +120,7 @@ export default function ProductCard({
                   ) : (
                     <Button
                       style={styles.addButton}
-                      onPress={() => handleAddToCart(item)}
+                      onPress={() => handleAddToCart(item.id)}
                     >
                       <Text style={styles.addButtonText}>Add to cart </Text>
                       <Icons.Feather
@@ -138,6 +141,7 @@ export default function ProductCard({
     />
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

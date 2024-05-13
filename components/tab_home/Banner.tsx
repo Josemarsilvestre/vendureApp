@@ -42,7 +42,8 @@ const Banner: React.FC<BannerProps> = ({ navigation, query, title }) => {
             onPress={() => {
               navigation.navigate("Products", {
                 products,
-                selectedIndex: index
+                selectedIndex: index,
+                productVariantId: data?.collection?.productVariants?.items[index].id
               });
             }}
           >

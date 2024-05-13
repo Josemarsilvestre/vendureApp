@@ -25,6 +25,7 @@ export const GET_BANNER_1_QUERY = graphql(`
     collection(id: "4") {
       productVariants(options: { take: 9 }) {
         items {
+          id
           product {
             id
             name
@@ -49,6 +50,7 @@ export const GET_BANNER_2_QUERY = graphql(`
     collection(id: "8") {
       productVariants(options: { take: 9 }) {
         items {
+          id
           product {
             id
             name
@@ -73,6 +75,7 @@ export const GET_BANNER_3_QUERY = graphql(`
     collection(id: "5") {
       productVariants(options: { take: 9 }) {
         items {
+          id
           product {
             id
             name

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 import ProductCard from "../product/ProductCard";
-import SubCategories from "../tab_category/SubCategories";
+//import SubCategories from "../tab_category/SubCategories";
 import Icons from "../common/Icons";
 
 export default function CategorySectionScreen({ route, navigation }) {
