@@ -11,7 +11,7 @@ import { useQuery } from "@apollo/client";
 import { moderateScale } from "react-native-size-matters";
 import { FlashList } from "@shopify/flash-list";
 
-import { GET_ALL_COLLECTIONS_QUERY } from "../../src/api/category";
+import { GET_ALL_COLLECTIONS_QUERY } from "../../src/api/graphql/category";
 import { Category } from "../../src/interface";
 
 export default function CategoryScreen({ navigation }) {

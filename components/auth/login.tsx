@@ -4,11 +4,10 @@ import { View, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { Text } from "react-native-paper";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@apollo/client";
-import NetInfo, { NetInfoState } from "@react-native-community/netinfo";
 import { moderateScale } from "react-native-size-matters";
 import * as SecureStore from "expo-secure-store";
 
-import { LOGIN_MUTATION } from "../../src/api/auth";
+import { LOGIN_MUTATION } from "../../src/api/graphql/auth";
 import { Button } from "../common/Buttons";
 import TextField from "../common/TextField";
 import { logInSchema } from "../../utils/validation";
@@ -25,7 +24,6 @@ interface LoginScreenProps {
 }
 
 export default function LoginScreen({ navigation }: LoginScreenProps) {
-  const [isConnected, setIsConnected] = useState<boolean | null>(true);
   const { dispatch } = useContext(Context);
 
   const setIsLogged = (boolean: boolean) => {
@@ -40,18 +38,6 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
     resolver: yupResolver(logInSchema),
     defaultValues: { username: "", password: "" },
   });
-
-  useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener((state: NetInfoState) => {
-      if (state.isConnected !== null) {
-        setIsConnected(state.isConnected);
-      }
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, []);
 
   const [login, { loading, error }] = useMutation(LOGIN_MUTATION, {
     onError: (error) => {
@@ -79,31 +65,27 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
   const onSubmit = async (data: LoginFormData) => {
     try {
       const { username, password } = data;
-  
-      if (isConnected !== null && isConnected) {
-        const response = await login({ variables: { username, password } });
-  
-        if (response.data && response.data.login && response.data.login.__typename === "CurrentUser") {
-          const channels = response.data.login.channels;
-          
-          if (channels && channels.length > 0) {
-            const token = channels[0].token;
-            const passw = password;
-  
-            await save(token, passw);
-          }
+
+      const response = await login({ variables: { username, password } });
+
+      if (
+        response.data &&
+        response.data.login &&
+        response.data.login.__typename === "CurrentUser"
+      ) {
+        const channels = response.data.login.channels;
+
+        if (channels && channels.length > 0) {
+          const token = channels[0].token;
+          const passw = password;
+
+          await save(token, passw);
         }
-      } else {
-        Alert.alert(
-          "Erro",
-          "Sem conexão à Internet. Por favor, verifique sua conexão e tente novamente."
-        );
       }
     } catch (error) {
       console.error(error);
     }
   };
-  
 
   async function save(token: string, password: string) {
     try {

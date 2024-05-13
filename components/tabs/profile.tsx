@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -13,11 +13,12 @@ import { useQuery } from "@apollo/client";
 import Icons from "../common/Icons";
 import BoxLink from "../common/BoxLink";
 import AuthScreen from "../auth/auth";
-import { GET_CUSTOMER } from "../../src/api/profile";
+import { GET_CUSTOMER } from "../../src/api/graphql/profile";
 import { Customer } from "../../src/interface";
+import PageLoading from "../loading/PageLoading";
 
 export default function ProfileScreen({ navigation }) {
-  const { data, loading, error } = useQuery(GET_CUSTOMER);
+  const { data, loading, error, refetch } = useQuery(GET_CUSTOMER);
 
   const insets = useSafeAreaInsets();
 
@@ -62,47 +63,69 @@ export default function ProfileScreen({ navigation }) {
     phoneNumber: "",
   };
 
+  useEffect(() => {
+    refetch();
+  }, [activeCustomer, data, loading, error]);
+
   if (error) return <Text>Error: {error.message}</Text>;
 
-  return (
-    <AuthScreen>
-      <ScrollView style={styles.container}>
-        <View style={[styles.mainContainer, { paddingTop: insets.top + 20 }]}>
-          <View style={styles.userInfoContainer}>
-            <View style={styles.textContainer}>
-              <Text style={styles.name}>
-                {activeCustomer?.firstName + " " + activeCustomer?.lastName}
-              </Text>
-              <Text style={styles.platform}>
-                {activeCustomer?.emailAddress}
-              </Text>
-            </View>
-            <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
-              <Icons.Feather
-                name="settings"
-                size={30}
-                color="black"
-                style={styles.icon}
-              />
-            </TouchableOpacity>
-          </View>
+  const content = () => {
+    return (
+      <>
+        {loading && activeCustomer.firstName == 'null' ? (
+          <>
+            <PageLoading />
+          </>
+        ) : (
+          <ScrollView style={styles.container}>
+            <View
+              style={[styles.mainContainer, { paddingTop: insets.top + 20 }]}
+            >
+              <View style={styles.userInfoContainer}>
+                <View style={styles.textContainer}>
+                  <Text style={styles.name}>
+                    {activeCustomer?.firstName + " " + activeCustomer?.lastName}
+                  </Text>
+                  <Text style={styles.platform}>
+                    {activeCustomer?.emailAddress}
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("Settings")}
+                >
+                  <Icons.Feather
+                    name="settings"
+                    size={30}
+                    color="black"
+                    style={styles.icon}
+                  />
+                </TouchableOpacity>
+              </View>
 
-          <View style={styles.linkContainer}>
-            {profilePaths.map((item, index) => (
-              <BoxLink
-                key={index}
-                path={item.path}
-                name={item.name}
-                navigation={navigation}
-              >
-                <item.Icon name={item.IconName} size={24} style={styles.icon} />
-              </BoxLink>
-            ))}
-          </View>
-        </View>
-      </ScrollView>
-    </AuthScreen>
-  );
+              <View style={styles.linkContainer}>
+                {profilePaths.map((item, index) => (
+                  <BoxLink
+                    key={index}
+                    path={item.path}
+                    name={item.name}
+                    navigation={navigation}
+                  >
+                    <item.Icon
+                      name={item.IconName}
+                      size={24}
+                      style={styles.icon}
+                    />
+                  </BoxLink>
+                ))}
+              </View>
+            </View>
+          </ScrollView>
+        )}
+      </>
+    );
+  };
+
+  return <AuthScreen>{content()}</AuthScreen>;
 }
 
 const styles = StyleSheet.create({

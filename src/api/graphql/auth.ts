@@ -1,4 +1,4 @@
-import { graphql } from "../gql";
+import { graphql } from "../../gql";
 
 interface LoginData {
   login: {

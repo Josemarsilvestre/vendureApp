@@ -51,3 +51,22 @@ export interface Customer {
   emailAddress: string;
   phoneNumber?: string | null;
 }
+
+export interface OrderLine {
+  __typename?: "OrderLine" | undefined;
+  id: string;
+  unitPrice: number;
+  quantity: number;
+  featuredAsset?: {
+    __typename?: "Asset" | undefined;
+    source: string;
+  } | null | undefined;
+  productVariant: {
+    name: string;
+    priceWithTax?: number | undefined;
+  };
+  proratedUnitPriceWithTax: number;
+  discounts: {
+    amountWithTax: number;
+  }[];
+}

@@ -1,19 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Image,
   Text,
   View,
   StyleSheet,
   TouchableOpacity,
-  useWindowDimensions
+  useWindowDimensions,
 } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { moderateScale } from "react-native-size-matters";
+import { useMutation, useQuery } from "@apollo/client";
 
 import ProductPrice from "./ProductPrice";
 import Icons from "../common/Icons";
 import { Product } from "../../src/interface";
 import { Button } from "../common/Buttons";
+import { ADD_TO_CART } from "../../src/api/graphql/cart";
+import { SHOW_ORDER } from "../../src/api/graphql/cart";
 
 interface Category {
   productVariants: {
@@ -34,6 +37,28 @@ export default function ProductCard({
   const imageWidth = windowWidth * 0.7;
 
   const products = category.productVariants.items.map((item) => item.product);
+  const [addedToCartMap, setAddedToCartMap] = useState<{
+    [key: string]: boolean;
+  }>({});
+  const [addToCart, { loading, error }] = useMutation(ADD_TO_CART);
+  const { refetch } = useQuery(SHOW_ORDER);
+
+  const handleAddToCart = (product: Product) => {
+    addToCart({ variables: { id_: product.id, quantity_: 1 } });
+    refetch();
+
+    setAddedToCartMap((prevState) => ({
+      ...prevState,
+      [product.id]: true,
+    }));
+
+    setTimeout(() => {
+      setAddedToCartMap((prevState) => ({
+        ...prevState,
+        [product.id]: false,
+      }));
+    }, 3000);
+  };
 
   return (
     <FlashList
@@ -45,7 +70,7 @@ export default function ProductCard({
             onPress={() =>
               navigation.navigate("Products", {
                 products: products,
-                selectedIndex: index
+                selectedIndex: index,
               })
             }
           >
@@ -71,18 +96,32 @@ export default function ProductCard({
                   {item.variants[0].stockLevel !== 0 ? (
                     <ProductPrice price={item.variants[0].priceWithTax} />
                   ) : (
-                    <Text style={styles.notAvailableText}>Não disponível</Text>
+                    <Text style={styles.notAvailableText}>Not available</Text>
                   )}
                 </View>
                 <View style={styles.AddContainer}>
-                  <Button style={styles.addButton}>
-                    <Text style={styles.addButtonText}>Add to cart{' '}</Text>
-                    <Icons.Feather
-                      name="shopping-cart"
-                      size={12}
-                      style={styles.addButtonIcon}
-                    />
-                  </Button>
+                  {addedToCartMap[item.id] ? (
+                    <TouchableOpacity style={styles.addedButton} disabled>
+                      <Text style={styles.addButtonText}>Added to cart </Text>
+                      <Icons.Feather
+                        name="shopping-cart"
+                        size={14}
+                        style={styles.addButtonIcon}
+                      />
+                    </TouchableOpacity>
+                  ) : (
+                    <Button
+                      style={styles.addButton}
+                      onPress={() => handleAddToCart(item)}
+                    >
+                      <Text style={styles.addButtonText}>Add to cart </Text>
+                      <Icons.Feather
+                        name="shopping-cart"
+                        size={12}
+                        style={styles.addButtonIcon}
+                      />
+                    </Button>
+                  )}
                 </View>
               </View>
             </View>
@@ -159,8 +198,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: moderateScale(15),
     backgroundColor: "#334255",
     borderRadius: moderateScale(8),
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: moderateScale(1),
   },
   addButtonText: {
@@ -170,15 +209,24 @@ const styles = StyleSheet.create({
   addButtonIcon: {
     color: "#F59E0B",
   },
+  addedButton: {
+    flexDirection: "row",
+    paddingVertical: moderateScale(10),
+    paddingHorizontal: moderateScale(15),
+    backgroundColor: "green",
+    borderRadius: moderateScale(8),
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: moderateScale(1),
+  },
   priceContainer: {
     flexDirection: "row",
     justifyContent: "flex-end",
-    marginTop: 2
+    marginTop: 2,
   },
   notAvailableText: {
     fontSize: 14,
     color: "#6B7280",
     height: 24,
-  }
+  },
 });
-

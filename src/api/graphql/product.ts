@@ -1,6 +1,6 @@
-import { graphql } from "../gql";
+import { graphql } from "../../gql";
 
-export const PRODUCTLIST_QUERY = graphql(`
+export const PRODUCT_SEARCHED_QUERY = graphql(`
   query GetProductList($id: String!) {
     products(options: { take: 1, filter: { id: { eq: $id } } }) {
       items {
@@ -15,9 +15,6 @@ export const PRODUCTLIST_QUERY = graphql(`
           stockLevel
           sku
         }
-        collections {
-          id
-        }
       }
     }
   }
@@ -29,6 +26,7 @@ export const SEARCH_QUERY = graphql(`
       totalItems
       items {
         productId
+        productVariantId
         productName
         productAsset {
           preview

@@ -78,6 +78,7 @@ export default function TabNavigator({ navigation }) {
         component={CartScreen}
         options={{
           title: "Cart",
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Feather name="shopping-cart" size={24} color={color} />
           ),

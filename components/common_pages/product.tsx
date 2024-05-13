@@ -1,13 +1,13 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
   ScrollView,
   TouchableOpacity,
-  Pressable,
   StyleSheet,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useMutation, useQuery } from "@apollo/client";
 
 import Icons from "../common/Icons";
 import ImageGallery from "../product/ImageGallery";
@@ -16,6 +16,8 @@ import FreeShipping from "../product/FreeShipping";
 import Description from "../product/Description";
 import ProductPrice from "../product/ProductPrice";
 import Similarproducts from "../product/Similarproducts";
+import { Product } from "../../src/interface";
+import { ADD_TO_CART, SHOW_ORDER } from "../../src/api/graphql/cart";
 //import Reviews from "./Reviews";
 //import AddToCartOperation from "./AddToCartOperation";
 
@@ -35,6 +37,31 @@ export default function ProductScreen({ route, navigation }) {
       scrollViewRef.current.scrollTo({ y: 0, animated: true });
     }
   }, [selectedProduct]);
+
+  const [addedToCartMap, setAddedToCartMap] = useState<{
+    [key: string]: boolean;
+  }>({});
+  const [addToCart, { loading, error }] = useMutation(ADD_TO_CART, {
+    variables: { id_: selectedProduct.id, quantity_: 1 },
+  });
+  const { refetch } = useQuery(SHOW_ORDER);
+
+  const handleAddToCart = (product: Product) => {
+    addToCart({ variables: { id_: product.id, quantity_: 1 } });
+    refetch()
+
+    setAddedToCartMap((prevState) => ({
+      ...prevState,
+      [product.id]: true,
+    }));
+
+    setTimeout(() => {
+      setAddedToCartMap((prevState) => ({
+        ...prevState,
+        [product.id]: false,
+      }));
+    }, 5000);
+  };
 
   return (
     <View style={styles.container}>
@@ -70,16 +97,28 @@ export default function ProductScreen({ route, navigation }) {
           <Text style={styles.reviewText}>Recent reviews</Text>
         </View>
       </ScrollView>
-
-      <Pressable style={styles.addToCartButton}>
-        <Text style={styles.addToCartButtonText}>Add to cart</Text>
-        <Icons.Feather
-          name="shopping-cart"
-          size={22}
-          style={{ color: "#F59E0B" }}
-        />
-      </Pressable>
-
+      {addedToCartMap[selectedProduct.id] ? (
+        <TouchableOpacity style={styles.addedButton} disabled>
+          <Text style={styles.addToCartButtonText}>Added to cart</Text>
+          <Icons.Feather
+            name="shopping-cart"
+            size={22}
+            style={{ color: "#F59E0B" }}
+          />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          style={styles.addToCartButton}
+          onPress={() => handleAddToCart(selectedProduct)}
+        >
+          <Text style={styles.addToCartButtonText}>Add to cart</Text>
+          <Icons.Feather
+            name="shopping-cart"
+            size={22}
+            style={{ color: "#F59E0B" }}
+          />
+        </TouchableOpacity>
+      )}
       <View style={styles.iconContainer}>
         <TouchableOpacity
           onPress={() => console.log("Navegar para Lista de Desejos")}
@@ -145,13 +184,25 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 16,
     alignItems: "center",
-    justifyContent: 'center'
+    justifyContent: "center",
   },
   addToCartButtonText: {
     color: "#FFF",
     fontSize: 16,
     fontWeight: "bold",
-    marginRight: 5
+    marginRight: 5,
+  },
+  addedButton: {
+    backgroundColor: "green",
+    flexDirection: "row",
+    position: "absolute",
+    bottom: 28,
+    left: 15,
+    right: 80,
+    borderRadius: 8,
+    padding: 16,
+    alignItems: "center",
+    justifyContent: "center",
   },
   iconContainer: {
     position: "absolute",
@@ -160,6 +211,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   icon: {
-    marginRight: 16
+    marginRight: 16,
   },
 });

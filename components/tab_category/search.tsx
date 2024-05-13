@@ -16,7 +16,7 @@ import Icons from "../common/Icons";
 import EmptySearchList from "../emptyList/EmptySearchList";
 import ProductPrice from "../product/ProductPrice";
 import ShowWrapper from "../common/ShowWrapper";
-import { SEARCH_QUERY } from "../../src/api/product";
+import { SEARCH_QUERY } from "../../src/api/graphql/product";
 
 export default function SearchScreen({ navigation }) {
   const [search, setSearch] = useState("");
@@ -68,13 +68,14 @@ export default function SearchScreen({ navigation }) {
               <FlashList
                 data={data?.search.items}
                 showsVerticalScrollIndicator={false}
-                renderItem={({ item, index }) => (
+                renderItem={({ item }) => (
                   <View key={item.productId} style={styles.productItem}>
                     <TouchableOpacity
                       style={styles.itemContainer}
                       onPress={() =>
                         navigation.navigate("ProductSearched", {
                           productId: item.productId,
+                          productVariantID: item.productVariantId
                         })
                       }
                     >

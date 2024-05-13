@@ -1,48 +1,105 @@
-import React, { useContext } from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import React from "react";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useQuery } from "@apollo/client";
 import { moderateScale } from "react-native-size-matters";
 
-import { Context } from "../../src/context/context";
+import CartInfo from "../tab_cart/cartInfo";
+import CartItem from "../tab_cart/cartItem";
 import { Button } from "../common/Buttons";
+import formatNumber from "../../utils/formatNumber";
+import { SHOW_ORDER } from "../../src/api/graphql/cart";
+import { FlashList } from "@shopify/flash-list";
+import PageLoading from "../loading/PageLoading";
 
 export default function CartScreen({ navigation }) {
-  const { state } = useContext(Context);
+  const { data, loading, error, refetch } = useQuery(SHOW_ORDER);
+  const insets = useSafeAreaInsets();
 
-  const content = () => {
-    return (
-      <View style={styles.scroolViewContainer}>
-        <View style={styles.text_view}>
-          <Text style={styles.text_}>
-            Make purchases to get the best out of the app
-          </Text>
-        </View>
-      </View>
-    );
+  if (loading) return <Text>Loading...</Text>;
+  if (error) return <Text>Error: {error.message}</Text>;
+
+  const order = data?.activeOrder;
+
+  const refetchCart = () => {
+    refetch();
+  };
+
+  const handleRoute = () => {
+    console.log("Payment", "Go to Payment");
   };
 
   return (
-    <ScrollView>
-      {state.isLogged ? (
-        content()
-      ) : (
-        <View style={styles.scroolViewContainer}>
-          <View style={styles.text_view}>
-            <Text style={styles.text_}>Log in to access the cart</Text>
+    <View style={{ marginTop: insets.top }}>
+      {loading ? (
+        <>
+          <PageLoading />
+        </>
+      ) : order && order.lines.length === 0 ? (
+        <>
+          <View
+            style={[
+              styles.scroolViewContainer,
+              { marginTop: insets.top + 250 },
+            ]}
+          >
+            <View style={styles.text_view}>
+              <Text style={styles.text_}>
+                Make purchases to get the best out of the app
+              </Text>
+            </View>
           </View>
-          <View style={{ marginTop: moderateScale(40) }}>
-            <Button onPress={() => navigation.navigate("Profile")}>
-              Login
+        </>
+      ) : (
+        <>
+          <ScrollView style={styles.scrollView}>
+            <View style={styles.cartItemsContainer}>
+              <View style={styles.cartTitleContainer}>
+                <Text style={styles.cartTitleText}>Your Cart</Text>
+                <Text>{order?.lines.length} items</Text>
+              </View>
+              <View style={styles.cartItems}>
+                <FlashList
+                  data={order?.lines}
+                  renderItem={({ item }) => {
+                    return (
+                      <CartItem
+                        item={item}
+                        key={item.id}
+                        refetchCart={refetchCart}
+                      />
+                    );
+                  }}
+                  estimatedItemSize={900}
+                  showsVerticalScrollIndicator={false}
+                />
+              </View>
+            </View>
+
+            {/* cart Info */}
+            <View style={styles.cartInfoContainer}>
+              <CartInfo taxSummary={order?.taxSummary || []} />
+            </View>
+          </ScrollView>
+
+          {/* to Shipping */}
+          <View style={styles.bottomContainer}>
+            <Text style={styles.totalText}>Total:</Text>
+            <View style={styles.totalPriceContainer}>
+              <Text style={styles.totalPriceWithTax}>
+                {formatNumber(order?.totalWithTax)}€
+              </Text>
+              <Text style={styles.totalPrice}>
+                {formatNumber(order?.total)}€
+              </Text>
+            </View>
+            <Button style={styles.continueButton} onPress={handleRoute}>
+              <Text>Continue</Text>
             </Button>
           </View>
-        </View>
+        </>
       )}
-    </ScrollView>
+    </View>
   );
 }
 
@@ -51,20 +108,6 @@ const styles = StyleSheet.create({
     margin: moderateScale(20),
     justifyContent: "center",
     alignItems: "center",
-    marginTop: moderateScale(250),
-  },
-  TouchableOpacitybtn: {
-    paddingVertical: moderateScale(12),
-    paddingHorizontal: moderateScale(24),
-    backgroundColor: "#fff",
-    borderRadius: moderateScale(8),
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: moderateScale(15),
-  },
-  TouchableOpacitybtnText: {
-    fontSize: moderateScale(16),
-    color: "#212B36",
   },
   text_view: {
     justifyContent: "center",
@@ -72,5 +115,73 @@ const styles = StyleSheet.create({
   },
   text_: {
     fontSize: moderateScale(16),
+  },
+  scrollView: {
+    backgroundColor: "white",
+  },
+  cartItemsContainer: {
+    paddingVertical: 10,
+    marginBottom: 1,
+  },
+  cartTitleContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+    paddingBottom: 10,
+  },
+  cartTitleText: {
+    marginBottom: 2,
+    fontSize: 14,
+    fontWeight: "bold",
+  },
+  cartItems: {
+    borderTopWidth: 1,
+    borderTopColor: "#E5E7EB",
+  },
+  cartInfoContainer: {
+    paddingHorizontal: 5,
+  },
+  bottomContainer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 5,
+    backgroundColor: "white",
+    borderTopWidth: 1,
+    borderTopColor: "#E5E7EB",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: -3,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 5,
+  },
+  totalText: {
+    fontWeight: "400",
+    marginTop: -17,
+  },
+  totalPriceContainer: {
+    flexDirection: "column",
+    alignItems: "flex-end",
+  },
+  totalPriceWithTax: {
+    fontSize: 14.5,
+    marginRight: 2,
+  },
+  totalPrice: {
+    fontSize: 12,
+    marginRight: 2,
+    color: "#97979A",
+  },
+  continueButton: {
+    width: "50%",
+    marginTop: 10,
   },
 });

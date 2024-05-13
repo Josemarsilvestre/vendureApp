@@ -1,4 +1,4 @@
-import { graphql } from "../gql";
+import { graphql } from "../../gql";
 
 export const GET_ALL_COLLECTIONS_QUERY = graphql(`
   query GetAllCollections {

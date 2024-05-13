@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     marginBottom: moderateScale(16),
     textAlign: 'center', 
     borderRadius: moderateScale(8),
-    backgroundColor: 'rgba(255, 0, 0, 0.9)',
+    backgroundColor: '#1F2937',
     maxWidth: 9999,
   },
 });

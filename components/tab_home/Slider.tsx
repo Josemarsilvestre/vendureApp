@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/client";
 import Swiper from 'react-native-swiper';
 import { moderateScale } from 'react-native-size-matters';
 
-import { GET_SLIDERS } from '../../src/api/home';
+import { GET_SLIDERS } from '../../src/api/graphql/home';
 
 interface ProductVariant {
   product: {
