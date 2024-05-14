@@ -16,7 +16,7 @@ import Icons from "../common/Icons";
 import EmptySearchList from "../emptyList/EmptySearchList";
 import ProductPrice from "../product/ProductPrice";
 import ShowWrapper from "../common/ShowWrapper";
-import { SEARCH_QUERY } from "../../api/graphql/product";
+import { SEARCH_QUERY } from "../../api/mutation/product";
 
 export default function SearchScreen({ navigation }) {
   const [search, setSearch] = useState("");

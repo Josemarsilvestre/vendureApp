@@ -13,10 +13,10 @@ import { useMutation, useQuery } from "@apollo/client";
 
 import ProductPrice from "./ProductPrice";
 import Icons from "../common/Icons";
-import { Product } from "../../interface";
+import { Product } from "../../../utils/interface";
 import { Button } from "../common/Buttons";
-import { ADD_TO_CART } from "../../api/graphql/cart";
-import { SHOW_ORDER } from "../../api/graphql/cart";
+import { ADD_TO_CART } from "../../api/mutation/cart";
+import { SHOW_ORDER } from "../../api/mutation/cart";
 
 interface Category {
   productVariants: {

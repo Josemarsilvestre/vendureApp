@@ -16,7 +16,7 @@ import FreeShipping from "../product/FreeShipping";
 import Description from "../product/Description";
 import ProductPrice from "../product/ProductPrice";
 import Similarproducts from "../product/Similarproducts";
-import { ADD_TO_CART, SHOW_ORDER } from "../../api/graphql/cart";
+import { ADD_TO_CART, SHOW_ORDER } from "../../api/mutation/cart";
 //import Reviews from "./Reviews";
 //import AddToCartOperation from "./AddToCartOperation";
 

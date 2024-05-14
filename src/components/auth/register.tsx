@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { Text } from "react-native-paper";
 
-import { REGISTER_MUTATION } from "../../api/graphql/auth";
+import { REGISTER_MUTATION } from "../../api/mutation/auth";
 import { Button } from "../common/Buttons";
 import TextField from "../common/TextField";
 import { registerSchema } from "../../../utils/validation";

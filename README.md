@@ -1,54 +1,59 @@
-# Aplicação de E-Commerce com React Native, GraphQL e TypeScript
+# E-Commerce application with React Native, GraphQL and TypeScript
 
-Bem-vindo à aplicação de comércio eletrônico desenvolvida em React Native inspirada no Vendure. Esta aplicação permite aos utilizadores visualizar produtos, adicionar itens ao carrinho e efetuar compras.
+Welcome to the React Native-powered eCommerce application inspired by Vendure.
+This application allows companies, which use Vendure for the web, to have the opportunity to enter the mobile application market, without having to create a new application.
 
-## Requisitos do Sistema
-   - Node.js (v14.x ou superior)
-   - React Native CLI
+Note: This application is only for client mode, i.e. front-end.
+
+## System Requirements
+   - Node.js (v14.x or higher)
    - Expo CLI
-   - Npm (opcional, mas recomendado)
+   - Npm (recommended)
 
-## Configuração do Projeto
+## Project Configuration
 
-1. Clone o repositório:
+1. Clone the repository:
 
    ```bash
       git clone https://github.com/Josemarsilvestre/vendureApp.git
       cd vendureApp
    ```
-2. Instale as dependências:
+2. Install the dependencies:
 
    ```bash
       npm install
    ```
-## Configuração do Backend
+## Backend Configuration
 
-Esta aplicação usa um backend GraphQL para gerenciar produtos, pedidos e usuários. Você pode usar o `Vendure` ou outro serviço semelhante.
+This application uses GraphQL in the backend to make calls to the Vendure API.
 
-Certifique-se de configurar as variáveis de ambiente corretamente para o backend. Isso pode incluir URLs de GraphQL, chaves de acesso, etc.
+Make sure you configure the environment variables in the .env, correctly. For testing, you can use the vendure API, mentioned below:
 
-## Executando o Projeto
+   ```bash
+      API_URL=https://demo.vendure.io/shop-api
+   ```
 
-Para iniciar o aplicativo em um emulador ou dispositivo físico, use:
+## Project Execution
+
+To launch the app on an emulator or physical device, type:
 
    ```bash
       npx expo start
    ```
 
-Isso abrirá o Metro Bundler em seu navegador padrão. A partir daí, você pode escolher executar o aplicativo em um emulador, em um dispositivo conectado ou através do Expo Go.
+From there, you can choose to run the app on an emulator, on a connected device, or through Expo Go, via the QR code.
 
-## Estrutura do Projeto
+## Project Structure
 
-A estrutura do projeto é organizada da seguinte forma:
+The structure of the project is organized as follows:
 
-   - /assets: Recursos estáticos como imagens e fontes.
-   - /components: Componentes reutilizáveis em toda a aplicação e páginas de navegação.
-   - /reports: relatório semanal da aplicação.
-   - /src: Configuração da api, mutation e context que a aplicação utiliza.
-   - /utils: Funções utilitárias para tarefas comuns.
+   - /assets: Static assets such as images and fonts.
+   - /reports: weekly report of the application, school use.
+   - /src: Configuration of the api, mutation, context, gql and types that the application uses.
+   - /utils: Utility functions for common tasks.
 
-## Contribuição
-Contribuições são bem-vindas! Se encontrar bugs, problemas de desempenho ou tiver sugestões de novos recursos, sinta-se à vontade para abrir uma issue ou enviar um pull request.
+## Contribution
+Contributions are welcome! If you encounter bugs, performance issues, or have suggestions for new features, feel free to open an issue or submit a pull request.
 
-## Licença
-Este projeto está licenciado sob a [MIT License](https://opensource.org/licenses/MIT).
+## License
+This project is licensed under the MIT License(https://opensource.org/licenses/MIT).

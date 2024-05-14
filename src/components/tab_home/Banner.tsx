@@ -12,7 +12,7 @@ import { useQuery } from "@apollo/client";
 
 import FeedSectionContainer from "../common/FeedSectionContainer";
 import ProductPrice from "../product/ProductPrice";
-import { Product } from "../../interface";
+import { Product } from "../../../utils/interface";
 
 export interface BannerProps {
   navigation: any;

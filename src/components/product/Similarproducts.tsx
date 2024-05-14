@@ -11,7 +11,7 @@ import { FlashList } from "@shopify/flash-list";
 
 import FeedSectionContainer from "../common/FeedSectionContainer";
 import ProductPrice from "./ProductPrice";
-import { Product } from "../../interface";
+import { Product } from "../../../utils/interface";
 
 export interface SimilarProductsProps {
   navigation: any;

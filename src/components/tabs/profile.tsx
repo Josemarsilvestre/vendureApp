@@ -13,8 +13,8 @@ import { useQuery } from "@apollo/client";
 import Icons from "../common/Icons";
 import BoxLink from "../common/BoxLink";
 import AuthScreen from "../auth/auth";
-import { GET_CUSTOMER } from "../../api/graphql/profile";
-import { Customer } from "../../interface";
+import { GET_CUSTOMER } from "../../api/mutation/profile";
+import { Customer } from "../../../utils/interface";
 import PageLoading from "../loading/PageLoading";
 
 export default function ProfileScreen({ navigation }) {

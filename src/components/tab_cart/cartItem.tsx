@@ -8,7 +8,7 @@ import {
 } from "react-native";
 
 import CartButtons from "./cartButtons";
-import { OrderLine } from "../../interface";
+import { OrderLine } from "../../../utils/interface";
 import formatNumber from "../../../utils/formatNumber";
 
 interface Order {

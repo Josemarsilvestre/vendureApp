@@ -7,7 +7,7 @@ import { useMutation } from "@apollo/client";
 import { moderateScale } from "react-native-size-matters";
 import * as SecureStore from "expo-secure-store";
 
-import { LOGIN_MUTATION } from "../../api/graphql/auth";
+import { LOGIN_MUTATION } from "../../api/mutation/auth";
 import { Button } from "../common/Buttons";
 import TextField from "../common/TextField";
 import { logInSchema } from "../../../utils/validation";

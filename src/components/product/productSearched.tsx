@@ -15,8 +15,8 @@ import Info from "./Info";
 import FreeShipping from "./FreeShipping";
 import Description from "./Description";
 import ProductPrice from "./ProductPrice";
-import { PRODUCT_SEARCHED_QUERY } from "../../api/graphql/product";
-import { ADD_TO_CART, SHOW_ORDER } from "../../api/graphql/cart";
+import { PRODUCT_SEARCHED_QUERY } from "../../api/mutation/product";
+import { ADD_TO_CART, SHOW_ORDER } from "../../api/mutation/cart";
 import PageLoading from "../loading/PageLoading";
 
 export default function ProductSearchedScreen({ route, navigation }) {

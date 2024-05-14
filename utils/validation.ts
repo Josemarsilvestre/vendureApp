@@ -1,22 +1,21 @@
 import * as Yup from 'yup'
 
 export const logInSchema = Yup.object().shape({
-  username: Yup.string().required('E-mail da conta obrigatório').email('Por favor, insira um e-mail válido'),
-  password: Yup.string().required('Por favor, insira a senha de login\n').min(4, 'A senha deve ter no mínimo 4 caracteres'),
+  username: Yup.string().required('Account email required').email('Please enter a valid email address'),
+  password: Yup.string().required('Please enter the login password\n').min(4, 'The password must be at least 4 characters long'),
 })
 
 export const registerSchema = Yup.object().shape({
-  emailAddress: Yup.string().required('E-mail da conta obrigatório').email('Por favor, insira um e-mail válido'),
-  firstName: Yup.string().required('Primeiro nome obrigatório').min(3, 'No mínimo três caracteres'),
-  lastName: Yup.string().required('Último nome obrigatório').min(3, 'No mínimo três caracteres'),
-  password: Yup.string().required('Senha de login obrigatória').min(4, 'A senha deve ter no mínimo 4 caracteres'),
+  emailAddress: Yup.string().required('Account email required').email('Please enter a valid email address'),
+  firstName: Yup.string().required('First name required').min(3, 'At least three characters'),
+  lastName: Yup.string().required('Last name required').min(3, 'At least three characters'),
+  password: Yup.string().required('Login password required').min(4, 'The password must be at least 4 characters long'),
   confirmPassword: Yup.string()
-    .required('Confirmação da senha obrigatória\n')
-    .oneOf([Yup.ref('password')], 'A confirmação da senha está incorreta'),
+    .required('Password confirmation required\n')
+    .oneOf([Yup.ref('password')], 'Password confirmation is incorrect'),
 })
-//.oneOf([Yup.ref('password'), null], 'A confirmação da senha está incorreta'),
 
-export const categorySchema = Yup.object().shape({
+/**export const categorySchema = Yup.object().shape({
   name: Yup.string().required('O nome da categoria não pode estar vazio'),
   slug: Yup.string().required('O nome do caminho não pode estar vazio'),
   image: Yup.string()
@@ -73,4 +72,4 @@ export const mobileSchema = Yup.object().shape({
     .required('O número de telefone deve estar registado')
     .min(9, 'O número de celular deve ter 9 dígitos')
     .max(9, 'O número de celular deve ter 9 dígitos'),
-})
+}) */

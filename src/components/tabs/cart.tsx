@@ -8,10 +8,10 @@ import CartInfo from "../tab_cart/cartInfo";
 import CartItem from "../tab_cart/cartItem";
 import { Button } from "../common/Buttons";
 import formatNumber from "../../../utils/formatNumber";
-import { SHOW_ORDER } from "../../api/graphql/cart";
+import { SHOW_ORDER } from "../../api/mutation/cart";
 import { FlashList } from "@shopify/flash-list";
 import PageLoading from "../loading/PageLoading";
-import { GET_CUSTOMER } from "../../api/graphql/profile";
+import { GET_CUSTOMER } from "../../api/mutation/profile";
 
 export default function CartScreen({ navigation }) {
   const { data, loading, error, refetch } = useQuery(SHOW_ORDER);
