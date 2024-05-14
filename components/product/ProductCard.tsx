@@ -37,16 +37,26 @@ export default function ProductCard({
   const windowWidth = useWindowDimensions().width;
   const imageWidth = windowWidth * 0.7;
 
-  const products = category.productVariants.items.map((item) => item.product);
-  
+  const uniqueVariantIds = new Set(
+    category.productVariants.items.map((item) => item.id)
+  );
+
   const [addedToCartMap, setAddedToCartMap] = useState<{
     [key: string]: boolean;
   }>(
-    products.reduce((acc, curr) => {
+    category.productVariants.items.reduce((acc, curr) => {
       acc[curr.id] = false;
       return acc;
     }, {})
   );
+
+  const uniqueProducts = category.productVariants.items
+    .map((item) => item.product)
+    .filter(
+      (product, index, self) =>
+        index === self.findIndex((p) => p.id === product.id)
+    );
+
   const [addToCart] = useMutation(ADD_TO_CART);
   const { refetch } = useQuery(SHOW_ORDER);
 
@@ -69,16 +79,17 @@ export default function ProductCard({
 
   return (
     <FlashList
-      data={products}
+      data={uniqueProducts}
       renderItem={({ item, index }: { item: Product; index: number }) => {
+        const itemId = category.productVariants.items[index].id;
         return (
           <TouchableOpacity
             style={styles.container}
             onPress={() =>
               navigation.navigate("Products", {
-                products: products,
+                products: uniqueProducts,
                 selectedIndex: index,
-                productVariantId: category.productVariants.items[index].id
+                productVariantId: itemId,
               })
             }
           >
@@ -108,7 +119,7 @@ export default function ProductCard({
                   )}
                 </View>
                 <View style={styles.AddContainer}>
-                  {addedToCartMap[item.id] ? (
+                  {addedToCartMap[itemId] ? (
                     <TouchableOpacity style={styles.addedButton} disabled>
                       <Text style={styles.addButtonText}>Added to cart </Text>
                       <Icons.Feather
@@ -120,7 +131,7 @@ export default function ProductCard({
                   ) : (
                     <Button
                       style={styles.addButton}
-                      onPress={() => handleAddToCart(item.id)}
+                      onPress={() => handleAddToCart(itemId)}
                     >
                       <Text style={styles.addButtonText}>Add to cart </Text>
                       <Icons.Feather
@@ -141,7 +152,6 @@ export default function ProductCard({
     />
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {

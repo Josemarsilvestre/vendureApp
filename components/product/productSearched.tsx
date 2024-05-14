@@ -29,10 +29,9 @@ export default function ProductSearchedScreen({ route, navigation }) {
     [key: string]: boolean;
   }>({});
 
-  const [addToCart, { loading: addToCartLoading, error: addToCartError }] =
-    useMutation(ADD_TO_CART, {
-      variables: { id_: productVariantID, quantity_: 1 },
-    });
+  const [addToCart] = useMutation(ADD_TO_CART, {
+    variables: { id_: productVariantID, quantity_: 1 },
+  });
 
   const { refetch } = useQuery(SHOW_ORDER);
 
@@ -70,7 +69,6 @@ export default function ProductSearchedScreen({ route, navigation }) {
   const handleAddToCart = (productVariantID) => {
     addToCart({ variables: { id_: productVariantID, quantity_: 1 } });
     refetch();
-    console.log("ID: ", productVariantID);
 
     setAddedToCartMap((prevState) => ({
       ...prevState,

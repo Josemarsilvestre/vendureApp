@@ -8,7 +8,6 @@ import {
 } from "react-native";
 
 import CartButtons from "./cartButtons";
-import Icons from "../common/Icons";
 import { OrderLine } from "../../src/interface";
 import formatNumber from "../../utils/formatNumber";
 
@@ -27,14 +26,11 @@ interface Order {
   refetchCart: () => void;
 }
 
-const CartItem: React.FC<{ item: OrderLine; refetchCart }> = ({
-  item,
-  refetchCart,
-}) => {
+function CartItem({ item, refetchCart }: { item: OrderLine; refetchCart: () => void; }) {
   const windowWidth = useWindowDimensions().width;
   const imageWidth = windowWidth * 0.7;
 
-  const totalPriceWithDiscountAndQuantity = ((item.productVariant.priceWithTax ?? 0) * item.quantity) + (item.discounts[0].amountWithTax ?? 0)
+  const totalPriceWithDiscountAndQuantity = ((item.productVariant.priceWithTax ?? 0) * item.quantity) + ((item.discounts[0]?.amountWithTax ?? 0));
 
   return (
     <View style={styles.container}>
@@ -75,7 +71,7 @@ const CartItem: React.FC<{ item: OrderLine; refetchCart }> = ({
           <View style={styles.infoRow}>
             <Text style={styles.infoText}>
               Discounts:{" "}
-              {formatNumber(item.discounts[0].amountWithTax)}
+              {formatNumber(item.discounts[0]?.amountWithTax ?? 0)}
             </Text>
             <Text>€</Text>
           </View>
@@ -90,7 +86,8 @@ const CartItem: React.FC<{ item: OrderLine; refetchCart }> = ({
       </View>
     </View>
   );
-};
+}
+
 
 const styles = StyleSheet.create({
   container: {

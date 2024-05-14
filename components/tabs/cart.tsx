@@ -11,9 +11,11 @@ import formatNumber from "../../utils/formatNumber";
 import { SHOW_ORDER } from "../../src/api/graphql/cart";
 import { FlashList } from "@shopify/flash-list";
 import PageLoading from "../loading/PageLoading";
+import { GET_CUSTOMER } from "../../src/api/graphql/profile";
 
 export default function CartScreen({ navigation }) {
   const { data, loading, error, refetch } = useQuery(SHOW_ORDER);
+  const {refetch: refetchCartCustomer } = useQuery(GET_CUSTOMER)
   const insets = useSafeAreaInsets();
 
   if (loading) return <Text>Loading...</Text>;
@@ -23,6 +25,7 @@ export default function CartScreen({ navigation }) {
 
   const refetchCart = () => {
     refetch();
+    refetchCartCustomer()
   };
 
   const handleRoute = () => {
@@ -182,6 +185,7 @@ const styles = StyleSheet.create({
   },
   continueButton: {
     width: "50%",
-    marginTop: 10,
+    marginTop: 5,
+    marginBottom: 5
   },
 });

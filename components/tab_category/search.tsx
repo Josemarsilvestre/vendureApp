@@ -35,6 +35,9 @@ export default function SearchScreen({ navigation }) {
     setSearch("");
   };
 
+  const uniqueSearchItems = Array.from(new Set(data?.search.items.map(item => item.productId)))
+    .map(productId => data?.search.items.find(item => item.productId === productId));
+
   return (
     <>
       <View style={styles.container}>
@@ -66,22 +69,22 @@ export default function SearchScreen({ navigation }) {
           >
             <View style={styles.innerList}>
               <FlashList
-                data={data?.search.items}
+                data={uniqueSearchItems}
                 showsVerticalScrollIndicator={false}
                 renderItem={({ item }) => (
-                  <View key={item.productId} style={styles.productItem}>
+                  <View key={item?.productId} style={styles.productItem}>
                     <TouchableOpacity
                       style={styles.itemContainer}
                       onPress={() =>
                         navigation.navigate("ProductSearched", {
-                          productId: item.productId,
-                          productVariantID: item.productVariantId
+                          productId: item?.productId,
+                          productVariantID: item?.productVariantId
                         })
                       }
                     >
                       <View style={styles.imageContainer}>
                         <Image
-                          source={{ uri: item.productAsset?.preview || "" }}
+                          source={{ uri: item?.productAsset?.preview || "" }}
                           style={styles.image}
                         />
                       </View>
@@ -91,10 +94,10 @@ export default function SearchScreen({ navigation }) {
                           ellipsizeMode="tail"
                           style={styles.title}
                         >
-                          {item.productName}
+                          {item?.productName}
                         </Text>
                         <View style={styles.rating}>
-                          <Text style={styles.ratingText}>{item.score}</Text>
+                          <Text style={styles.ratingText}>{item?.score}</Text>
                           <Icons.AntDesign
                             name="star"
                             size={15}
@@ -103,8 +106,8 @@ export default function SearchScreen({ navigation }) {
                         </View>
                         <ProductPrice
                           price={
-                            item.priceWithTax.__typename === "SinglePrice"
-                              ? item.priceWithTax.value
+                            item?.priceWithTax.__typename === "SinglePrice"
+                              ? item?.priceWithTax.value
                               : 0
                           }
                         />
