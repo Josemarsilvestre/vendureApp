@@ -57,7 +57,7 @@ export default function ProfileScreen({ navigation }) {
 
   const activeCustomer: Customer | undefined = data?.activeCustomer || {
     id: "",
-    firstName: "",
+    firstName: "null",
     lastName: "",
     emailAddress: "",
     phoneNumber: "",
@@ -72,7 +72,7 @@ export default function ProfileScreen({ navigation }) {
   const content = () => {
     return (
       <>
-        {loading && activeCustomer.firstName == '' ? (
+        {loading && activeCustomer.firstName === 'null' ? (
           <>
             <PageLoading />
           </>
