@@ -19,3 +19,4 @@ Aprendi que é importante ter uma boa comunicação, para se ter bons resultados
 ### Feedback/Questões para a equipa
 
 - Por enquanto, nenhum.
+ 

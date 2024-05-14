@@ -18,4 +18,4 @@ Aprendi a usar melhor a api do vendure, com graphql.
 
 ### Feedback/Questões para a equipa
 
-- Por enquanto, nenhum.
+- Por enquanto, nenhum. 
