@@ -3,7 +3,7 @@ import LoginScreen from './login';
 import { useNavigation } from '@react-navigation/native';
 import * as SecureStore from "expo-secure-store";
 
-import { Context } from '../../src/context/context';
+import { Context } from '../../context/context';
 
 interface AuthScreenProps {
   children: React.ReactNode;

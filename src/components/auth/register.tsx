@@ -12,12 +12,12 @@ import {
 } from "react-native";
 import { Text } from "react-native-paper";
 
-import { REGISTER_MUTATION } from "../../src/api/graphql/auth";
+import { REGISTER_MUTATION } from "../../api/graphql/auth";
 import { Button } from "../common/Buttons";
 import TextField from "../common/TextField";
-import { registerSchema } from "../../utils/validation";
-import { Context } from "../../src/context/context";
-import client from "../../src/api/client";
+import { registerSchema } from "../../../utils/validation";
+import { Context } from "../../context/context";
+import client from "../../api/client";
 import styles from "./Styles.Auth";
 
 type RegisterFormData = {

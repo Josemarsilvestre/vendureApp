@@ -12,7 +12,7 @@ import { useQuery } from "@apollo/client";
 
 import FeedSectionContainer from "../common/FeedSectionContainer";
 import ProductPrice from "../product/ProductPrice";
-import { Product } from "../../src/interface";
+import { Product } from "../../interface";
 
 export interface BannerProps {
   navigation: any;
@@ -37,38 +37,45 @@ const Banner: React.FC<BannerProps> = ({ navigation, query, title }) => {
     <FeedSectionContainer title={title}>
       <FlashList
         data={products}
-        renderItem={({ item, index }) => (
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Products", {
-                products,
-                selectedIndex: index,
-                productVariantId: data?.collection?.productVariants?.items[index].id
-              });
-            }}
-          >
-            <View
-              style={[styles.imageContainer, { width: imageWidth }]}
-              key={item.id}
+        renderItem={({ item, index }) => {
+          const items_ = data?.collection?.productVariants?.items[index]
+          return (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("Products", {
+                  products: data?.collection?.productVariants?.items,
+                  selectedIndex: index,
+                  productVariantId: items_.id,
+                });
+              }}
             >
-              <Image
-                source={{ uri: item.featuredAsset.source || "" }}
-                style={styles.image}
-                resizeMode="cover"
-              />
-            </View>
-            <View>
-              <Text numberOfLines={1} ellipsizeMode="tail" style={styles.text}>
-                {item.name}
-              </Text>
-
-              <View style={styles.priceContainer}>
-                <Text style={styles.priceText}>Price: </Text>
-                <ProductPrice price={item.variants[0].priceWithTax} />
+              <View
+                style={[styles.imageContainer, { width: imageWidth }]}
+                key={items_.id}
+              >
+                <Image
+                  source={{ uri: item.featuredAsset.source || "" }}
+                  style={styles.image}
+                  resizeMode="cover"
+                />
               </View>
-            </View>
-          </TouchableOpacity>
-        )}
+              <View>
+                <Text
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                  style={styles.text}
+                >
+                  {items_.name}
+                </Text>
+
+                <View style={styles.priceContainer}>
+                  <Text style={styles.priceText}>Price: </Text>
+                  <ProductPrice price={item.variants[0].priceWithTax} />
+                </View>
+              </View>
+            </TouchableOpacity>
+          );
+        }}
         horizontal={true}
         estimatedItemSize={300}
         estimatedListSize={{ height: 170, width: 200 }}

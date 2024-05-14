@@ -7,11 +7,11 @@ import { moderateScale } from "react-native-size-matters";
 import CartInfo from "../tab_cart/cartInfo";
 import CartItem from "../tab_cart/cartItem";
 import { Button } from "../common/Buttons";
-import formatNumber from "../../utils/formatNumber";
-import { SHOW_ORDER } from "../../src/api/graphql/cart";
+import formatNumber from "../../../utils/formatNumber";
+import { SHOW_ORDER } from "../../api/graphql/cart";
 import { FlashList } from "@shopify/flash-list";
 import PageLoading from "../loading/PageLoading";
-import { GET_CUSTOMER } from "../../src/api/graphql/profile";
+import { GET_CUSTOMER } from "../../api/graphql/profile";
 
 export default function CartScreen({ navigation }) {
   const { data, loading, error, refetch } = useQuery(SHOW_ORDER);
@@ -38,7 +38,7 @@ export default function CartScreen({ navigation }) {
         <>
           <PageLoading />
         </>
-      ) : order && order.lines.length === 0 ? (
+      ) : !order || !order.lines || order.lines.length === 0 ? (
         <>
           <View
             style={[

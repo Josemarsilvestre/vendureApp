@@ -7,11 +7,11 @@ import { useMutation } from "@apollo/client";
 import { moderateScale } from "react-native-size-matters";
 import * as SecureStore from "expo-secure-store";
 
-import { LOGIN_MUTATION } from "../../src/api/graphql/auth";
+import { LOGIN_MUTATION } from "../../api/graphql/auth";
 import { Button } from "../common/Buttons";
 import TextField from "../common/TextField";
-import { logInSchema } from "../../utils/validation";
-import { Context } from "../../src/context/context";
+import { logInSchema } from "../../../utils/validation";
+import { Context } from "../../context/context";
 import styles from "./Styles.Auth";
 
 type LoginFormData = {

@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { Provider } from './src/context/context';
 import client from './src/api/client';
-import MainStackNavigator from './components/MyStack';
+import MainStackNavigator from './src/components/MyStack';
 
 export default function App() {
     return (

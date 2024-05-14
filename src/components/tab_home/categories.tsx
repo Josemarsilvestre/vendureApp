@@ -3,9 +3,9 @@ import { Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { useQuery } from "@apollo/client";
 
-import { GET_ALL_COLLECTIONS_QUERY } from '../../src/api/graphql/category';
+import { GET_ALL_COLLECTIONS_QUERY } from '../../api/graphql/category';
 import FeedSectionContainer from '../common/FeedSectionContainer';
-import { Category } from '../../src/interface';
+import { Category } from '../../interface';
 
 export interface CategoriesProps {
   navigation: any;

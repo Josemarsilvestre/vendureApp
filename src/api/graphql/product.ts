@@ -27,7 +27,7 @@ export const SEARCH_QUERY = graphql(`
       items {
         productId
         productVariantId
-        productName
+        productVariantName
         productAsset {
           preview
         }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
-import formatNumber from '../../utils/formatNumber';
+import formatNumber from '../../../utils/formatNumber';
 
 interface ProductPriceProps {
   price: number;

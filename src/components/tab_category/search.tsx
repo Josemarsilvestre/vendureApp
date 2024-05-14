@@ -16,7 +16,7 @@ import Icons from "../common/Icons";
 import EmptySearchList from "../emptyList/EmptySearchList";
 import ProductPrice from "../product/ProductPrice";
 import ShowWrapper from "../common/ShowWrapper";
-import { SEARCH_QUERY } from "../../src/api/graphql/product";
+import { SEARCH_QUERY } from "../../api/graphql/product";
 
 export default function SearchScreen({ navigation }) {
   const [search, setSearch] = useState("");
@@ -35,8 +35,7 @@ export default function SearchScreen({ navigation }) {
     setSearch("");
   };
 
-  const uniqueSearchItems = Array.from(new Set(data?.search.items.map(item => item.productId)))
-    .map(productId => data?.search.items.find(item => item.productId === productId));
+  const SearchItems = data?.search.items.map(item => item)
 
   return (
     <>
@@ -69,7 +68,7 @@ export default function SearchScreen({ navigation }) {
           >
             <View style={styles.innerList}>
               <FlashList
-                data={uniqueSearchItems}
+                data={SearchItems}
                 showsVerticalScrollIndicator={false}
                 renderItem={({ item }) => (
                   <View key={item?.productId} style={styles.productItem}>
@@ -94,7 +93,7 @@ export default function SearchScreen({ navigation }) {
                           ellipsizeMode="tail"
                           style={styles.title}
                         >
-                          {item?.productName}
+                          {item?.productVariantName}
                         </Text>
                         <View style={styles.rating}>
                           <Text style={styles.ratingText}>{item?.score}</Text>

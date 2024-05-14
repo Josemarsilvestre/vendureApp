@@ -13,8 +13,8 @@ import { useQuery } from "@apollo/client";
 import Icons from "../common/Icons";
 import BoxLink from "../common/BoxLink";
 import AuthScreen from "../auth/auth";
-import { GET_CUSTOMER } from "../../src/api/graphql/profile";
-import { Customer } from "../../src/interface";
+import { GET_CUSTOMER } from "../../api/graphql/profile";
+import { Customer } from "../../interface";
 import PageLoading from "../loading/PageLoading";
 
 export default function ProfileScreen({ navigation }) {
@@ -57,7 +57,7 @@ export default function ProfileScreen({ navigation }) {
 
   const activeCustomer: Customer | undefined = data?.activeCustomer || {
     id: "",
-    firstName: "null",
+    firstName: "",
     lastName: "",
     emailAddress: "",
     phoneNumber: "",
@@ -72,7 +72,7 @@ export default function ProfileScreen({ navigation }) {
   const content = () => {
     return (
       <>
-        {loading && activeCustomer.firstName === 'null' ? (
+        {loading && activeCustomer.firstName.length === 0 ? (
           <>
             <PageLoading />
           </>

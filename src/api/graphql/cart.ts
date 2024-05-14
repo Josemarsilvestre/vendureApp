@@ -1,33 +1,5 @@
 import { graphql } from "../../gql";
 
-/**interface AddToCartData {
-  addItemToOrder:
-    | {
-        __typename: "Order";
-        id: string;
-      }
-    | {
-        __typename: "OrderModificationError";
-        errorCode: string;
-        message: string;
-      }
-    | {
-        __typename: "OrderLimitError";
-        errorCode: string;
-        message: string;
-      }
-    | {
-        __typename: "NegativeQuantityError";
-        errorCode: string;
-        message: string;
-      }
-    | {
-        __typename: "InsufficientStockError";
-        errorCode: string;
-        message: string;
-      };
-} */
-
 export const ADD_TO_CART = graphql(`
   mutation ConvidadoOuLoginSuccess($id_: ID!, $quantity_: Int!) {
     addItemToOrder(productVariantId: $id_, quantity: $quantity_) {

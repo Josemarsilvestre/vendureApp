@@ -31,8 +31,6 @@ export interface Category {
 }
 
 export interface Product {
-  id: string;
-  name: string;
   featuredAsset: {
     source: string;
   };

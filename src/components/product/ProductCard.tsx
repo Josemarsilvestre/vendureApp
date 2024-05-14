@@ -13,15 +13,16 @@ import { useMutation, useQuery } from "@apollo/client";
 
 import ProductPrice from "./ProductPrice";
 import Icons from "../common/Icons";
-import { Product } from "../../src/interface";
+import { Product } from "../../interface";
 import { Button } from "../common/Buttons";
-import { ADD_TO_CART } from "../../src/api/graphql/cart";
-import { SHOW_ORDER } from "../../src/api/graphql/cart";
+import { ADD_TO_CART } from "../../api/graphql/cart";
+import { SHOW_ORDER } from "../../api/graphql/cart";
 
 interface Category {
   productVariants: {
     items: {
       id: string;
+      name: string;
       product: Product;
     }[];
   };
@@ -37,10 +38,6 @@ export default function ProductCard({
   const windowWidth = useWindowDimensions().width;
   const imageWidth = windowWidth * 0.7;
 
-  const uniqueVariantIds = new Set(
-    category.productVariants.items.map((item) => item.id)
-  );
-
   const [addedToCartMap, setAddedToCartMap] = useState<{
     [key: string]: boolean;
   }>(
@@ -49,16 +46,10 @@ export default function ProductCard({
       return acc;
     }, {})
   );
-
-  const uniqueProducts = category.productVariants.items
-    .map((item) => item.product)
-    .filter(
-      (product, index, self) =>
-        index === self.findIndex((p) => p.id === product.id)
-    );
-
   const [addToCart] = useMutation(ADD_TO_CART);
   const { refetch } = useQuery(SHOW_ORDER);
+
+  const products = category.productVariants.items.map((item) => item.product);
 
   const handleAddToCart = (itemId: string) => {
     addToCart({ variables: { id_: itemId, quantity_: 1 } });
@@ -79,21 +70,22 @@ export default function ProductCard({
 
   return (
     <FlashList
-      data={uniqueProducts}
+      data={products}
       renderItem={({ item, index }: { item: Product; index: number }) => {
-        const itemId = category.productVariants.items[index].id;
+        const items_ = category.productVariants.items[index];
+        
         return (
           <TouchableOpacity
             style={styles.container}
             onPress={() =>
               navigation.navigate("Products", {
-                products: uniqueProducts,
+                products: category.productVariants.items,
                 selectedIndex: index,
-                productVariantId: itemId,
+                productVariantId: items_.id,
               })
             }
           >
-            <View style={styles.cardContent} key={item.id}>
+            <View style={styles.cardContent} key={items_.id}>
               <View style={[styles.imageContainer, { width: imageWidth }]}>
                 <Image
                   source={{
@@ -109,7 +101,7 @@ export default function ProductCard({
                   ellipsizeMode="tail"
                   style={styles.title}
                 >
-                  {item.name}
+                  {items_.name}
                 </Text>
                 <View style={styles.priceContainer}>
                   {item.variants[0].stockLevel !== 0 ? (
@@ -119,7 +111,7 @@ export default function ProductCard({
                   )}
                 </View>
                 <View style={styles.AddContainer}>
-                  {addedToCartMap[itemId] ? (
+                  {addedToCartMap[items_.id] ? (
                     <TouchableOpacity style={styles.addedButton} disabled>
                       <Text style={styles.addButtonText}>Added to cart </Text>
                       <Icons.Feather
@@ -131,7 +123,7 @@ export default function ProductCard({
                   ) : (
                     <Button
                       style={styles.addButton}
-                      onPress={() => handleAddToCart(itemId)}
+                      onPress={() => handleAddToCart(items_.id)}
                     >
                       <Text style={styles.addButtonText}>Add to cart </Text>
                       <Icons.Feather

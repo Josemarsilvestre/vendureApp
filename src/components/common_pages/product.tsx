@@ -16,38 +16,37 @@ import FreeShipping from "../product/FreeShipping";
 import Description from "../product/Description";
 import ProductPrice from "../product/ProductPrice";
 import Similarproducts from "../product/Similarproducts";
-import { Product } from "../../src/interface";
-import { ADD_TO_CART, SHOW_ORDER } from "../../src/api/graphql/cart";
+import { ADD_TO_CART, SHOW_ORDER } from "../../api/graphql/cart";
 //import Reviews from "./Reviews";
 //import AddToCartOperation from "./AddToCartOperation";
 
 export default function ProductScreen({ route, navigation }) {
   const { products, selectedIndex, productVariantId } = route.params;
-  const selectedProduct = products[selectedIndex];
+  const selectedProducts = products[selectedIndex];
 
   const insets = useSafeAreaInsets();
   const scrollViewRef = useRef<ScrollView>(null);
 
   useEffect(() => {
     navigation.setOptions({
-      title: selectedProduct.name || "Products",
+      title: selectedProducts.name || "Products",
     });
 
     if (scrollViewRef.current) {
       scrollViewRef.current.scrollTo({ y: 0, animated: true });
     }
-  }, [selectedProduct]);
+  }, [selectedProducts]);
 
   const [addedToCartMap, setAddedToCartMap] = useState<{
     [key: string]: boolean;
   }>({});
-  const [addToCart, { loading, error }] = useMutation(ADD_TO_CART, {
-    variables: { id_: selectedProduct.id, quantity_: 1 },
+  const [addToCart] = useMutation(ADD_TO_CART, {
+    variables: { id_: productVariantId, quantity_: 1 },
   });
   const { refetch } = useQuery(SHOW_ORDER);
 
-  const handleAddToCart = (product: Product) => {
-    addToCart({ variables: { id_: productVariantId, quantity_: 1 } });
+  const handleAddToCart = (product) => {
+    addToCart({ variables: { id_: product.id, quantity_: 1 } });
     refetch()
 
     setAddedToCartMap((prevState) => ({
@@ -73,31 +72,31 @@ export default function ProductScreen({ route, navigation }) {
         ]}
       >
         <View style={styles.content}>
-          <ImageGallery product={selectedProduct.featuredAsset.source} />
-          <Text style={styles.title}>{selectedProduct.name}</Text>
-          <Text>{selectedProduct.variants[0].sku}</Text>
+          <ImageGallery product={selectedProducts.product.featuredAsset.source} />
+          <Text style={styles.title}>{selectedProducts.name}</Text>
+          <Text>{selectedProducts.product.variants[0].sku}</Text>
           <View style={styles.divider} />
 
           <View style={styles.priceContainer}>
             <Text style={styles.header}>Price: </Text>
-            <ProductPrice price={selectedProduct.variants[0].priceWithTax} />
+            <ProductPrice price={selectedProducts.product.variants[0].priceWithTax} />
           </View>
 
           <View style={styles.infoContainer}>
             <Info />
             <FreeShipping />
           </View>
-          <Description product={selectedProduct} />
+          <Description product={selectedProducts.product} />
           <Similarproducts
             navigation={navigation}
-            products={products}
+            items={products}
             title="Similar products"
           />
           <View style={styles.divider} />
           <Text style={styles.reviewText}>Recent reviews</Text>
         </View>
       </ScrollView>
-      {addedToCartMap[selectedProduct.id] ? (
+      {addedToCartMap[selectedProducts.id] ? (
         <TouchableOpacity style={styles.addedButton} disabled>
           <Text style={styles.addToCartButtonText}>Added to cart</Text>
           <Icons.Feather
@@ -109,7 +108,7 @@ export default function ProductScreen({ route, navigation }) {
       ) : (
         <TouchableOpacity
           style={styles.addToCartButton}
-          onPress={() => handleAddToCart(selectedProduct)}
+          onPress={() => handleAddToCart(selectedProducts)}
         >
           <Text style={styles.addToCartButtonText}>Add to cart</Text>
           <Icons.Feather

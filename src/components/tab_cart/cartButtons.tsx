@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity, Text, View, StyleSheet } from "react-native";
 import { useMutation } from "@apollo/client";
-import { ADJUST_ORDER, REMOVE_ONLY_ORDER_LINE } from "../../src/api/graphql/cart";
+import { ADJUST_ORDER, REMOVE_ONLY_ORDER_LINE } from "../../api/graphql/cart";
 
 import Icons from "../common/Icons";
 
