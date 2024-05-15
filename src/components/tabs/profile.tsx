@@ -13,12 +13,14 @@ import { useQuery } from "@apollo/client";
 import Icons from "../common/Icons";
 import BoxLink from "../common/BoxLink";
 import AuthScreen from "../auth/auth";
+import PageLoading from "../loading/PageLoading";
 import { GET_CUSTOMER } from "../../api/mutation/profile";
 import { Customer } from "../../../utils/interface";
-import PageLoading from "../loading/PageLoading";
+import { SHOW_ORDER } from "../../api/mutation/cart";
 
 export default function ProfileScreen({ navigation }) {
-  const { data, loading, error, refetch } = useQuery(GET_CUSTOMER);
+  const { data, loading, error, refetch: refetchProfile } = useQuery(GET_CUSTOMER);
+  const { refetch: refetchCart } = useQuery(SHOW_ORDER);
 
   const insets = useSafeAreaInsets();
 
@@ -64,7 +66,8 @@ export default function ProfileScreen({ navigation }) {
   };
 
   useEffect(() => {
-    refetch();
+    refetchProfile()
+    refetchCart()
   }, [activeCustomer, data, loading, error]);
 
   if (error) return <PageLoading />;
@@ -72,7 +75,7 @@ export default function ProfileScreen({ navigation }) {
   const content = () => {
     return (
       <>
-        {loading && activeCustomer.firstName.length === 0 ? (
+        {loading || !activeCustomer || !activeCustomer.firstName || !activeCustomer.lastName ? (
           <>
             <PageLoading />
           </>
@@ -125,7 +128,7 @@ export default function ProfileScreen({ navigation }) {
     );
   };
 
-  return <AuthScreen>{content()}</AuthScreen>;
+  return <AuthScreen refetchProfile={refetchProfile} refetchCart={refetchCart}>{content()}</AuthScreen>;
 }
 
 const styles = StyleSheet.create({

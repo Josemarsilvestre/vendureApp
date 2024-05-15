@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { View, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { Text } from "react-native-paper";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { moderateScale } from "react-native-size-matters";
 import * as SecureStore from "expo-secure-store";
 
@@ -13,6 +13,8 @@ import TextField from "../common/TextField";
 import { logInSchema } from "../../../utils/validation";
 import { Context } from "../../context/context";
 import styles from "./Styles.Auth";
+import { GET_CUSTOMER } from "../../api/mutation/profile";
+import { SHOW_ORDER } from "../../api/mutation/cart";
 
 type LoginFormData = {
   username: string;
@@ -25,6 +27,8 @@ interface LoginScreenProps {
 
 export default function LoginScreen({ navigation }: LoginScreenProps) {
   const { dispatch } = useContext(Context);
+  const { refetch: refetchProfile } = useQuery(GET_CUSTOMER);
+  const { refetch: refetchCart } = useQuery(SHOW_ORDER);
 
   const setIsLogged = (boolean: boolean) => {
     dispatch({ type: "isLogged", payload: boolean });
@@ -39,7 +43,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
     defaultValues: { username: "", password: "" },
   });
 
-  const [login, { loading, error }] = useMutation(LOGIN_MUTATION, {
+  const [login] = useMutation(LOGIN_MUTATION, {
     onError: (error) => {
       Alert.alert("Erro", error.message);
     },
@@ -47,6 +51,8 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
       try {
         const { login } = data;
         if (login.__typename === "CurrentUser") {
+          await refetchProfile();
+          await refetchCart();
           setIsLogged(true);
           navigation.navigate("Profile");
         } else {

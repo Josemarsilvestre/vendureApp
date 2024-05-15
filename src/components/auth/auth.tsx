@@ -1,17 +1,19 @@
-import React, { useContext, useEffect} from 'react';
-import LoginScreen from './login';
-import { useNavigation } from '@react-navigation/native';
+import React, { useContext, useEffect } from "react";
+import LoginScreen from "./login";
+import { useNavigation } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
 
-import { Context } from '../../context/context';
+import { Context } from "../../context/context";
 
 interface AuthScreenProps {
   children: React.ReactNode;
+  refetchProfile: any;
+  refetchCart: any;
 }
 
-export default function AuthScreen({ children }: AuthScreenProps) {
-  const { state, dispatch} = useContext(Context);
-  const navigation = useNavigation()
+export default function AuthScreen({ children, refetchProfile, refetchCart }: AuthScreenProps) {
+  const { state, dispatch } = useContext(Context);
+  const navigation = useNavigation();
 
   const setIsLogged = (boolean: boolean) => {
     dispatch({ type: "isLogged", payload: boolean });
@@ -38,7 +40,13 @@ export default function AuthScreen({ children }: AuthScreenProps) {
 
   return (
     <>
-      {state.isLogged ? <>{children}</> : <LoginScreen navigation={navigation}/>}
+      {state.isLogged ? (
+        <>
+        {React.cloneElement(children as React.ReactElement<any>, { refetchProfile, refetchCart })}
+      </>
+      ) : (
+        <LoginScreen navigation={navigation} />
+      )}
     </>
   );
 }
