@@ -99,7 +99,7 @@ export default function CartScreen({ navigation }) {
                 </Text>
               </View>
               <Button style={styles.continueButton} onPress={handleRoute}>
-                <Text>Continue</Text>
+                <Text>Payment</Text>
               </Button>
             </View>
           </View>
