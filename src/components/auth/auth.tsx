@@ -11,7 +11,11 @@ interface AuthScreenProps {
   refetchCart: any;
 }
 
-export default function AuthScreen({ children, refetchProfile, refetchCart }: AuthScreenProps) {
+export default function AuthScreen({
+  children,
+  refetchProfile,
+  refetchCart,
+}: AuthScreenProps) {
   const { state, dispatch } = useContext(Context);
   const navigation = useNavigation();
 
@@ -26,6 +30,7 @@ export default function AuthScreen({ children, refetchProfile, refetchCart }: Au
         setIsLogged(false);
         return;
       }
+      setIsLogged(true);
     } catch (error) {
       console.error("Erro ao verificar a expiração do token:", error);
     }
@@ -42,8 +47,11 @@ export default function AuthScreen({ children, refetchProfile, refetchCart }: Au
     <>
       {state.isLogged ? (
         <>
-        {React.cloneElement(children as React.ReactElement<any>, { refetchProfile, refetchCart })}
-      </>
+          {React.cloneElement(children as React.ReactElement<any>, {
+            refetchProfile,
+            refetchCart,
+          })}
+        </>
       ) : (
         <LoginScreen navigation={navigation} />
       )}

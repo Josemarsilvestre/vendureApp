@@ -15,17 +15,16 @@ import { GET_CUSTOMER } from "../../api/mutation/profile";
 
 export default function CartScreen({ navigation }) {
   const { data, loading, error, refetch } = useQuery(SHOW_ORDER);
-  const {refetch: refetchCartCustomer } = useQuery(GET_CUSTOMER)
+  const { refetch: refetchCartCustomer } = useQuery(GET_CUSTOMER);
   const insets = useSafeAreaInsets();
 
-  if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Error: {error.message}</Text>;
 
   const order = data?.activeOrder;
 
   const refetchCart = () => {
     refetch();
-    refetchCartCustomer()
+    refetchCartCustomer();
   };
 
   const handleRoute = () => {
@@ -33,76 +32,80 @@ export default function CartScreen({ navigation }) {
   };
 
   return (
-    <View style={{ marginTop: insets.top }}>
+    <>
       {loading ? (
         <>
           <PageLoading />
         </>
       ) : !order || !order.lines || order.lines.length === 0 ? (
         <>
-          <View
-            style={[
-              styles.scroolViewContainer,
-              { marginTop: insets.top + 250 },
-            ]}
-          >
-            <View style={styles.text_view}>
-              <Text style={styles.text_}>
-                Make purchases to get the best out of the app
-              </Text>
+          <View style={{ marginTop: insets.top }}>
+            <View
+              style={[
+                styles.scroolViewContainer,
+                { marginTop: insets.top + 250 },
+              ]}
+            >
+              <View style={styles.text_view}>
+                <Text style={styles.text_}>
+                  Make purchases to get the best out of the app
+                </Text>
+              </View>
             </View>
           </View>
         </>
       ) : (
         <>
-          <ScrollView style={styles.scrollView}>
-            <View style={styles.cartItemsContainer}>
-              <View style={styles.cartTitleContainer}>
-                <Text style={styles.cartTitleText}>Your Cart</Text>
-                <Text>{order?.lines.length} items</Text>
+          <View style={{ marginTop: insets.top }}>
+            <ScrollView style={styles.scrollView}>
+              <View style={styles.cartItemsContainer}>
+                <View style={styles.cartTitleContainer}>
+                  <Text style={styles.cartTitleText}>Your Cart</Text>
+                  <Text>{order?.lines.length} items</Text>
+                </View>
+                <View style={styles.cartItems}>
+                  <FlashList
+                    data={order?.lines}
+                    renderItem={({ item }) => {
+                      return (
+                        <CartItem
+                          item={item}
+                          key={item.id}
+                          refetchCart={refetchCart}
+                        />
+                      );
+                    }}
+                    estimatedItemSize={900}
+                    showsVerticalScrollIndicator={false}
+                  />
+                </View>
               </View>
-              <View style={styles.cartItems}>
-                <FlashList
-                  data={order?.lines}
-                  renderItem={({ item }) => {
-                    return (
-                      <CartItem
-                        item={item}
-                        key={item.id}
-                        refetchCart={refetchCart}
-                      />
-                    );
-                  }}
-                  estimatedItemSize={900}
-                  showsVerticalScrollIndicator={false}
-                />
+
+              {/* cart Info */}
+              <View style={styles.cartInfoContainer}>
+                <CartInfo taxSummary={order?.taxSummary || []} />
               </View>
-            </View>
+            </ScrollView>
 
-            {/* cart Info */}
-            <View style={styles.cartInfoContainer}>
-              <CartInfo taxSummary={order?.taxSummary || []} />
+            {/* to Shipping */}
+            <View style={styles.bottomContainer}>
+              <Text style={styles.totalText}>Total:</Text>
+              <View style={styles.totalPriceContainer}>
+                <Text style={styles.totalPriceWithTax}>
+                  {formatNumber(order?.totalWithTax)}€
+                </Text>
+                <Text style={styles.totalPrice}>
+                  {formatNumber(order?.total)}€
+                </Text>
+              </View>
+              <Button style={styles.continueButton} onPress={handleRoute}>
+                <Text>Continue</Text>
+              </Button>
             </View>
-          </ScrollView>
-
-          {/* to Shipping */}
-          <View style={styles.bottomContainer}>
-            <Text style={styles.totalText}>Total:</Text>
-            <View style={styles.totalPriceContainer}>
-              <Text style={styles.totalPriceWithTax}>
-                {formatNumber(order?.totalWithTax)}€
-              </Text>
-              <Text style={styles.totalPrice}>
-                {formatNumber(order?.total)}€
-              </Text>
-            </View>
-            <Button style={styles.continueButton} onPress={handleRoute}>
-              <Text>Continue</Text>
-            </Button>
           </View>
         </>
       )}
-    </View>
+    </>
   );
 }
 
@@ -186,6 +189,6 @@ const styles = StyleSheet.create({
   continueButton: {
     width: "50%",
     marginTop: 5,
-    marginBottom: 5
+    marginBottom: 5,
   },
 });

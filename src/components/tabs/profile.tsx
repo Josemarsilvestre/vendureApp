@@ -19,7 +19,12 @@ import { Customer } from "../../../utils/interface";
 import { SHOW_ORDER } from "../../api/mutation/cart";
 
 export default function ProfileScreen({ navigation }) {
-  const { data, loading, error, refetch: refetchProfile } = useQuery(GET_CUSTOMER);
+  const {
+    data,
+    loading,
+    error,
+    refetch: refetchProfile,
+  } = useQuery(GET_CUSTOMER);
   const { refetch: refetchCart } = useQuery(SHOW_ORDER);
 
   const insets = useSafeAreaInsets();
@@ -58,77 +63,66 @@ export default function ProfileScreen({ navigation }) {
   ];
 
   const activeCustomer: Customer | undefined = data?.activeCustomer || {
-    id: "",
     firstName: "",
     lastName: "",
     emailAddress: "",
     phoneNumber: "",
   };
 
-  useEffect(() => {
-    refetchProfile()
-    refetchCart()
-  }, [activeCustomer, data, loading, error]);
-
   if (error) return <PageLoading />;
 
-  const content = () => {
-    return (
-      <>
-        {loading || !activeCustomer || !activeCustomer.firstName || !activeCustomer.lastName ? (
-          <>
-            <PageLoading />
-          </>
-        ) : (
-          <ScrollView style={styles.container}>
-            <View
-              style={[styles.mainContainer, { paddingTop: insets.top + 20 }]}
-            >
-              <View style={styles.userInfoContainer}>
-                <View style={styles.textContainer}>
-                  <Text style={styles.name}>
-                    {activeCustomer?.firstName + " " + activeCustomer?.lastName}
-                  </Text>
-                  <Text style={styles.platform}>
-                    {activeCustomer?.emailAddress}
-                  </Text>
-                </View>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("Settings")}
+  return (
+    <AuthScreen refetchProfile={refetchProfile} refetchCart={refetchCart}>
+      {loading ||
+      !activeCustomer ||
+      !activeCustomer.firstName ||
+      !activeCustomer.lastName ? (
+        <>
+          <PageLoading />
+        </>
+      ) : (
+        <ScrollView style={styles.container}>
+          <View style={[styles.mainContainer, { paddingTop: insets.top + 20 }]}>
+            <View style={styles.userInfoContainer}>
+              <View style={styles.textContainer}>
+                <Text style={styles.name}>
+                  {activeCustomer?.firstName + " " + activeCustomer?.lastName}
+                </Text>
+                <Text style={styles.platform}>
+                  {activeCustomer?.emailAddress}
+                </Text>
+              </View>
+              <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
+                <Icons.Feather
+                  name="settings"
+                  size={30}
+                  color="black"
+                  style={styles.icon}
+                />
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.linkContainer}>
+              {profilePaths.map((item, index) => (
+                <BoxLink
+                  key={index}
+                  path={item.path}
+                  name={item.name}
+                  navigation={navigation}
                 >
-                  <Icons.Feather
-                    name="settings"
-                    size={30}
-                    color="black"
+                  <item.Icon
+                    name={item.IconName}
+                    size={24}
                     style={styles.icon}
                   />
-                </TouchableOpacity>
-              </View>
-
-              <View style={styles.linkContainer}>
-                {profilePaths.map((item, index) => (
-                  <BoxLink
-                    key={index}
-                    path={item.path}
-                    name={item.name}
-                    navigation={navigation}
-                  >
-                    <item.Icon
-                      name={item.IconName}
-                      size={24}
-                      style={styles.icon}
-                    />
-                  </BoxLink>
-                ))}
-              </View>
+                </BoxLink>
+              ))}
             </View>
-          </ScrollView>
-        )}
-      </>
-    );
-  };
-
-  return <AuthScreen refetchProfile={refetchProfile} refetchCart={refetchCart}>{content()}</AuthScreen>;
+          </View>
+        </ScrollView>
+      )}
+    </AuthScreen>
+  );
 }
 
 const styles = StyleSheet.create({

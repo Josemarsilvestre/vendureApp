@@ -1,6 +1,13 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { View, ScrollView, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+  Platform,
+  KeyboardAvoidingView,
+} from "react-native";
 import { Text } from "react-native-paper";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation, useQuery } from "@apollo/client";
@@ -103,53 +110,58 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
   }
 
   return (
-    <ScrollView>
-      <View style={styles.scroolViewContainer}>
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: moderateScale(50),
-          }}
-        >
-          <Text variant="titleLarge" style={styles.title}>
-            Vendure App
-          </Text>
-        </View>
-        <View style={styles.formContainer}>
-          <Text variant="titleMedium" style={styles.title}>
-            Sign in
-          </Text>
-          <View style={styles.fieldsContainer}>
-            <TextField
-              errors={errors.username?.message}
-              placeholder="Email"
-              name="username"
-              control={control as any}
-            />
-            <TextField
-              errors={errors.password?.message}
-              type="password"
-              placeholder="Password"
-              name="password"
-              control={control as any}
-            />
-            <Button onPress={handleSubmit(onSubmit)}>Login</Button>
-            <TouchableOpacity
-              style={styles.TouchableOpacitybtn}
-              onPress={() => {
-                navigation.setOptions({
-                  name: "Register",
-                  params: { navigation },
-                });
-                navigation.navigate("Register");
-              }}
-            >
-              <Text style={styles.TouchableOpacitybtnText}>Register</Text>
-            </TouchableOpacity>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <ScrollView>
+        <View style={styles.scroolViewContainer}>
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              marginBottom: moderateScale(50),
+            }}
+          >
+            <Text variant="titleLarge" style={styles.title}>
+              Vendure App
+            </Text>
+          </View>
+          <View style={styles.formContainer}>
+            <Text variant="titleMedium" style={styles.title}>
+              Sign in
+            </Text>
+            <View style={styles.fieldsContainer}>
+              <TextField
+                errors={errors.username?.message}
+                placeholder="Email"
+                name="username"
+                control={control as any}
+              />
+              <TextField
+                errors={errors.password?.message}
+                type="password"
+                placeholder="Password"
+                name="password"
+                control={control as any}
+              />
+              <Button onPress={handleSubmit(onSubmit)}>Login</Button>
+              <TouchableOpacity
+                style={styles.TouchableOpacitybtn}
+                onPress={() => {
+                  navigation.setOptions({
+                    name: "Register",
+                    params: { navigation },
+                  });
+                  navigation.navigate("Register");
+                }}
+              >
+                <Text style={styles.TouchableOpacitybtnText}>Register</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }

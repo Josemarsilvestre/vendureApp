@@ -15,9 +15,11 @@ interface TextFieldProps {
   keyboardType?: KeyboardTypeOptions;
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
   username?: string;
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
-const TextField: React.FC<TextFieldProps> = ({ label, errors, name, type = 'text', control, placeholder, keyboardType, autoCapitalize, username }) => {
+const TextField: React.FC<TextFieldProps> = ({ label, errors, name, type = 'text', control, placeholder, keyboardType, autoCapitalize, username, value, onChange }) => {
   const { field } = useController({ name, control });
 
   const onChangeHandler = (value: string) => {
@@ -27,6 +29,10 @@ const TextField: React.FC<TextFieldProps> = ({ label, errors, name, type = 'text
       field.onChange(parseInt(inputValue, 10));
     } else {
       field.onChange(inputValue);
+    }
+
+    if (onChange) {
+      onChange(value);
     }
   };
 
@@ -38,12 +44,12 @@ const TextField: React.FC<TextFieldProps> = ({ label, errors, name, type = 'text
         keyboardType={keyboardType || (type === 'email' ? 'email-address' : 'default')}
         autoCapitalize={autoCapitalize || (type === 'password' ? 'none' : 'sentences')}
         secureTextEntry={type === 'password'}
-        value={field?.value?.toString()}
+        value={value !== undefined ? value : field?.value?.toString()}
         onBlur={field.onBlur}
         onChangeText={onChangeHandler}
         ref={field.ref}
         placeholder={placeholder}
-        defaultValue={username} // Definindo o valor padrão com a propriedade username
+        defaultValue={username}
       />
       <DisplayError errors={errors} />
     </View>
