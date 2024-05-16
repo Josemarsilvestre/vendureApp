@@ -1,32 +1,50 @@
-import * as Yup from 'yup'
+import * as Yup from "yup";
 
 export const logInSchema = Yup.object().shape({
-  username: Yup.string().required('Account email required').email('Please enter a valid email address'),
-  password: Yup.string().required('Please enter the login password\n').min(4, 'The password must be at least 4 characters long'),
-})
+  username: Yup.string()
+    .required("Account email required")
+    .email("Please enter a valid email address"),
+  password: Yup.string()
+    .required("Please enter the login password\n")
+    .min(4, "The password must be at least 4 characters long"),
+});
 
 export const registerSchema = Yup.object().shape({
-  emailAddress: Yup.string().required('Email address required').email('Please enter a valid email address'),
-  firstName: Yup.string().required('First name required').min(3, 'At least three characters'),
-  lastName: Yup.string().required('Last name required').min(3, 'At least three characters'),
-  password: Yup.string().required('Login password required').min(4, 'The password must be at least 4 characters long'),
+  emailAddress: Yup.string()
+    .required("Email address required")
+    .email("Please enter a valid email address"),
+  firstName: Yup.string()
+    .required("First name required")
+    .min(3, "At least three characters"),
+  lastName: Yup.string()
+    .required("Last name required")
+    .min(3, "At least three characters"),
+  password: Yup.string()
+    .required("Login password required")
+    .min(4, "The password must be at least 4 characters long"),
   confirmPassword: Yup.string()
-    .required('Password confirmation required\n')
-    .oneOf([Yup.ref('password')], 'Password confirmation is incorrect'),
-})
+    .required("Password confirmation required\n")
+    .oneOf([Yup.ref("password")], "Password confirmation is incorrect"),
+});
 
 export const updateCustomerSchema = Yup.object().shape({
-  firstName: Yup.string().required('First name required').min(3, 'At least three characters'),
-  lastName: Yup.string().required('Last name required').min(3, 'At least three characters'),
+  firstName: Yup.string()
+    .required("First name required")
+    .min(3, "At least three characters"),
+  lastName: Yup.string()
+    .required("Last name required")
+    .min(3, "At least three characters"),
   phoneNumber: Yup.string()
-    .required('Phone number required')
-    .min(9, 'The phone number must be 9 digits long')
-    .max(9, 'The phone number must be 9 digits long'),
+    .required("Phone number required")
+    .min(9, "The phone number must be 9 digits long")
+    .max(9, "The phone number must be 9 digits long"),
 });
 
 export const changePasswordSchema = Yup.object().shape({
-  currentPassword: Yup.string().required('Password required'),
-  newPassword: Yup.string().required('Please enter the new password\n').min(4, 'The password must be at least 4 characters long'),
+  currentPassword: Yup.string().required("Password required"),
+  newPassword: Yup.string()
+    .required("Please enter the new password\n")
+    .min(4, "The password must be at least 4 characters long"),
 });
 
 /**export const reviewSchema = Yup.object().shape({
