@@ -31,7 +31,7 @@ type CustomerFormData = {
   phoneNumber: string;
 };
 
-const PersonalInfoScreen = () => {
+const PersonalInfoScreen = ({navigation}) => {
   const { data, refetch: refetchProfile } = useQuery(GET_CUSTOMER);
 
   const [updateCustomer] = useMutation(UPDATE_CUSTOMER, {
@@ -43,6 +43,7 @@ const PersonalInfoScreen = () => {
         await refetchProfile();
         setButtonPressed(true);
         setButtonText("Updated");
+        navigation.navigate("Profile");
       } catch (error) {
         console.error(error);
         Alert.alert("Erro", "Ocorreu um erro. Por favor, tente novamente.");
