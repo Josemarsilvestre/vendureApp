@@ -24,6 +24,11 @@ export const updateCustomerSchema = Yup.object().shape({
     .max(9, 'The phone number must be 9 digits long'),
 });
 
+export const changePasswordSchema = Yup.object().shape({
+  currentPassword: Yup.string().required('Password required'),
+  newPassword: Yup.string().required('Please enter the new password\n').min(4, 'The password must be at least 4 characters long'),
+});
+
 /**export const reviewSchema = Yup.object().shape({
   title: Yup.string().required('O título da avaliação não pode estar vazio').min(4, 'O título da avaliação deve ter no mínimo 4 caracteres'),
   comment: Yup.string().required('O texto da avaliação não pode estar vazio').min(4, 'O texto da avaliação não deve ter menos de 4 caracteres'),

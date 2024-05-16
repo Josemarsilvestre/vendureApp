@@ -31,7 +31,7 @@ type CustomerFormData = {
   phoneNumber: string;
 };
 
-const PersonalInfoScreen = ({ navigation }) => {
+const PersonalInfoScreen = () => {
   const { data, refetch: refetchProfile } = useQuery(GET_CUSTOMER);
 
   const [updateCustomer] = useMutation(UPDATE_CUSTOMER, {

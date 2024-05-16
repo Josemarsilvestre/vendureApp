@@ -24,6 +24,7 @@ import ProductScreen from "./common_pages/product";
 import CategorySectionScreen from "./common_pages/category_section";
 import SettingScreen from "./tab_profile/settings";
 import ProductSearchedScreen from "./product/productSearched";
+import PasswordScreen from "./tab_profile/password";
 
 const Stack = createStackNavigator();
 
@@ -107,11 +108,28 @@ export default function MainStackNavigator() {
           ),
         }}
       />
+        <Stack.Screen
+        name="Password"
+        component={PasswordScreen}
+        options={{
+          title: "Security",
+          headerShown: true,
+          headerLeft: () => (
+            <Ionicons
+              name="arrow-back"
+              size={28}
+              color="#000"
+              style={{ marginLeft: 16 }}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+        }}
+      />
       <Stack.Screen
         name="History"
         component={UserHistoryScreen}
         options={{
-          title: "History",
+          title: "Shopping history",
           headerShown: true,
           headerLeft: () => (
             <Ionicons
@@ -129,23 +147,6 @@ export default function MainStackNavigator() {
         component={AddressScreen}
         options={{
           title: "Address",
-          headerShown: true,
-          headerLeft: () => (
-            <Ionicons
-              name="arrow-back"
-              size={28}
-              color="#000"
-              style={{ marginLeft: 16 }}
-              onPress={() => navigation.goBack()}
-            />
-          ),
-        }}
-      />
-      <Stack.Screen
-        name="Orders"
-        component={OrderScreen}
-        options={{
-          title: "Orders",
           headerShown: true,
           headerLeft: () => (
             <Ionicons

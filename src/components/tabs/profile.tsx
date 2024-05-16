@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -37,7 +37,7 @@ export default function ProfileScreen({ navigation }) {
       path: "Information_account",
     },
     {
-      name: "History",
+      name: "Shopping history",
       Icon: Icons.AntDesign,
       IconName: "shoppingcart",
       path: "History",
@@ -49,10 +49,10 @@ export default function ProfileScreen({ navigation }) {
       path: "Address",
     },
     {
-      name: "Orders",
-      Icon: Icons.SimpleLineIcons,
-      IconName: "handbag",
-      path: "Orders",
+      name: "Change password",
+      Icon: Icons.Ionicons,
+      IconName: "lock-closed-outline",
+      path: "Password",
     },
     {
       name: "Favorites",

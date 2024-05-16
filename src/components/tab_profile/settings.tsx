@@ -32,7 +32,7 @@ export default function SettingScreen({ navigation }) {
       try {
         await refetchProfile();
         await refetchCart();
-        await removeToken();
+        await removeLogin();
         setIsLogged(false);
         navigation.navigate("Profile");
       } catch (error) {
@@ -50,9 +50,10 @@ export default function SettingScreen({ navigation }) {
     }
   };
 
-  const removeToken = async () => {
+  const removeLogin = async () => {
     try {
       await SecureStore.deleteItemAsync("token");
+      await SecureStore.deleteItemAsync("password");
     } catch (error) {
       console.error("Erro ao remover token:", error);
     }
