@@ -70,6 +70,7 @@ export default function MainStackNavigator() {
         name="Login"
         component={LoginScreen}
         options={{
+          headerShown: false,
           headerBackTitleVisible: false,
         }}
       />

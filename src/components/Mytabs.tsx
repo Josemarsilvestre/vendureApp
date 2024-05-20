@@ -88,11 +88,10 @@ export default function TabNavigator({ navigation }) {
         name="Profile"
         component={ProfileScreen}
         options={{
-          title: "Account",
           tabBarIcon: ({ color }) => (
             <FontAwesome name="user" size={24} color={color} />
           ),
-          headerShown: state.isLogged ? false : true,
+          headerShown: false,
         }}
       />
     </Tab.Navigator>
