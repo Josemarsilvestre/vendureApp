@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
@@ -17,7 +17,7 @@ import { Button } from "../common/Buttons";
 import TextField from "../common/TextField";
 import { registerSchema } from "../../../utils/validation";
 import { Context } from "../../context/context";
-import client from "../../api/client";
+import {client} from "../../api/client";
 import styles from "./Styles.Auth";
 
 type RegisterFormData = {

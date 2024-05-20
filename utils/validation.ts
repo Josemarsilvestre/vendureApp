@@ -34,10 +34,7 @@ export const updateCustomerSchema = Yup.object().shape({
   lastName: Yup.string()
     .required("Last name required")
     .min(3, "At least three characters"),
-  phoneNumber: Yup.string()
-    .required("Phone number required")
-    .min(9, "The phone number must be 9 digits long")
-    .max(9, "The phone number must be 9 digits long"),
+  phoneNumber: Yup.string(),
 });
 
 export const changePasswordSchema = Yup.object().shape({
@@ -47,21 +44,21 @@ export const changePasswordSchema = Yup.object().shape({
     .min(4, "The password must be at least 4 characters long"),
 });
 
+export const addressSchema = Yup.object().shape({
+  fullName: Yup.string().required("First name required"),
+  company: Yup.string(),
+  streetLine1: Yup.string().required("Please enter the street where you live"),
+  city: Yup.string().required("Please select the city where you live"),
+  province: Yup.string().required("Please select the area where you live"),
+  postalCode: Yup.string()
+    .required("Please enter your zip code")
+    .min(8, "The zip code is wrong")
+    .max(8, "The zip code is wrong"),
+  countryCode: Yup.string().required("Please enter your country code"),
+  phoneNumber: Yup.string().required("Phone number required"),
+});
+
 /**export const reviewSchema = Yup.object().shape({
   title: Yup.string().required('O título da avaliação não pode estar vazio').min(4, 'O título da avaliação deve ter no mínimo 4 caracteres'),
   comment: Yup.string().required('O texto da avaliação não pode estar vazio').min(4, 'O texto da avaliação não deve ter menos de 4 caracteres'),
-})
-
-export const addressSchema = Yup.object().shape({
-  province: Yup.object().shape({
-    name: Yup.string().required('Por favor, selecione a província onde você mora'),
-  }),
-  city: Yup.object().shape({
-    name: Yup.string().required('Por favor, selecione a cidade onde você mora'),
-  }),
-  area: Yup.object().shape({
-    name: Yup.string().required('Por favor, selecione o distrito onde você mora'),
-  }),
-  street: Yup.string().required('O nome da rua não pode estar vazio'),
-  postalCode: Yup.string().required('Por favor, insira seu código postal'),
-}) */
+})*/

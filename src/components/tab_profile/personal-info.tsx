@@ -20,15 +20,10 @@ import { updateCustomerSchema } from "../../../utils/validation";
 import { UPDATE_CUSTOMER } from "../../api/mutation/updateCustomer";
 import { Text } from "react-native-paper";
 
-interface UserNameModalProps {
-  isShow: boolean;
-  onClose: () => void;
-}
-
 type CustomerFormData = {
   firstName: string;
   lastName: string;
-  phoneNumber: string;
+  phoneNumber?: string;
 };
 
 const PersonalInfoScreen = ({navigation}) => {
@@ -38,12 +33,14 @@ const PersonalInfoScreen = ({navigation}) => {
     onError: (error) => {
       Alert.alert("Erro", error.message);
     },
-    onCompleted: async (data) => {
+    onCompleted: async () => {
       try {
         await refetchProfile();
         setButtonPressed(true);
+        
         setButtonText("Updated");
-        navigation.navigate("Profile");
+
+        navigation.goBack()
       } catch (error) {
         console.error(error);
         Alert.alert("Erro", "Ocorreu um erro. Por favor, tente novamente.");
@@ -52,6 +49,7 @@ const PersonalInfoScreen = ({navigation}) => {
   });
 
   const activeCustomer: Customer | undefined = data?.activeCustomer || {
+    id: "",
     firstName: "",
     lastName: "",
     emailAddress: "",

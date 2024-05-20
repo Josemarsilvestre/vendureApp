@@ -1,6 +1,6 @@
-import { graphql } from "../../gql";
+import { gql } from "@apollo/client";
 
-export const UPDATE_CUSTOMER = graphql(`
+export const UPDATE_CUSTOMER = gql`
   mutation updateCustomer(
     $firstName: String!
     $lastName: String!
@@ -19,9 +19,9 @@ export const UPDATE_CUSTOMER = graphql(`
       phoneNumber
     }
   }
-`);
+`;
 
-export const UPDATE_CUSTOMER_PASSWORD = graphql(`
+export const UPDATE_CUSTOMER_PASSWORD = gql`
   mutation updateCustomerPassword(
     $currentPassword: String!
     $newPassword: String!
@@ -48,9 +48,9 @@ export const UPDATE_CUSTOMER_PASSWORD = graphql(`
       }
     }
   }
-`);
+`;
 
-export const REQUEST_UPDATE_CUSTOMER_EMAIL_ADDRESS = graphql(`
+export const REQUEST_UPDATE_CUSTOMER_EMAIL_ADDRESS = gql`
   mutation requestUpdateCustomerEmailAddress(
     $password: String!
     $newEmailAddress: String!
@@ -76,9 +76,9 @@ export const REQUEST_UPDATE_CUSTOMER_EMAIL_ADDRESS = graphql(`
       }
     }
   }
-`);
+`;
 
-export const UPDATE_CUSTOMER_EMAIL_ADDRESS = graphql(`
+export const UPDATE_CUSTOMER_EMAIL_ADDRESS = gql`
   mutation updateCustomerEmailAddress($token: String!) {
     updateCustomerEmailAddress(token: $token) {
       ... on Success {
@@ -98,38 +98,46 @@ export const UPDATE_CUSTOMER_EMAIL_ADDRESS = graphql(`
       }
     }
   }
-`);
+`;
 
-export const UPDATE_CUSTOMER_ADDRESS = graphql(`
-  mutation updateCustomerAddress(
-    $id: ID!
+export const COUNTRY_CODE = gql`
+  query GetCountryCode {
+    availableCountries {
+      name
+      code
+    }
+  }
+`;
+
+export const CREATE_CUSTOMER_ADDRESS = gql`
+  mutation createCustomerAddress(
     $fullName: String!
     $company: String!
     $streetLine1: String!
-    $streetLine2: String!
     $city: String!
     $province: String!
     $postalCode: String!
+    $countryCode: String!
+    $phoneNumber: String!
   ) {
-    updateCustomerAddress(
+    createCustomerAddress(
       input: {
-        id: $id
         fullName: $fullName
         company: $company
         streetLine1: $streetLine1
-        streetLine2: $streetLine2
         city: $city
         province: $province
         postalCode: $postalCode
+        countryCode: $countryCode
+        phoneNumber: $phoneNumber
       }
     ) {
       fullName
       company
       streetLine1
-      streetLine2
       city
       province
       postalCode
     }
   }
-`);
+`;

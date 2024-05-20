@@ -1,35 +1,56 @@
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
+import {
+  createStackNavigator,
+  StackNavigationProp,
+} from "@react-navigation/stack";
+import { useNavigation, NavigationContainer } from "@react-navigation/native";
+import { Entypo, Ionicons } from "@expo/vector-icons";
 
-//Auth Pages
+// Auth Pages
 import LoginScreen from "./auth/login";
 import RegisterScreen from "./auth/register";
 
 import TabNavigator from "./Mytabs";
 
-//Profile Screen
-import OrderScreen from "./tab_profile/orders";
+// Profile Screen
 import FavoriteScreen from "./tab_profile/favorite";
 import UserHistoryScreen from "./tab_profile/user-history";
 import PersonalInfoScreen from "./tab_profile/personal-info";
 import AddressScreen from "./tab_profile/address";
 
-//Search
+// Search
 import SearchScreen from "./tab_category/search";
 
-//Products
+// Products
 import ProductScreen from "./common_pages/product";
 import CategorySectionScreen from "./common_pages/category_section";
 import SettingScreen from "./tab_profile/settings";
 import ProductSearchedScreen from "./product/productSearched";
 import PasswordScreen from "./tab_profile/password";
+import AddressEdition from "./common_pages/address_add_or_edit";
+import { TouchableOpacity } from "react-native";
 
-const Stack = createStackNavigator();
+type RootStackParamList = {
+  TabNavigator: undefined;
+  Login: undefined;
+  Register: undefined;
+  Settings: undefined;
+  Information_account: undefined;
+  Password: undefined;
+  History: undefined;
+  AddressEdition: undefined;
+  Address: undefined;
+  Favorite: undefined;
+  Search: undefined;
+  ProductSearched: undefined;
+  Products: undefined;
+  CategorySection: undefined;
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 export default function MainStackNavigator() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   return (
     <Stack.Navigator
@@ -108,7 +129,7 @@ export default function MainStackNavigator() {
           ),
         }}
       />
-        <Stack.Screen
+      <Stack.Screen
         name="Password"
         component={PasswordScreen}
         options={{
@@ -143,6 +164,23 @@ export default function MainStackNavigator() {
         }}
       />
       <Stack.Screen
+        name="AddressEdition"
+        component={AddressEdition}
+        options={{
+          title: "Address edition",
+          headerShown: true,
+          headerLeft: () => (
+            <Ionicons
+              name="arrow-back"
+              size={28}
+              color="#000"
+              style={{ marginLeft: 16 }}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
         name="Address"
         component={AddressScreen}
         options={{
@@ -156,6 +194,18 @@ export default function MainStackNavigator() {
               style={{ marginLeft: 16 }}
               onPress={() => navigation.goBack()}
             />
+          ),
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("AddressEdition")}
+            >
+              <Entypo
+                name="add-to-list"
+                size={28}
+                color="#000"
+                style={{ marginRight: 16 }}
+              />
+            </TouchableOpacity>
           ),
         }}
       />

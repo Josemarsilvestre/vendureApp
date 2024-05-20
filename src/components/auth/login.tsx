@@ -50,7 +50,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
     defaultValues: { username: "", password: "" },
   });
 
-  const [login] = useMutation(LOGIN_MUTATION, {
+  const [loginMutation] = useMutation(LOGIN_MUTATION, {
     onError: (error) => {
       Alert.alert("Erro", error.message);
     },
@@ -62,6 +62,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
           await refetchCart();
           setIsLogged(true);
           navigation.navigate("Profile");
+          await makeAuthenticatedRequest('http://192.168.1.70:3000/shop-api/');
         } else {
           Alert.alert("Erro", "Utilizador ou senha inválidos.");
         }
@@ -79,20 +80,16 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
     try {
       const { username, password } = data;
 
-      const response = await login({ variables: { username, password } });
+      const response = await loginMutation({ variables: { username, password } });
 
-      if (
-        response.data &&
-        response.data.login &&
-        response.data.login.__typename === "CurrentUser"
-      ) {
+      if (response.data && response.data.login && response.data.login.__typename === "CurrentUser") {
         const channels = response.data.login.channels;
 
         if (channels && channels.length > 0) {
           const token = channels[0].token;
-          const passw = password;
 
-          await save(token, passw);
+          // Armazena o token e a senha de forma segura
+          await updateAuthToken(token);
         }
       }
     } catch (error) {
@@ -100,12 +97,38 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
     }
   };
 
-  async function save(token: string, password: string) {
+  async function getAuthToken() {
     try {
-      await SecureStore.setItemAsync("token", token);
-      await SecureStore.setItemAsync("password", password);
+      const token = await SecureStore.getItemAsync("token");
+      return token;
     } catch (error) {
-      console.error("Erro ao salvar o token e a senha:", error);
+      console.error("Erro ao obter o token:", error);
+      throw error;
+    }
+  }
+
+  async function updateAuthToken(newToken: string) {
+    try {
+      await SecureStore.setItemAsync("token", newToken);
+      console.log(newToken);
+    } catch (error) {
+      console.error("Erro ao atualizar o token:", error);
+      throw error;
+    }
+  }
+  
+  async function makeAuthenticatedRequest(url: string, options: RequestInit = {}) {
+    try {
+      const authToken = await getAuthToken();
+      const headers = {
+        ...options.headers,
+        Authorization: `Bearer ${authToken}`,
+      };
+      const response = await fetch(url, { ...options, headers });
+      return response.json();
+    } catch (error) {
+      console.error("Erro ao fazer a solicitação autenticada:", error);
+      throw error;
     }
   }
 
@@ -120,7 +143,8 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
             style={{
               justifyContent: "center",
               alignItems: "center",
-              marginBottom: moderateScale(50),
+              marginBottom: moderateScale(60),
+              marginTop: moderateScale(60)
             }}
           >
             <Text variant="titleLarge" style={styles.title}>

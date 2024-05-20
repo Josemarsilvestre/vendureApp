@@ -4,7 +4,7 @@ import { ApolloProvider } from '@apollo/client';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { Provider } from './src/context/context';
-import client from './src/api/client';
+import { client } from './src/api/client';
 import MainStackNavigator from './src/components/MyStack';
 
 export default function App() {

@@ -19,7 +19,19 @@ interface TextFieldProps {
   onChange?: (value: string) => void;
 }
 
-const TextField: React.FC<TextFieldProps> = ({ label, errors, name, type = 'text', control, placeholder, keyboardType, autoCapitalize, username, value, onChange }) => {
+const TextField: React.FC<TextFieldProps> = ({
+  label,
+  errors,
+  name,
+  type = 'text',
+  control,
+  placeholder,
+  keyboardType,
+  autoCapitalize, 
+  username,
+  value,
+  onChange
+}) => {
   const { field } = useController({ name, control });
 
   const onChangeHandler = (value: string) => {

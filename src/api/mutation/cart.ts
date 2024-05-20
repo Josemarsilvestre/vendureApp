@@ -1,6 +1,6 @@
-import { graphql } from "../../gql";
+import { gql } from '@apollo/client';
 
-export const ADD_TO_CART = graphql(`
+export const ADD_TO_CART = gql`
   mutation ConvidadoOuLoginSuccess($id_: ID!, $quantity_: Int!) {
     addItemToOrder(productVariantId: $id_, quantity: $quantity_) {
       ... on Order {
@@ -24,9 +24,9 @@ export const ADD_TO_CART = graphql(`
       }
     }
   }
-`);
+`;
 
-export const SHOW_ORDER = graphql(`
+export const SHOW_ORDER = gql`
   query Order {
     activeOrder {
       total
@@ -55,9 +55,9 @@ export const SHOW_ORDER = graphql(`
       }
     }
   }
-`);
+`;
 
-export const REMOVE_ONLY_ORDER_LINE = graphql(`
+export const REMOVE_ONLY_ORDER_LINE = gql`
   mutation REMOVE_ORDER($id_: ID!) {
     removeOrderLine(orderLineId: $id_) {
       ... on Order {
@@ -69,9 +69,9 @@ export const REMOVE_ONLY_ORDER_LINE = graphql(`
       }
     }
   }
-`);
+`;
 
-export const ADJUST_ORDER = graphql(`
+export const ADJUST_ORDER = gql`
   mutation ADJUST_ORDER($id_: ID!, $quantity_: Int!) {
     adjustOrderLine(orderLineId: $id_, quantity: $quantity_) {
       ... on Order {
@@ -95,9 +95,9 @@ export const ADJUST_ORDER = graphql(`
       }
     }
   }
-`);
+`;
 
-export const REMOVE_ALL_ORDER = graphql(`
+export const REMOVE_ALL_ORDER = gql`
   mutation REMOVE_ALL_ORDER {
     removeAllOrderLines {
       ... on Order {
@@ -109,4 +109,4 @@ export const REMOVE_ALL_ORDER = graphql(`
       }
     }
   }
-`);
+`;

@@ -83,81 +83,73 @@ export default function ProductSearchedScreen({ route, navigation }) {
     }, 5000);
   };
 
+  if(loading) return <PageLoading />
+
   return (
-    <>
-      {loading ? (
-        <>
-          <PageLoading />
-        </>
-      ) : (
-        <>
-          <View style={styles.container}>
-            <ScrollView
-              ref={scrollViewRef}
-              contentContainerStyle={[
-                styles.scrollContent,
-                { paddingBottom: insets.bottom },
-              ]}
-            >
-              <View style={styles.content}>
-                <ImageGallery product={product.featuredAsset.source} />
-                <Text style={styles.title}>{product.name}</Text>
-                <Text>{product.variants[0].sku}</Text>
-                <View style={styles.divider} />
+    <View style={styles.container}>
+      <ScrollView
+        ref={scrollViewRef}
+        contentContainerStyle={[
+          styles.scrollContent,
+          { paddingBottom: insets.bottom },
+        ]}
+      >
+        <View style={styles.content}>
+          <ImageGallery product={product.featuredAsset.source} />
+          <Text style={styles.title}>{product.name}</Text>
+          <Text>{product.variants[0].sku}</Text>
+          <View style={styles.divider} />
 
-                <View style={styles.priceContainer}>
-                  <Text style={styles.header}>Price: </Text>
-                  <ProductPrice price={product.variants[0].priceWithTax} />
-                </View>
-
-                <View style={styles.infoContainer}>
-                  <Info />
-                  <FreeShipping />
-                </View>
-                <Description product={product} />
-                <Text style={styles.reviewText}>Recent reviews</Text>
-              </View>
-            </ScrollView>
-
-            {addedToCartMap[productVariantID] ? (
-              <TouchableOpacity style={styles.addedButton} disabled>
-                <Text style={styles.addToCartButtonText}>Added to cart</Text>
-                <Icons.Feather
-                  name="shopping-cart"
-                  size={22}
-                  style={{ color: "#F59E0B" }}
-                />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                style={styles.addToCartButton}
-                onPress={() => handleAddToCart(productVariantID)}
-              >
-                <Text style={styles.addToCartButtonText}>Add to cart</Text>
-                <Icons.Feather
-                  name="shopping-cart"
-                  size={22}
-                  style={{ color: "#F59E0B" }}
-                />
-              </TouchableOpacity>
-            )}
-
-            <View style={styles.iconContainer}>
-              <TouchableOpacity
-                onPress={() => console.log("Navegar para Lista de Desejos")}
-              >
-                <Icons.Feather
-                  name="heart"
-                  size={28}
-                  color="#1F2937"
-                  style={styles.icon}
-                />
-              </TouchableOpacity>
-            </View>
+          <View style={styles.priceContainer}>
+            <Text style={styles.header}>Price: </Text>
+            <ProductPrice price={product.variants[0].priceWithTax} />
           </View>
-        </>
+
+          <View style={styles.infoContainer}>
+            <Info />
+            <FreeShipping />
+          </View>
+          <Description product={product} />
+          <Text style={styles.reviewText}>Recent reviews</Text>
+        </View>
+      </ScrollView>
+
+      {addedToCartMap[productVariantID] ? (
+        <TouchableOpacity style={styles.addedButton} disabled>
+          <Text style={styles.addToCartButtonText}>Added to cart</Text>
+          <Icons.Feather
+            name="shopping-cart"
+            size={22}
+            style={{ color: "#F59E0B" }}
+          />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          style={styles.addToCartButton}
+          onPress={() => handleAddToCart(productVariantID)}
+        >
+          <Text style={styles.addToCartButtonText}>Add to cart</Text>
+          <Icons.Feather
+            name="shopping-cart"
+            size={22}
+            style={{ color: "#F59E0B" }}
+          />
+        </TouchableOpacity>
       )}
-    </>
+
+      <View style={styles.iconContainer}>
+        <TouchableOpacity
+          onPress={() => console.log("Navegar para Lista de Desejos")}
+        >
+          <Icons.Feather
+            name="heart"
+            size={28}
+            color="#1F2937"
+            style={styles.icon}
+          />
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }
 

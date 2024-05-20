@@ -28,8 +28,8 @@ export default function PasswordScreen({ navigation }) {
       try {
         await refetchProfile();
         setButtonText("Updated");
-        setButtonColor("green");
-        navigation.navigate("Profile");
+        setButtonColor("#00FF00");
+        navigation.goBack()
       } catch (error) {
         console.error(error);
         Alert.alert("Erro", "Ocorreu um erro. Por favor, tente novamente.");

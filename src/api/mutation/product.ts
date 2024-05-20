@@ -1,6 +1,6 @@
-import { graphql } from "../../gql";
+import { gql } from '@apollo/client';
 
-export const PRODUCT_SEARCHED_QUERY = graphql(`
+export const PRODUCT_SEARCHED_QUERY = gql`
   query GetProductList($id: String!) {
     products(options: { take: 1, filter: { id: { eq: $id } } }) {
       items {
@@ -18,9 +18,9 @@ export const PRODUCT_SEARCHED_QUERY = graphql(`
       }
     }
   }
-`);
+`;
 
-export const SEARCH_QUERY = graphql(`
+export const SEARCH_QUERY = gql`
   query Search($term: String!) {
     search(input: { term: $term }) {
       totalItems
@@ -40,4 +40,4 @@ export const SEARCH_QUERY = graphql(`
       }
     }
   }
-`);
+`;

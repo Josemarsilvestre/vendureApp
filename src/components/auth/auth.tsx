@@ -1,60 +1,84 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import LoginScreen from "./login";
-import { useNavigation } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
-
+import { useMutation, useLazyQuery } from "@apollo/client";
+import { LOGOUT } from "../../api/mutation/auth";
 import { Context } from "../../context/context";
+import { Alert } from "react-native";
+import { GET_CUSTOMER } from "../../api/mutation/profile";
+import { SHOW_ORDER } from "../../api/mutation/cart";
+import PageLoading from "../loading/PageLoading";
 
 interface AuthScreenProps {
   children: React.ReactNode;
-  refetchProfile: any;
-  refetchCart: any;
+  navigation: any;
 }
 
-export default function AuthScreen({
-  children,
-  refetchProfile,
-  refetchCart,
-}: AuthScreenProps) {
+export default function AuthScreen({ children, navigation }: AuthScreenProps) {
   const { state, dispatch } = useContext(Context);
-  const navigation = useNavigation();
+  const [checkingToken, setCheckingToken] = useState(true);
 
-  const setIsLogged = (boolean: boolean) => {
-    dispatch({ type: "isLogged", payload: boolean });
+  const [getCustomer, { data: customerData, loading: customerLoading }] = useLazyQuery(GET_CUSTOMER);
+  const [getOrder, { refetch: refetchCart }] = useLazyQuery(SHOW_ORDER);
+
+  const setIsLogged = (isLogged: boolean) => {
+    dispatch({ type: "isLogged", payload: isLogged });
   };
 
-  const checkTokenExpiration = async () => {
+  const [logoutMutation] = useMutation(LOGOUT, {
+    onError: (error) => {
+      Alert.alert("Erro", error.message);
+    },
+    onCompleted: async () => {
+      try {
+        await refetchCart();
+        await SecureStore.deleteItemAsync("token");
+        setIsLogged(false);
+        navigation.navigate("Profile");
+      } catch (error) {
+        console.error(error);
+        Alert.alert("Erro", "Ocorreu um erro. Por favor, tente novamente.");
+      }
+    },
+  });
+
+  useEffect(() => {
+    checkTokenExistence();
+  }, []);
+
+  const checkTokenExistence = async () => {
     try {
       const token = await SecureStore.getItemAsync("token");
-      if (!token) {
-        setIsLogged(false);
-        return;
+
+      if (token) {
+        await getCustomer();
+        await getOrder();
+        setIsLogged(true);
+      } else {
+        await logoutMutation();
       }
-      setIsLogged(true);
     } catch (error) {
-      console.error("Erro ao verificar a expiração do token:", error);
+      console.error("Erro ao verificar a existência do token:", error);
+      await logoutMutation();
+    } finally {
+      setCheckingToken(false);
     }
   };
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      checkTokenExpiration();
-    });
-    return unsubscribe;
-  }, [navigation]);
+  if (customerLoading || checkingToken) {
+    return <PageLoading />;
+  }
+
+  if (state.isLogged === false || customerData?.activeCustomer === null) {
+    return <LoginScreen navigation={navigation} />;
+  }
 
   return (
     <>
-      {state.isLogged ? (
-        <>
-          {React.cloneElement(children as React.ReactElement<any>, {
-            refetchProfile,
-            refetchCart,
-          })}
-        </>
-      ) : (
-        <LoginScreen navigation={navigation} />
-      )}
+      {React.cloneElement(children as React.ReactElement<any>, {
+        refetchProfile: getCustomer,
+        refetchCart,
+      })}
     </>
   );
 }

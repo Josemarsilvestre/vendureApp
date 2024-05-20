@@ -16,16 +16,9 @@ import AuthScreen from "../auth/auth";
 import PageLoading from "../loading/PageLoading";
 import { GET_CUSTOMER } from "../../api/mutation/profile";
 import { Customer } from "../../../utils/interface";
-import { SHOW_ORDER } from "../../api/mutation/cart";
 
 export default function ProfileScreen({ navigation }) {
-  const {
-    data,
-    loading,
-    error,
-    refetch: refetchProfile,
-  } = useQuery(GET_CUSTOMER);
-  const { refetch: refetchCart } = useQuery(SHOW_ORDER);
+  const { data, loading, error } = useQuery(GET_CUSTOMER);
 
   const insets = useSafeAreaInsets();
 
@@ -63,23 +56,19 @@ export default function ProfileScreen({ navigation }) {
   ];
 
   const activeCustomer: Customer | undefined = data?.activeCustomer || {
+    id: "",
     firstName: "",
     lastName: "",
     emailAddress: "",
     phoneNumber: "",
   };
 
-  if (error) return <PageLoading />;
+  if (error) return <Text>{error.message}</Text>;
 
   return (
-    <AuthScreen refetchProfile={refetchProfile} refetchCart={refetchCart}>
-      {loading ||
-      !activeCustomer ||
-      !activeCustomer.firstName ||
-      !activeCustomer.lastName ? (
-        <>
-          <PageLoading />
-        </>
+    <AuthScreen navigation={navigation}>
+      {loading || data?.activeCustomer === null ? (
+        <PageLoading />
       ) : (
         <ScrollView style={styles.container}>
           <View style={[styles.mainContainer, { paddingTop: insets.top + 20 }]}>
@@ -124,6 +113,10 @@ export default function ProfileScreen({ navigation }) {
     </AuthScreen>
   );
 }
+
+/**||
+      !activeCustomer.firstName ||
+      !activeCustomer.lastName */
 
 const styles = StyleSheet.create({
   container: {
