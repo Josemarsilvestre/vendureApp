@@ -12,7 +12,7 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useQuery, useMutation } from "@apollo/client";
 import { Text } from "react-native-paper";
-import Dropdown from "../common/Dropdown";
+import Dropdown from "../dropdown/Dropdown";
 
 import { GET_CUSTOMER } from "../../api/mutation/profile";
 import { addressSchema } from "../../../utils/validation";
@@ -22,7 +22,7 @@ import {
 } from "../../api/mutation/updateCustomer";
 import TextField from "../common/TextField";
 import PageLoading from "../loading/PageLoading";
-import DropdownController from "../common/DropdownController";
+import DropdownController from "../dropdown/DropdownController";
 
 type AddressFormData = {
   fullName: string;
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 110,
+    marginBottom: 90,
   },
   buttonText: {
     fontSize: 16,

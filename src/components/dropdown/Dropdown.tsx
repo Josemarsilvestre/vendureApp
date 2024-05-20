@@ -2,7 +2,7 @@ import React from 'react';
 import { useController, Control, FieldValues } from 'react-hook-form';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
-import DisplayError from './DisplayError';
+import DisplayError from '../common/DisplayError';
 
 export interface Option {
   label: string;
