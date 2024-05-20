@@ -37,7 +37,7 @@ export default function AuthScreen({ children, navigation }: AuthScreenProps) {
         navigation.navigate("Profile");
       } catch (error) {
         console.error(error);
-        Alert.alert("Erro", "Ocorreu um erro. Por favor, tente novamente.");
+        Alert.alert("Erro", "An error has occurred. Please try again.");
       }
     },
   });
@@ -58,7 +58,6 @@ export default function AuthScreen({ children, navigation }: AuthScreenProps) {
         await logoutMutation();
       }
     } catch (error) {
-      console.error("Erro ao verificar a existência do token:", error);
       await logoutMutation();
     } finally {
       setCheckingToken(false);

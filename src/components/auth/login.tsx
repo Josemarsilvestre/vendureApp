@@ -110,7 +110,6 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
   async function updateAuthToken(newToken: string) {
     try {
       await SecureStore.setItemAsync("token", newToken);
-      console.log(newToken);
     } catch (error) {
       console.error("Erro ao atualizar o token:", error);
       throw error;
