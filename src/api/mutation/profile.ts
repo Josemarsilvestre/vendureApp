@@ -9,6 +9,7 @@ export const GET_CUSTOMER = gql`
       emailAddress
       phoneNumber
       addresses {
+        id
         fullName
         company
         streetLine1

@@ -30,7 +30,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   placeholder,
   style,
   value,
-  onChange
+  onChange,
 }) => {
   const { field } = useController({ name, control });
 
@@ -79,7 +79,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 const styles = StyleSheet.create({
   label: {
     fontSize: 15,
-    marginBottom: 5
+    marginBottom: 5,
   },
   dropdownButton: {
     backgroundColor: '#fff',
@@ -87,13 +87,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 8,
-    marginBottom: 20
+    marginBottom: 20,
   },
   option: {
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc'
-  }
+    borderBottomColor: '#ccc',
+  },
 });
 
 export default Dropdown;

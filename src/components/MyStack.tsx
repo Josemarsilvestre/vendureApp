@@ -38,7 +38,17 @@ type RootStackParamList = {
   Information_account: undefined;
   Password: undefined;
   History: undefined;
-  AddressEdition: undefined;
+  AddressEdition: {
+    id: string;
+    fullName_navigation: string;
+    company_navigation: string;
+    streetLine1_navigation: string;
+    city_navigation: string;
+    province_navigation: string;
+    postalCode_navigation: string;
+    countryCode_navigation: string;
+    phoneNumber_navigation: string;
+  };
   Address: undefined;
   Favorite: undefined;
   Search: undefined;
@@ -198,7 +208,19 @@ export default function MainStackNavigator() {
           ),
           headerRight: () => (
             <TouchableOpacity
-              onPress={() => navigation.navigate("AddressEdition")}
+              onPress={() => {
+                navigation.navigate("AddressEdition", {
+                  id: "",
+                  fullName_navigation: "",
+                  company_navigation: "",
+                  streetLine1_navigation: "",
+                  city_navigation: "",
+                  province_navigation: "",
+                  postalCode_navigation: "",
+                  countryCode_navigation: "",
+                  phoneNumber_navigation: ""
+                });
+              }}
             >
               <Entypo
                 name="add-to-list"

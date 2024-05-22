@@ -50,30 +50,32 @@ export const UPDATE_CUSTOMER_PASSWORD = gql`
   }
 `;
 
-export const REQUEST_UPDATE_CUSTOMER_EMAIL_ADDRESS = gql`
-  mutation requestUpdateCustomerEmailAddress(
-    $password: String!
-    $newEmailAddress: String!
+export const UPDATE_CUSTOMER_ADDRESS = gql`
+  mutation updateCustomerAddres(
+    $id: ID!
+    $fullName: String!
+    $company: String!
+    $streetLine1: String!
+    $city: String!
+    $province: String!
+    $postalCode: String!
+    $countryCode: String!
+    $phoneNumber: String!
   ) {
-    requestUpdateCustomerEmailAddress(
-      password: $password
-      newEmailAddress: $newEmailAddress
+    updateCustomerAddress(
+      input: {
+        id: $id
+        fullName: $fullName
+        company: $company
+        streetLine1: $streetLine1
+        city: $city
+        province: $province
+        postalCode: $postalCode
+        countryCode: $countryCode
+        phoneNumber: $phoneNumber
+      }
     ) {
-      ... on Success {
-        success
-      }
-      ... on InvalidCredentialsError {
-        errorCode
-        message
-      }
-      ... on EmailAddressConflictError {
-        errorCode
-        message
-      }
-      ... on NativeAuthStrategyError {
-        errorCode
-        message
-      }
+      id
     }
   }
 `;

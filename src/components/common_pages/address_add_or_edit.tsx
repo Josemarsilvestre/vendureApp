@@ -8,11 +8,10 @@ import {
   Platform,
   KeyboardAvoidingView,
 } from "react-native";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useQuery, useMutation } from "@apollo/client";
 import { Text } from "react-native-paper";
-import Dropdown from "../dropdown/Dropdown";
 
 import { GET_CUSTOMER } from "../../api/mutation/profile";
 import { addressSchema } from "../../../utils/validation";
@@ -35,7 +34,19 @@ type AddressFormData = {
   phoneNumber: string;
 };
 
-const AddressEdition = ({ navigation }) => {
+const AddressEdition = ({ route, navigation }) => {
+  const {
+    id,
+    fullName_navigation,
+    company_navigation,
+    streetLine1_navigation,
+    city_navigation,
+    province_navigation,
+    postalCode_navigation,
+    countryCode_navigation,
+    phoneNumber_navigation,
+  } = route.params;
+
   const { refetch: refetchProfile } = useQuery(GET_CUSTOMER);
   const {
     data: countryData,
@@ -67,6 +78,17 @@ const AddressEdition = ({ navigation }) => {
     },
   });
 
+  const [formValues, setFormValues] = useState<AddressFormData>({
+    fullName: fullName_navigation || "",
+    company: company_navigation || "",
+    streetLine1: streetLine1_navigation || "",
+    city: city_navigation || "",
+    province: province_navigation || "",
+    postalCode: postalCode_navigation || "",
+    countryCode: countryCode_navigation || "",
+    phoneNumber: phoneNumber_navigation || "",
+  });
+
   const {
     handleSubmit,
     control,
@@ -74,14 +96,14 @@ const AddressEdition = ({ navigation }) => {
   } = useForm<AddressFormData>({
     resolver: yupResolver(addressSchema),
     defaultValues: {
-      fullName: "",
-      company: "",
-      streetLine1: "",
-      city: "",
-      province: "",
-      postalCode: "",
-      countryCode: "",
-      phoneNumber: "",
+      fullName: formValues.fullName,
+      company: formValues.company,
+      streetLine1: formValues.streetLine1,
+      city: formValues.city,
+      province: formValues.province,
+      postalCode: formValues.postalCode,
+      countryCode: formValues.countryCode,
+      phoneNumber: formValues.phoneNumber,
     },
   });
 
@@ -135,6 +157,11 @@ const AddressEdition = ({ navigation }) => {
       value: country.code,
     })) || [];
 
+  const onChangeHandler = (value: string, fieldName: keyof AddressFormData) => {
+    const updatedFormValues = { ...formValues, [fieldName]: value };
+    setFormValues(updatedFormValues);
+  };
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -152,36 +179,48 @@ const AddressEdition = ({ navigation }) => {
               label="Fullname"
               control={control}
               errors={errors.fullName?.message}
+              value={formValues.fullName}
+              onChange={(value) => onChangeHandler(value, "fullName")}
               name="fullName"
             />
             <TextField
               label="Enterprise"
               control={control}
               errors={errors.company?.message}
+              value={formValues.company}
+              onChange={(value) => onChangeHandler(value, "company")}
               name="company"
             />
             <TextField
               label="Address"
               control={control}
               errors={errors.streetLine1?.message}
+              value={formValues.streetLine1}
+              onChange={(value) => onChangeHandler(value, "streetLine1")}
               name="streetLine1"
             />
             <TextField
               label="City"
               control={control}
               errors={errors.city?.message}
+              value={formValues.city}
+              onChange={(value) => onChangeHandler(value, "city")}
               name="city"
             />
             <TextField
               label="Council/Province"
               control={control}
               errors={errors.province?.message}
+              value={formValues.province}
+              onChange={(value) => onChangeHandler(value, "province")}
               name="province"
             />
             <TextField
               label="Postal code"
               control={control}
               errors={errors.postalCode?.message}
+              value={formValues.postalCode}
+              onChange={(value) => onChangeHandler(value, "postalCode")}
               name="postalCode"
             />
             <Text style={styles.label}>Country</Text>
@@ -189,12 +228,16 @@ const AddressEdition = ({ navigation }) => {
               name="countryCode"
               control={control}
               options={countryOptions}
+              value={formValues.countryCode}
+              onChange={(value) => onChangeHandler(value, "countryCode")}
               placeholder="Select a country..."
             />
             <TextField
               label="Phone"
               control={control}
               errors={errors.phoneNumber?.message}
+              value={formValues.phoneNumber}
+              onChange={(value) => onChangeHandler(value, "phoneNumber")}
               name="phoneNumber"
             />
             <TouchableOpacity

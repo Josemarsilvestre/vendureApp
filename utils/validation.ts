@@ -45,6 +45,7 @@ export const changePasswordSchema = Yup.object().shape({
 });
 
 export const addressSchema = Yup.object().shape({
+  id: Yup.string(),
   fullName: Yup.string().required("First name required"),
   company: Yup.string(),
   streetLine1: Yup.string().required("Please enter the street where you live"),

@@ -1,12 +1,14 @@
 import React from 'react';
-import { Controller, Control, FieldValues, useFormState, FieldError } from 'react-hook-form';
-import Dropdown, { Option }  from './Dropdown';
+import { Controller, Control, FieldValues, useFormState } from 'react-hook-form';
+import Dropdown, { Option } from './Dropdown';
 
 interface DropdownControllerProps {
   name: keyof FieldValues;
   control: Control<any>;
   options: Option[];
   placeholder?: string;
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
 const DropdownController: React.FC<DropdownControllerProps> = ({
@@ -14,6 +16,8 @@ const DropdownController: React.FC<DropdownControllerProps> = ({
   control,
   options,
   placeholder,
+  value,
+  onChange,
 }) => {
   const { errors } = useFormState({ control });
 
@@ -27,11 +31,17 @@ const DropdownController: React.FC<DropdownControllerProps> = ({
       name={name}
       render={({ field }) => (
         <Dropdown
+          label={name.toString()}
           name={name}
           control={control}
           options={options}
-          value={typeof field.value === 'string' ? field.value : ''}
-          onChange={(value: string) => field.onChange(value)}
+          value={value !== undefined ? value : field.value}
+          onChange={(value: string) => {
+            field.onChange(value);
+            if (onChange) {
+              onChange(value);
+            }
+          }}
           placeholder={placeholder || 'Select...'}
           errors={errorMessage}
         />

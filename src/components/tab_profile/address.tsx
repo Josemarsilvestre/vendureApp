@@ -7,7 +7,7 @@ import { Feather, Fontisto } from "@expo/vector-icons";
 import PageLoading from "../loading/PageLoading";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export default function AddressScreen() {
+export default function AddressScreen({navigation}) {
   const { loading, error, data } = useQuery(GET_CUSTOMER);
   const insets = useSafeAreaInsets();
 
@@ -42,6 +42,19 @@ export default function AddressScreen() {
                 backgroundColor: "#d3d3d3",
                 borderRadius: moderateScale(10),
                 marginBottom: moderateScale(-8)
+              }}
+              onPress={() => {
+                navigation.navigate("AddressEdition", {
+                  id: address.id,
+                  fullName_navigation: address.fullName,
+                  company_navigation: address.company,
+                  streetLine1_navigation: address.streetLine1,
+                  city_navigation: address.city,
+                  province_navigation: address.province,
+                  postalCode_navigation: address.postalCode,
+                  countryCode_navigation: address.country.code,
+                  phoneNumber_navigation: address.phoneNumber
+                });
               }}
             >
               <Text
