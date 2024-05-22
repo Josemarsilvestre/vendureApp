@@ -39,7 +39,7 @@ type RootStackParamList = {
   Password: undefined;
   History: undefined;
   AddressEdition: {
-    id: string;
+    id: number;
     fullName_navigation: string;
     company_navigation: string;
     streetLine1_navigation: string;
@@ -210,7 +210,7 @@ export default function MainStackNavigator() {
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate("AddressEdition", {
-                  id: "",
+                  id: 0,
                   fullName_navigation: "",
                   company_navigation: "",
                   streetLine1_navigation: "",

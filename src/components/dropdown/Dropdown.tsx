@@ -49,7 +49,6 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   return (
     <View>
-      {label && <Text style={styles.label}>{label}</Text>}
       <TouchableOpacity
         style={[styles.dropdownButton, style]}
         onPress={() => setIsOpen(!isOpen)}
