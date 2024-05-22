@@ -42,6 +42,9 @@ export const changePasswordSchema = Yup.object().shape({
   newPassword: Yup.string()
     .required("Please enter the new password\n")
     .min(4, "The password must be at least 4 characters long"),
+  confirmPassword: Yup.string()
+    .required("Password confirmation required\n")
+    .oneOf([Yup.ref("newPassword")], "Password confirmation is incorrect"),
 });
 
 export const addressSchema = Yup.object().shape({

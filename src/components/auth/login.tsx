@@ -87,9 +87,9 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
 
         if (channels && channels.length > 0) {
           const token = channels[0].token;
-
+          const pass = password;
           // Armazena o token e a senha de forma segura
-          await updateAuthToken(token);
+          await updateAuthToken(token, pass);
         }
       }
     } catch (error) {
@@ -107,9 +107,10 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
     }
   }
 
-  async function updateAuthToken(newToken: string) {
+  async function updateAuthToken(newToken: string, pass: string) {
     try {
       await SecureStore.setItemAsync("token", newToken);
+      await SecureStore.setItemAsync("password", pass);
     } catch (error) {
       console.error("Erro ao atualizar o token:", error);
       throw error;

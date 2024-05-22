@@ -1,20 +1,29 @@
-import { useMutation, useQuery } from '@apollo/client';
-import { View, ScrollView, Alert, KeyboardAvoidingView, Platform, TouchableOpacity, StyleSheet } from 'react-native'
+import { useMutation, useQuery } from "@apollo/client";
+import {
+  View,
+  ScrollView,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { moderateScale } from "react-native-size-matters";
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as SecureStore from 'expo-secure-store';
-import { Text } from 'react-native-paper';
-import { useForm } from 'react-hook-form';
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as SecureStore from "expo-secure-store";
+import { Text } from "react-native-paper";
+import { useForm } from "react-hook-form";
 
-import { UPDATE_CUSTOMER_PASSWORD } from '../../api/mutation/updateCustomer';
-import { GET_CUSTOMER } from '../../api/mutation/profile';
-import { changePasswordSchema } from '../../../utils/validation';
-import TextField from '../common/TextField';
-import { useState } from 'react';
+import { UPDATE_CUSTOMER_PASSWORD } from "../../api/mutation/updateCustomer";
+import { GET_CUSTOMER } from "../../api/mutation/profile";
+import { changePasswordSchema } from "../../../utils/validation";
+import TextField from "../common/TextField";
+import { useState } from "react";
 
 type PasswordFormData = {
   currentPassword: string;
   newPassword: string;
+  confirmPassword: string;
 };
 
 export default function PasswordScreen({ navigation }) {
@@ -28,8 +37,8 @@ export default function PasswordScreen({ navigation }) {
       try {
         await refetchProfile();
         setButtonText("Updated");
-        setButtonColor("#00FF00");
-        navigation.goBack()
+        setButtonColor("green");
+        navigation.goBack();
       } catch (error) {
         console.error(error);
         Alert.alert("Erro", "Ocorreu um erro. Por favor, tente novamente.");
@@ -45,7 +54,8 @@ export default function PasswordScreen({ navigation }) {
     resolver: yupResolver(changePasswordSchema),
     defaultValues: {
       currentPassword: "",
-      newPassword: ""
+      newPassword: "",
+      confirmPassword: "",
     },
   });
 
@@ -56,22 +66,28 @@ export default function PasswordScreen({ navigation }) {
       const savedPassword = await SecureStore.getItemAsync("password");
       if (savedPassword === currentPassword) {
         if (currentPassword === newPassword) {
-          Alert.alert("Erro", "A nova palavra-passe não pode ser igual à atual.");
+          Alert.alert(
+            "Erro",
+            "A nova palavra-passe não pode ser igual à atual."
+          );
         } else {
           await updateCustomerPassword({
             variables: { currentPassword, newPassword },
           });
-          
+
           await SecureStore.setItemAsync("password", newPassword);
         }
       } else {
-        Alert.alert("Erro", "A palavra-passe atual não corresponde à guardada.");
+        Alert.alert(
+          "Erro",
+          "A palavra-passe atual não corresponde à guardada."
+        );
       }
     } catch (error) {
       console.error(error);
     }
   };
-  
+
   const [buttonText, setButtonText] = useState("Update");
   const [buttonColor, setButtonColor] = useState("#212B36");
 
@@ -97,17 +113,30 @@ export default function PasswordScreen({ navigation }) {
                 label="Current password"
                 control={control as any}
                 errors={errors.currentPassword?.message}
+                type="password"
                 name="currentPassword"
               />
               <TextField
                 label="New password"
                 control={control as any}
                 errors={errors.newPassword?.message}
+                type="password"
                 name="newPassword"
               />
 
+              <TextField
+                label="Confirm password"
+                errors={errors.confirmPassword?.message}
+                type="password"
+                name="confirmPassword"
+                control={control}
+              />
+
               <TouchableOpacity
-                style={[styles.TouchableOpacitybtn, { backgroundColor: buttonColor }]}
+                style={[
+                  styles.TouchableOpacitybtn,
+                  { backgroundColor: buttonColor },
+                ]}
                 onPress={handleSubmit(onSubmit)}
               >
                 <Text style={styles.TouchableOpacitybtnText}>{buttonText}</Text>
@@ -117,7 +146,7 @@ export default function PasswordScreen({ navigation }) {
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
