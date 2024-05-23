@@ -25,3 +25,25 @@ export const GET_CUSTOMER = gql`
     }
   }
 `;
+
+
+export const UPDATE_CUSTOMER = gql`
+  mutation updateCustomer(
+    $firstName: String!
+    $lastName: String!
+    $phoneNumber: String!
+  ) {
+    updateCustomer(
+      input: {
+        firstName: $firstName
+        lastName: $lastName
+        phoneNumber: $phoneNumber
+      }
+    ) {
+      firstName
+      lastName
+      emailAddress
+      phoneNumber
+    }
+  }
+`;

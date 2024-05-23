@@ -6,6 +6,7 @@ import { useQuery } from "@apollo/client";
 import { GET_ALL_COLLECTIONS_QUERY } from '../../api/mutation/category';
 import FeedSectionContainer from '../common/FeedSectionContainer';
 import { Category } from '../../../utils/interface';
+import { moderateScale } from 'react-native-size-matters';
 
 export interface CategoriesProps {
   navigation: any;
@@ -57,13 +58,13 @@ const styles = StyleSheet.create({
   categoryItem: {
     flexDirection: "column",
     alignItems: "center",
-    marginRight: 15,
+    marginRight: moderateScale(15),
   },
   imageContainer: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    borderWidth: 2,
+    width: moderateScale(70),
+    height: moderateScale(70),
+    borderRadius: moderateScale(35),
+    borderWidth: moderateScale(2),
     borderColor: "#d6d6d6",
     overflow: "hidden",
   },
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#4d4d4d",
-    maxWidth: 90,
+    maxWidth: moderateScale(90),
     textAlign: "center",
   },
 });

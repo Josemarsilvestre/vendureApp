@@ -3,20 +3,19 @@ import {
   Image,
   Text,
   View,
-  StyleSheet,
   TouchableOpacity,
   useWindowDimensions,
 } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import { moderateScale } from "react-native-size-matters";
 import { useMutation, useQuery } from "@apollo/client";
 
-import ProductPrice from "./ProductPrice";
-import Icons from "../common/Icons";
-import { Product } from "../../../utils/interface";
-import { Button } from "../common/Buttons";
-import { ADD_TO_CART } from "../../api/mutation/cart";
-import { SHOW_ORDER } from "../../api/mutation/cart";
+import ProductPrice from "../ProductPrice";
+import Icons from "../../common/Icons";
+import { Product } from "../../../../utils/interface";
+import { Button } from "../../common/Buttons";
+import { ADD_TO_CART } from "../../../api/mutation/order";
+import { SHOW_ORDER } from "../../../api/mutation/order";
+import styles from "./style/style.productCard";
 
 interface Category {
   productVariants: {
@@ -86,7 +85,7 @@ export default function ProductCard({
             }
           >
             <View style={styles.cardContent} key={items_.id}>
-              <View style={[styles.imageContainer, { width: imageWidth }]}>
+              <View style={[styles.imageContainer, { width: imageWidth }]}> 
                 <Image
                   source={{
                     uri: item.featuredAsset.source || "",
@@ -144,100 +143,3 @@ export default function ProductCard({
     />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: "#E5E7EB",
-    position: "relative",
-    marginBottom: 9,
-  },
-  absolute: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    zIndex: 10,
-  },
-  cardContent: {
-    flexDirection: "row",
-    paddingHorizontal: 12,
-    gap: 12,
-  },
-  imageContainer: {
-    flex: 1,
-    position: "relative",
-  },
-  image: {
-    width: "80%",
-    height: "100%",
-    borderRadius: 10,
-  },
-  colorContainer: {
-    position: "absolute",
-    bottom: 8,
-    left: 8,
-    flexDirection: "row",
-    gap: 6,
-  },
-  color: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "#D1D5DB",
-  },
-  infoContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
-  },
-  title: {
-    fontSize: 16,
-    color: "#374151",
-    lineHeight: 17,
-    height: 42,
-    textAlign: "right",
-  },
-  AddContainer: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    marginTop: 3,
-  },
-  addButton: {
-    flexDirection: "row",
-    paddingVertical: moderateScale(10),
-    paddingHorizontal: moderateScale(15),
-    backgroundColor: "#334255",
-    borderRadius: moderateScale(8),
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: moderateScale(1),
-  },
-  addButtonText: {
-    fontSize: 14,
-    color: "#fff",
-  },
-  addButtonIcon: {
-    color: "#F59E0B",
-  },
-  addedButton: {
-    flexDirection: "row",
-    paddingVertical: moderateScale(10),
-    paddingHorizontal: moderateScale(15),
-    backgroundColor: "green",
-    borderRadius: moderateScale(8),
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: moderateScale(1),
-  },
-  priceContainer: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    marginTop: 2,
-  },
-  notAvailableText: {
-    fontSize: 14,
-    color: "#6B7280",
-    height: 24,
-  },
-});

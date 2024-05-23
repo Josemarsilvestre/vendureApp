@@ -18,7 +18,7 @@ import TextField from "../common/TextField";
 import { registerSchema } from "../../../utils/validation";
 import { Context } from "../../context/context";
 import {client} from "../../api/client";
-import styles from "./Styles.Auth";
+import styles from "./style/styles.auth";
 
 type RegisterFormData = {
   emailAddress: string;

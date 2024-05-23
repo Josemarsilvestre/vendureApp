@@ -14,8 +14,8 @@ import * as SecureStore from "expo-secure-store";
 import { Text } from "react-native-paper";
 import { useForm } from "react-hook-form";
 
-import { UPDATE_CUSTOMER_PASSWORD } from "../../api/mutation/updateCustomer";
-import { GET_CUSTOMER } from "../../api/mutation/profile";
+import { UPDATE_CUSTOMER_PASSWORD } from "../../api/mutation/password";
+import { GET_CUSTOMER } from "../../api/mutation/customer";
 import { changePasswordSchema } from "../../../utils/validation";
 import TextField from "../common/TextField";
 import { useState } from "react";

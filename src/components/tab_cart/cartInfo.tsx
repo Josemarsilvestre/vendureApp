@@ -1,5 +1,8 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
+import { moderateScale } from "react-native-size-matters";
+import styles from "./style/styles.cart";
+
 import formatNumber from "../../../utils/formatNumber";
 
 interface TaxSummary {
@@ -18,21 +21,21 @@ const CartInfo: React.FC<Order> = ({ taxSummary }) => {
     <View style={styles.container}>
       {taxSummary.map((summary, index) => (
         <View key={index}>
-          <View style={styles.infoRow}>
+          <View style={styles.infoRow_CartInfo}>
             <Text>Description</Text>
             <View style={styles.priceContainer}>
               <Text style={styles.label}>{summary.description}</Text>
             </View>
           </View>
 
-          <View style={styles.infoRow}>
+          <View style={styles.infoRow_CartInfo}>
             <Text>Tax Rate</Text>
             <View style={styles.priceContainer}>
               <Text style={styles.label}>{summary.taxRate}%</Text>
             </View>
           </View>
 
-          <View style={styles.infoRow}>
+          <View style={styles.infoRow_CartInfo}>
             <Text>Taxe Base</Text>
             <View style={styles.priceContainer}>
               <Text style={styles.label}>{formatNumber(summary.taxBase)}</Text>
@@ -40,7 +43,7 @@ const CartInfo: React.FC<Order> = ({ taxSummary }) => {
             </View>
           </View>
 
-          <View style={styles.infoRow}>
+          <View style={[styles.infoRow_CartInfo, {borderBottomColor: '#fff'}]}>
             <Text style={styles.label}>Total Taxes</Text>
             <View style={styles.priceContainer}>
               <Text>{formatNumber(summary.taxTotal)}</Text>
@@ -49,55 +52,8 @@ const CartInfo: React.FC<Order> = ({ taxSummary }) => {
           </View>
         </View>
       ))}
-
-      <Text style={styles.infoText}>
-        Shipping is calculated based on your item's address, delivery time,
-        weight, and volume.
-      </Text>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    marginTop: 8,
-    marginBottom: 100,
-  },
-  infoRow: {
-    paddingBottom: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: "#E5E7EB",
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  label: {
-    fontSize: 14,
-  },
-  priceContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  currency: {
-    marginLeft: 2,
-  },
-  infoText: {
-    paddingBottom: 8,
-    fontSize: 14,
-  },
-  discountText: {
-    color: "red",
-  },
-  discountContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  discountPercentage: {
-    color: "red",
-    fontSize: 14,
-    marginRight: 2,
-  },
-});
 
 export default CartInfo;

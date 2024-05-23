@@ -4,7 +4,6 @@ import {
   Text,
   Pressable,
   TextInput,
-  StyleSheet,
   Image,
   useWindowDimensions,
   TouchableOpacity,
@@ -16,14 +15,36 @@ import Icons from "../common/Icons";
 import EmptySearchList from "../emptyList/EmptySearchList";
 import ProductPrice from "../product/ProductPrice";
 import ShowWrapper from "../common/ShowWrapper";
-import { SEARCH_QUERY } from "../../api/mutation/product";
+import styles from "./style/styles.search";
+import { SEARCH_QUERY } from "../../api/mutation/search";
+
+interface Product {
+  productId: string;
+  productVariantId: string;
+  productVariantName: string;
+  productAsset: {
+    preview: string;
+  };
+  priceWithTax: {
+    value: number;
+    __typename: string;
+  };
+  score: number;
+}
+
+interface SearchData {
+  search: {
+    totalItems: number;
+    items: Product[];
+  };
+}
 
 export default function SearchScreen({ navigation }) {
   const [search, setSearch] = useState("");
   const windowWidth = useWindowDimensions().width;
   const imageWidth = windowWidth * 0.2;
 
-  const { data, loading, error, fetchMore } = useQuery(SEARCH_QUERY, {
+  const { data, loading, error, fetchMore } = useQuery<SearchData>(SEARCH_QUERY, {
     variables: { term: search },
   });
 
@@ -124,90 +145,3 @@ export default function SearchScreen({ navigation }) {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: "#fff",
-  },
-  searchBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 10,
-    backgroundColor: "#f0f0f0",
-    paddingHorizontal: 10,
-  },
-  searchIcon: {
-    marginRight: 10,
-  },
-  input: {
-    flex: 1,
-    paddingVertical: 10,
-    fontSize: 16,
-    color: "#333",
-  },
-  closeIcon: {
-    marginLeft: 10,
-  },
-  productList: {
-    flex: 1,
-    paddingTop: 20,
-  },
-  innerList: {
-    flex: 1,
-  },
-  productItem: {
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#f0f0f0",
-    marginBottom: 10,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  itemContainer: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  imageContainer: {
-    width: "40%",
-    aspectRatio: 1,
-    marginRight: 10,
-  },
-  image: {
-    width: "100%",
-    height: "100%",
-    borderRadius: 10,
-  },
-  textContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
-    width: "100%",
-    paddingHorizontal: 10,
-    marginTop: -60,
-  },
-  title: {
-    fontSize: 16,
-    paddingBottom: 5,
-    color: "#333",
-    textAlign: "right",
-  },
-  rating: {
-    flexDirection: "row",
-  },
-  ratingText: {
-    fontSize: 14,
-    color: "#6B7280",
-  },
-  starIcon: {
-    color: "#F59E0B",
-    marginTop: 2
-  },  
-  priceContainer: {
-    flexDirection: "row",
-    alignItems: "flex-end",
-    justifyContent: "flex-end",
-  },
-});

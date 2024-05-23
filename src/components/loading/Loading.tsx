@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
-import { View, ViewStyle, StyleSheet } from 'react-native';
-import { moderateScale } from 'react-native-size-matters';
+import { View, ViewStyle } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
+
+import styles from './style/style.loading';
 
 interface LoadingProps {
   style?: ViewStyle;
@@ -43,7 +44,7 @@ const Loading: React.FC<LoadingProps> = ({ style }) => {
   }, []);
 
   return (
-    <View style={[styles.constainer, style]}>
+    <View style={[styles.constainer_Loading, style]}>
         <Animated.View
         style={[styles.AnimatedStyle, { left: 8 }, animatedOnePointStyles]}
         />
@@ -62,19 +63,3 @@ const Loading: React.FC<LoadingProps> = ({ style }) => {
 }
 
 export default Loading;
-
-const styles = StyleSheet.create({
-  constainer:{
-    width: moderateScale(80), 
-    height: moderateScale(24), 
-    position: 'relative'
-  },
-  AnimatedStyle:{
-    width: moderateScale(13), 
-    height: moderateScale(13), 
-    backgroundColor: 'white', 
-    borderRadius: moderateScale(13/2), 
-    position: 'absolute', 
-    top: '15%'
-  }
-})

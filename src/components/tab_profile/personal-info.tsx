@@ -12,12 +12,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useQuery, useMutation } from "@apollo/client";
 
-import { GET_CUSTOMER } from "../../api/mutation/profile";
+import { GET_CUSTOMER } from "../../api/mutation/customer";
 import { Customer } from "../../../utils/interface";
 import { moderateScale } from "react-native-size-matters";
 import TextField from "../common/TextField";
 import { updateCustomerSchema } from "../../../utils/validation";
-import { UPDATE_CUSTOMER } from "../../api/mutation/updateCustomer";
+import { UPDATE_CUSTOMER } from "../../api/mutation/customer";
 import { Text } from "react-native-paper";
 
 type CustomerFormData = {

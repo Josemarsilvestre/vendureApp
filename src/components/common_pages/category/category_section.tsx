@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 
-import ProductCard from "../product/ProductCard";
+import ProductCard from "../../product/productCard/ProductCard";
 //import SubCategories from "../tab_category/SubCategories";
-import Icons from "../common/Icons";
+import Icons from "../../common/Icons";
+import styles from "./styles.category";
 
 export default function CategorySectionScreen({ route, navigation }) {
   const { category } = route.params;
@@ -34,47 +35,3 @@ export default function CategorySectionScreen({ route, navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  content: {
-    flex: 1,
-    paddingHorizontal: 2,
-    marginBottom: 10
-  },
-  productsContainer: {
-    flex: 1,
-    paddingVertical: 2,
-  },
-  filterContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 2,
-  },
-  infoContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 2,
-    marginLeft: 10,
-    marginRight: 5,
-    marginTop: 10,
-    borderBottomWidth: 2,
-    borderBottomColor: "#E5E7EB",
-  },
-  infoText: {
-    fontSize: 16,
-    color: "#6B7280",
-  },
-  notFoundText: {
-    textAlign: "center",
-    color: "red",
-  },
-  divider: {
-    height: 2,
-    backgroundColor: "lightgray",
-    marginVertical: 8,
-  },
-});

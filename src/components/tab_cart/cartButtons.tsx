@@ -1,7 +1,9 @@
 import React from "react";
-import { TouchableOpacity, Text, View, StyleSheet } from "react-native";
+import { TouchableOpacity, Text, View } from "react-native";
 import { useMutation } from "@apollo/client";
-import { ADJUST_ORDER, REMOVE_ONLY_ORDER_LINE } from "../../api/mutation/cart";
+
+import { ADJUST_ORDER, REMOVE_ONLY_ORDER_LINE } from "../../api/mutation/order";
+import styles from "./style/styles.cart";
 
 import Icons from "../common/Icons";
 
@@ -40,57 +42,24 @@ const CartButtons: React.FC<CartButtonsProps> = ({ itemID, quantity, refetchCart
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container_CartButtons}>
       <TouchableOpacity onPress={increase} style={styles.pressable}>
-        <Icons.AntDesign name="plus" size={18} style={styles.icon} />
+        <Icons.AntDesign name="plus" size={18} style={styles.icon_CartButtons} />
       </TouchableOpacity>
 
       <Text style={styles.quantity}>{quantity}</Text>
 
       {quantity === 1 ? (
         <TouchableOpacity onPress={removeFromCart} style={styles.pressable}>
-          <Icons.AntDesign name="delete" size={18} style={styles.icon} />
+          <Icons.AntDesign name="delete" size={18} style={styles.icon_CartButtons} />
         </TouchableOpacity>
       ) : (
         <TouchableOpacity onPress={decrease} style={styles.pressable}>
-          <Icons.AntDesign name="minus" size={18} style={styles.icon} />
+          <Icons.AntDesign name="minus" size={18} style={styles.icon_CartButtons} />
         </TouchableOpacity>
       )}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 8,
-    paddingHorizontal: 1,
-    borderRadius: 4,
-    backgroundColor: "white",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-    elevation: 3,
-    justifyContent: "space-evenly",
-    marginRight: 30
-  },
-  pressable: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  icon: {
-    color: "red",
-  },
-  quantity: {
-    minWidth: 22,
-    textAlign: "center",
-    fontSize: 14,
-  },
-});
 
 export default CartButtons;

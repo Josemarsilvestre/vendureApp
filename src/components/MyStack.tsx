@@ -3,7 +3,7 @@ import {
   createStackNavigator,
   StackNavigationProp,
 } from "@react-navigation/stack";
-import { useNavigation, NavigationContainer } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { Entypo, Ionicons } from "@expo/vector-icons";
 
 // Auth Pages
@@ -14,7 +14,7 @@ import TabNavigator from "./Mytabs";
 
 // Profile Screen
 import FavoriteScreen from "./tab_profile/favorite";
-import UserHistoryScreen from "./tab_profile/user-history";
+import UserHistoryScreen from "./tab_profile/purchaseHistory";
 import PersonalInfoScreen from "./tab_profile/personal-info";
 import AddressScreen from "./tab_profile/address";
 
@@ -22,13 +22,15 @@ import AddressScreen from "./tab_profile/address";
 import SearchScreen from "./tab_category/search";
 
 // Products
-import ProductScreen from "./common_pages/product";
-import CategorySectionScreen from "./common_pages/category_section";
+import ProductScreen from "./common_pages/product/product";
+import CategorySectionScreen from "./common_pages/category/category_section";
 import SettingScreen from "./tab_profile/settings";
 import ProductSearchedScreen from "./product/productSearched";
 import PasswordScreen from "./tab_profile/password";
-import AddressEdition from "./common_pages/address_add_or_edit";
+import AddressEdition from "./common_pages/address/address_add_or_edit";
 import { TouchableOpacity } from "react-native";
+import PaymentScreen from "./payment/payment";
+import { moderateScale } from "react-native-size-matters";
 
 type RootStackParamList = {
   TabNavigator: undefined;
@@ -55,12 +57,14 @@ type RootStackParamList = {
   ProductSearched: undefined;
   Products: undefined;
   CategorySection: undefined;
+  Payments: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 export default function MainStackNavigator() {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const style_fix = {marginLeft: moderateScale(16)}
 
   return (
     <Stack.Navigator
@@ -100,7 +104,7 @@ export default function MainStackNavigator() {
               name="arrow-back"
               size={28}
               color="#000"
-              style={{ marginLeft: 16 }}
+              style={style_fix}
               onPress={() => navigation.goBack()}
             />
           ),
@@ -117,7 +121,7 @@ export default function MainStackNavigator() {
               name="arrow-back"
               size={28}
               color="#000"
-              style={{ marginLeft: 16 }}
+              style={style_fix}
               onPress={() => navigation.goBack()}
             />
           ),
@@ -134,7 +138,7 @@ export default function MainStackNavigator() {
               name="arrow-back"
               size={28}
               color="#000"
-              style={{ marginLeft: 16 }}
+              style={style_fix}
               onPress={() => navigation.goBack()}
             />
           ),
@@ -151,7 +155,7 @@ export default function MainStackNavigator() {
               name="arrow-back"
               size={28}
               color="#000"
-              style={{ marginLeft: 16 }}
+              style={style_fix}
               onPress={() => navigation.goBack()}
             />
           ),
@@ -161,14 +165,14 @@ export default function MainStackNavigator() {
         name="History"
         component={UserHistoryScreen}
         options={{
-          title: "Shopping history",
+          title: "History",
           headerShown: true,
           headerLeft: () => (
             <Ionicons
               name="arrow-back"
               size={28}
               color="#000"
-              style={{ marginLeft: 16 }}
+              style={style_fix}
               onPress={() => navigation.goBack()}
             />
           ),
@@ -185,7 +189,7 @@ export default function MainStackNavigator() {
               name="arrow-back"
               size={28}
               color="#000"
-              style={{ marginLeft: 16 }}
+              style={style_fix}
               onPress={() => navigation.goBack()}
             />
           ),
@@ -202,7 +206,7 @@ export default function MainStackNavigator() {
               name="arrow-back"
               size={28}
               color="#000"
-              style={{ marginLeft: 16 }}
+              style={style_fix}
               onPress={() => navigation.goBack()}
             />
           ),
@@ -218,7 +222,7 @@ export default function MainStackNavigator() {
                   province_navigation: "",
                   postalCode_navigation: "",
                   countryCode_navigation: "",
-                  phoneNumber_navigation: ""
+                  phoneNumber_navigation: "",
                 });
               }}
             >
@@ -226,7 +230,7 @@ export default function MainStackNavigator() {
                 name="add-to-list"
                 size={28}
                 color="#000"
-                style={{ marginRight: 16 }}
+                style={{ marginRight: moderateScale(16) }}
               />
             </TouchableOpacity>
           ),
@@ -243,7 +247,7 @@ export default function MainStackNavigator() {
               name="arrow-back"
               size={28}
               color="#000"
-              style={{ marginLeft: 16 }}
+              style={style_fix}
               onPress={() => navigation.goBack()}
             />
           ),
@@ -260,7 +264,7 @@ export default function MainStackNavigator() {
               name="arrow-back"
               size={28}
               color="#000"
-              style={{ marginLeft: 16 }}
+              style={style_fix}
               onPress={() => navigation.goBack()}
             />
           ),
@@ -277,7 +281,7 @@ export default function MainStackNavigator() {
               name="arrow-back"
               size={28}
               color="#000"
-              style={{ marginLeft: 16 }}
+              style={style_fix}
               onPress={() => navigation.goBack()}
             />
           ),
@@ -293,7 +297,7 @@ export default function MainStackNavigator() {
               name="arrow-back"
               size={28}
               color="#000"
-              style={{ marginLeft: 16 }}
+              style={style_fix}
               onPress={() => navigation.goBack()}
             />
           ),
@@ -309,7 +313,23 @@ export default function MainStackNavigator() {
               name="arrow-back"
               size={28}
               color="#000"
-              style={{ marginLeft: 16 }}
+              style={style_fix}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Payments"
+        component={PaymentScreen}
+        options={{
+          headerShown: true,
+          headerLeft: () => (
+            <Ionicons
+              name="arrow-back"
+              size={28}
+              color="#000"
+              style={style_fix}
               onPress={() => navigation.goBack()}
             />
           ),

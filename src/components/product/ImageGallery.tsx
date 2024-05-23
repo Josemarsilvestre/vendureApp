@@ -24,7 +24,7 @@ export default ImageGallery;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: moderateScale(-18),
+    marginTop: moderateScale(-14),
     borderRadius: moderateScale(10),
     overflow: "hidden",
   },

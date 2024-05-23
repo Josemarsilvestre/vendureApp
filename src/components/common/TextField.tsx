@@ -1,9 +1,9 @@
 import React from 'react';
 import { useController, Control, FieldValues } from 'react-hook-form';
-import { TextInput, View, StyleSheet, KeyboardTypeOptions } from 'react-native';
+import { TextInput, View, KeyboardTypeOptions } from 'react-native';
 import { Text } from 'react-native-paper';
 import DisplayError from './DisplayError';
-import StylesText from '../auth/Styles.Auth';
+import StylesText from '../auth/style/styles.auth';
 
 interface TextFieldProps {
   label?: string;
@@ -50,7 +50,7 @@ const TextField: React.FC<TextFieldProps> = ({
 
   return (
     <View>
-      {label && <Text style={styles.label}>{label}</Text>}
+      {label && <Text style={StylesText.label}>{label}</Text>}
       <TextInput
         style={StylesText.SpaceInput}
         keyboardType={keyboardType || (type === 'email' ? 'email-address' : 'default')}
@@ -68,11 +68,5 @@ const TextField: React.FC<TextFieldProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  label: {
-    fontSize: 15,
-    marginBottom: 5,
-  }
-});
 
 export default TextField;

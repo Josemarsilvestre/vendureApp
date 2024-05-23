@@ -15,8 +15,9 @@ import Info from "./Info";
 import FreeShipping from "./FreeShipping";
 import Description from "./Description";
 import ProductPrice from "./ProductPrice";
-import { PRODUCT_SEARCHED_QUERY } from "../../api/mutation/product";
-import { ADD_TO_CART, SHOW_ORDER } from "../../api/mutation/cart";
+import { PRODUCT_SEARCHED_QUERY } from "../../api/mutation/search";
+import { ADD_TO_CART, SHOW_ORDER } from "../../api/mutation/order";
+import styles from "../common_pages/product/styles.product";
 import PageLoading from "../loading/PageLoading";
 
 export default function ProductSearchedScreen({ route, navigation }) {
@@ -83,7 +84,7 @@ export default function ProductSearchedScreen({ route, navigation }) {
     }, 5000);
   };
 
-  if(loading) return <PageLoading />
+  if (loading) return <PageLoading />;
 
   return (
     <View style={styles.container}>
@@ -114,121 +115,42 @@ export default function ProductSearchedScreen({ route, navigation }) {
         </View>
       </ScrollView>
 
-      {addedToCartMap[productVariantID] ? (
-        <TouchableOpacity style={styles.addedButton} disabled>
-          <Text style={styles.addToCartButtonText}>Added to cart</Text>
-          <Icons.Feather
-            name="shopping-cart"
-            size={22}
-            style={{ color: "#F59E0B" }}
-          />
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity
-          style={styles.addToCartButton}
-          onPress={() => handleAddToCart(productVariantID)}
-        >
-          <Text style={styles.addToCartButtonText}>Add to cart</Text>
-          <Icons.Feather
-            name="shopping-cart"
-            size={22}
-            style={{ color: "#F59E0B" }}
-          />
-        </TouchableOpacity>
-      )}
-
-      <View style={styles.iconContainer}>
-        <TouchableOpacity
-          onPress={() => console.log("Navegar para Lista de Desejos")}
-        >
-          <Icons.Feather
-            name="heart"
-            size={28}
-            color="#1F2937"
-            style={styles.icon}
-          />
-        </TouchableOpacity>
+      <View style={[styles.bottomContainer, { paddingBottom: insets.bottom }]}>
+        {addedToCartMap[productVariantID] ? (
+          <TouchableOpacity style={styles.addedButton} disabled>
+            <Text style={styles.addToCartButtonText}>Added to cart</Text>
+            <Icons.Feather
+              name="shopping-cart"
+              size={22}
+              style={{ color: "#F59E0B" }}
+            />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={styles.addToCartButton}
+            onPress={() => handleAddToCart(productVariantID)}
+          >
+            <Text style={styles.addToCartButtonText}>Add to cart</Text>
+            <Icons.Feather
+              name="shopping-cart"
+              size={22}
+              style={{ color: "#F59E0B" }}
+            />
+          </TouchableOpacity>
+        )}
+        <View style={styles.iconContainer}>
+          <TouchableOpacity
+            onPress={() => console.log("Navegar para Lista de Desejos")}
+          >
+            <Icons.Feather
+              name="heart"
+              size={28}
+              color="#1F2937"
+              style={styles.icon}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  scrollContent: {
-    paddingVertical: 16,
-  },
-  content: {
-    padding: 16,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginTop: 16,
-  },
-  header: {
-    marginRight: 5,
-    fontWeight: "bold",
-    fontSize: 16,
-    color: "green",
-  },
-  priceContainer: {
-    marginTop: -1,
-    flexDirection: "row",
-  },
-  divider: {
-    height: 2,
-    backgroundColor: "lightgray",
-    marginVertical: 8,
-  },
-  infoContainer: {
-    marginBottom: 16,
-  },
-  sliderText: {
-    marginTop: 16,
-  },
-  reviewText: {
-    marginTop: 16,
-  },
-  addToCartButton: {
-    flexDirection: "row",
-    position: "absolute",
-    bottom: 28,
-    left: 15,
-    right: 80,
-    backgroundColor: "#1F2937",
-    borderRadius: 8,
-    padding: 16,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  addToCartButtonText: {
-    color: "#FFF",
-    fontSize: 16,
-    fontWeight: "bold",
-    marginRight: 5,
-  },
-  addedButton: {
-    backgroundColor: "green",
-    flexDirection: "row",
-    position: "absolute",
-    bottom: 28,
-    left: 15,
-    right: 80,
-    borderRadius: 8,
-    padding: 16,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  iconContainer: {
-    position: "absolute",
-    right: 16,
-    bottom: 41,
-    flexDirection: "row",
-  },
-  icon: {
-    marginRight: 16,
-  },
-});

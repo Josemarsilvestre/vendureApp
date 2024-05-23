@@ -8,6 +8,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import Icons from "../common/Icons";
+import { moderateScale } from "react-native-size-matters";
 
 export interface FeedHeaderProps {
   navigation: any;
@@ -43,17 +44,17 @@ const FeedHeader: React.FC<FeedHeaderProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: moderateScale(10),
+    paddingHorizontal: moderateScale(20),
     backgroundColor: "white",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: moderateScale(2),
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowOpacity: moderateScale(0.25),
+    shadowRadius: moderateScale(3.84),
+    elevation: moderateScale(5),
   },
   header: {
     flexDirection: "row",
@@ -66,10 +67,10 @@ const styles = StyleSheet.create({
   },
   cartIconContainer: {
     position: "relative",
-    marginLeft: 15,
+    marginLeft: moderateScale(15),
   },
   text:{
-    fontSize: 16, 
+    fontSize: moderateScale(16),
     fontWeight: "bold"
   }
 });

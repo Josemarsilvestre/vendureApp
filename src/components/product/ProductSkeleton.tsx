@@ -2,6 +2,7 @@ import React from 'react';
 import { View, ViewStyle, StyleSheet } from 'react-native';
 
 import { Skeleton, Items, Item } from '../common/skeleton';
+import { moderateScale } from 'react-native-size-matters';
 
 interface ProductSkeletonProps {
   style?: ViewStyle;
@@ -41,10 +42,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 24,
+    marginBottom: moderateScale(24),
   },
   image: {
-    borderRadius: 8,
+    borderRadius: moderateScale(8),
   },
   textContainer: {
     flex: 1,

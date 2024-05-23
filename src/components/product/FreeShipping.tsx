@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, View, StyleSheet, Image } from "react-native";
+import { moderateScale } from "react-native-size-matters";
 
 export default function FreeShipping() {
   return (
@@ -22,33 +23,33 @@ export default function FreeShipping() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 5,
+    paddingVertical: moderateScale(5),
     backgroundColor: "#E5E5E5",
-    paddingHorizontal: 16,
+    paddingHorizontal: moderateScale(16),
   },
   innerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     backgroundColor: "#FFFFFF",
-    borderWidth: 1,
+    borderWidth: moderateScale(1),
     borderColor: "#CCCCCC",
-    borderRadius: 10,
+    borderRadius: moderateScale(10),
   },
   textContainer: {
-    padding: 12,
+    padding: moderateScale(12),
   },
   title: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
     fontWeight: "bold",
   },
   description: {
-    marginTop: 8,
-    fontSize: 12,
+    marginTop: moderateScale(8),
+    fontSize: moderateScale(12),
     color: "#888888",
   },
   image: {
-    width: 80,
-    height: 60,
-    padding: 16,
+    width: moderateScale(80),
+    height: moderateScale(60),
+    padding: moderateScale(16),
   },
 });

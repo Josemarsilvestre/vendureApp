@@ -13,12 +13,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useQuery, useMutation } from "@apollo/client";
 import { Text } from "react-native-paper";
 
-import { COUNTRY_CODE, CREATE_CUSTOMER_ADDRESS, UPDATE_CUSTOMER_ADDRESS } from "../../api/mutation/updateCustomer";
-import { GET_CUSTOMER } from "../../api/mutation/profile";
-import { addressSchema } from "../../../utils/validation";
-import TextField from "../common/TextField";
-import PageLoading from "../loading/PageLoading";
-import DropdownController from "../dropdown/DropdownController";
+import { COUNTRY_CODE, CREATE_CUSTOMER_ADDRESS, UPDATE_CUSTOMER_ADDRESS } from "../../../api/mutation/address";
+import { GET_CUSTOMER } from "../../../api/mutation/customer";
+import { addressSchema } from "../../../../utils/validation";
+import TextField from "../../common/TextField";
+import PageLoading from "../../loading/PageLoading";
+import styles from "./style.address";
+import DropdownController from "../../dropdown/DropdownController";
 
 type AddressFormData = {
   fullName: string;
@@ -133,50 +134,5 @@ const AddressEdition = ({ route, navigation }) => {
     </KeyboardAvoidingView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  scrollViewContainer: {
-    margin: 18,
-    justifyContent: "center",
-    marginTop: 20,
-  },
-  formContainer: {
-    width: "100%",
-    paddingHorizontal: 8,
-    paddingVertical: 6,
-  },
-  title: {
-    color: "#212B36",
-    fontWeight: "bold",
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  subtitle: {
-    marginBottom: 15,
-  },
-  fieldsContainer: {
-    marginTop: 5,
-  },
-  button: {
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    backgroundColor: "#212B36",
-    borderRadius: 8,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 90,
-  },
-  buttonText: {
-    fontSize: 16,
-    color: "#fff",
-  },
-  label: {
-    fontSize: 15,
-    marginBottom: 5,
-  },
-});
 
 export default AddressEdition;

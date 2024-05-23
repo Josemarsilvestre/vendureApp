@@ -61,44 +61,6 @@ export const REGISTER_MUTATION = gql`
   }
 `;
 
-export const VERIFY_CUSTOMER = gql`
-  mutation VerifyCustomer($token: String!) {
-    verifyCustomerAccount(token: $token) {
-      ... on CurrentUser {
-        id
-        identifier
-        channels {
-          token
-        }
-      }
-      ... on VerificationTokenInvalidError {
-        errorCode
-        message
-      }
-      ... on VerificationTokenExpiredError {
-        errorCode
-        message
-      }
-      ... on MissingPasswordError {
-        errorCode
-        message
-      }
-      ... on PasswordValidationError {
-        errorCode
-        message
-      }
-      ... on PasswordAlreadySetError {
-        errorCode
-        message
-      }
-      ... on NativeAuthStrategyError {
-        errorCode
-        message
-      }
-    }
-  }
-`;
-
 export const LOGOUT = gql`
   mutation logout {
     logout {

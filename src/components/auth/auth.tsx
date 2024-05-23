@@ -5,8 +5,8 @@ import { useMutation, useLazyQuery } from "@apollo/client";
 import { LOGOUT } from "../../api/mutation/auth";
 import { Context } from "../../context/context";
 import { Alert } from "react-native";
-import { GET_CUSTOMER } from "../../api/mutation/profile";
-import { SHOW_ORDER } from "../../api/mutation/cart";
+import { GET_CUSTOMER } from "../../api/mutation/customer";
+import { SHOW_ORDER } from "../../api/mutation/order";
 import PageLoading from "../loading/PageLoading";
 
 interface AuthScreenProps {
@@ -18,7 +18,8 @@ export default function AuthScreen({ children, navigation }: AuthScreenProps) {
   const { state, dispatch } = useContext(Context);
   const [checkingToken, setCheckingToken] = useState(true);
 
-  const [getCustomer, { data: customerData, loading: customerLoading }] = useLazyQuery(GET_CUSTOMER);
+  const [getCustomer, { data: customerData, loading: customerLoading }] =
+    useLazyQuery(GET_CUSTOMER);
   const [getOrder, { refetch: refetchCart }] = useLazyQuery(SHOW_ORDER);
 
   const setIsLogged = (isLogged: boolean) => {
@@ -26,7 +27,7 @@ export default function AuthScreen({ children, navigation }: AuthScreenProps) {
   };
 
   const [logoutMutation] = useMutation(LOGOUT, {
-    onError: (error) => {
+    onError: async (error) => {
       Alert.alert("Erro", error.message);
     },
     onCompleted: async () => {

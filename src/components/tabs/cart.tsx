@@ -1,19 +1,20 @@
 import React from "react";
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useQuery } from "@apollo/client";
-import { moderateScale } from "react-native-size-matters";
 
 import CartInfo from "../tab_cart/cartInfo";
 import CartItem from "../tab_cart/cartItem";
 import { Button } from "../common/Buttons";
 import formatNumber from "../../../utils/formatNumber";
-import { SHOW_ORDER } from "../../api/mutation/cart";
+import { SHOW_ORDER } from "../../api/mutation/order";
 import { FlashList } from "@shopify/flash-list";
 import PageLoading from "../loading/PageLoading";
-import { GET_CUSTOMER } from "../../api/mutation/profile";
+import { GET_CUSTOMER } from "../../api/mutation/customer";
+import { OrderLine } from "../../../utils/interface";
+import styles from "../tab_cart/style/styles.cart";
 
-export default function CartScreen({ navigation }) {
+export default function CartScreen({navigation}) {
   const { data, loading, error, refetch } = useQuery(SHOW_ORDER);
   const { refetch: refetchCartCustomer } = useQuery(GET_CUSTOMER);
   const insets = useSafeAreaInsets();
@@ -25,10 +26,6 @@ export default function CartScreen({ navigation }) {
   const refetchCart = () => {
     refetch();
     refetchCartCustomer();
-  };
-
-  const handleRoute = () => {
-    console.log("Payment", "Go to Payment");
   };
 
   return (
@@ -64,17 +61,15 @@ export default function CartScreen({ navigation }) {
                   <Text>{order?.lines.length} items</Text>
                 </View>
                 <View style={styles.cartItems}>
-                  <FlashList
+                  <FlashList<OrderLine>
                     data={order?.lines}
-                    renderItem={({ item }) => {
-                      return (
-                        <CartItem
-                          item={item}
-                          key={item.id}
-                          refetchCart={refetchCart}
-                        />
-                      );
-                    }}
+                    renderItem={({ item }) => (
+                      <CartItem
+                        item={item}
+                        key={item.id}
+                        refetchCart={refetchCart}
+                      />
+                    )}
                     estimatedItemSize={900}
                     showsVerticalScrollIndicator={false}
                   />
@@ -82,7 +77,7 @@ export default function CartScreen({ navigation }) {
               </View>
 
               {/* cart Info */}
-              <View style={styles.cartInfoContainer}>
+              <View>
                 <CartInfo taxSummary={order?.taxSummary || []} />
               </View>
             </ScrollView>
@@ -98,7 +93,12 @@ export default function CartScreen({ navigation }) {
                   {formatNumber(order?.total)}€
                 </Text>
               </View>
-              <Button style={styles.continueButton} onPress={handleRoute}>
+              <Button
+                style={styles.continueButton}
+                onPress={() => {
+                  navigation.navigate("Payments");
+                }}
+              >
                 <Text>Payment</Text>
               </Button>
             </View>
@@ -108,87 +108,3 @@ export default function CartScreen({ navigation }) {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  scroolViewContainer: {
-    margin: moderateScale(20),
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  text_view: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  text_: {
-    fontSize: moderateScale(16),
-  },
-  scrollView: {
-    backgroundColor: "white",
-  },
-  cartItemsContainer: {
-    paddingVertical: 10,
-    marginBottom: 1,
-  },
-  cartTitleContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 10,
-    paddingBottom: 10,
-  },
-  cartTitleText: {
-    marginBottom: 2,
-    fontSize: 14,
-    fontWeight: "bold",
-  },
-  cartItems: {
-    borderTopWidth: 1,
-    borderTopColor: "#E5E7EB",
-  },
-  cartInfoContainer: {
-    paddingHorizontal: 5,
-  },
-  bottomContainer: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 5,
-    backgroundColor: "white",
-    borderTopWidth: 1,
-    borderTopColor: "#E5E7EB",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: -3,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 5,
-  },
-  totalText: {
-    fontWeight: "400",
-    marginTop: -17,
-  },
-  totalPriceContainer: {
-    flexDirection: "column",
-    alignItems: "flex-end",
-  },
-  totalPriceWithTax: {
-    fontSize: 14.5,
-    marginRight: 2,
-  },
-  totalPrice: {
-    fontSize: 12,
-    marginRight: 2,
-    color: "#97979A",
-  },
-  continueButton: {
-    width: "50%",
-    marginTop: 5,
-    marginBottom: 5,
-  },
-});

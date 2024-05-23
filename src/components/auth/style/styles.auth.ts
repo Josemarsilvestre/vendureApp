@@ -50,4 +50,8 @@ export default ScaledSheet.create({
     fontSize: moderateScale(16),
     color: '#212B36',
   },
+  label: {
+    fontSize: moderateScale(15),
+    marginBottom: moderateScale(5),
+  }
 });

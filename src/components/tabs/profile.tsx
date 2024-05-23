@@ -14,7 +14,7 @@ import Icons from "../common/Icons";
 import BoxLink from "../common/BoxLink";
 import AuthScreen from "../auth/auth";
 import PageLoading from "../loading/PageLoading";
-import { GET_CUSTOMER } from "../../api/mutation/profile";
+import { GET_CUSTOMER } from "../../api/mutation/customer";
 import { Customer } from "../../../utils/interface";
 
 export default function ProfileScreen({ navigation }) {
@@ -30,9 +30,9 @@ export default function ProfileScreen({ navigation }) {
       path: "Information_account",
     },
     {
-      name: "Shopping history",
-      Icon: Icons.AntDesign,
-      IconName: "shoppingcart",
+      name: "Purchase history",
+      Icon: Icons.MaterialCommunityIcons,
+      IconName: "shopping-outline",
       path: "History",
     },
     {
@@ -113,10 +113,6 @@ export default function ProfileScreen({ navigation }) {
     </AuthScreen>
   );
 }
-
-/**||
-      !activeCustomer.firstName ||
-      !activeCustomer.lastName */
 
 const styles = StyleSheet.create({
   container: {

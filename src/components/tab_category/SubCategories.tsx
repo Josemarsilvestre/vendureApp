@@ -1,6 +1,8 @@
 import React from "react";
-import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { Text, View, TouchableOpacity, Image } from "react-native";
 import { FlashList } from "@shopify/flash-list";
+
+import styles from "./style/styles.search";
 
 interface SubCategory {
   id: string;
@@ -66,36 +68,3 @@ export default function SubCategories({
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginLeft: 10,
-  },
-  categoryItem: {
-    flexDirection: "column",
-    alignItems: "center",
-    marginRight: 15,
-    marginTop: 10,
-  },
-  imageContainer: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    borderWidth: 2,
-    borderColor: "#d6d6d6",
-    overflow: "hidden",
-  },
-  image: {
-    width: "100%",
-    height: "100%",
-  },
-  text: {
-    color: "#4d4d4d",
-    maxWidth: 90,
-    textAlign: "center",
-    textAlignVertical: "center",
-    overflow: "hidden",
-  },
-});

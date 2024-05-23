@@ -1,8 +1,10 @@
 import React from 'react';
 import { useController, Control, FieldValues } from 'react-hook-form';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
+
 import DisplayError from '../common/DisplayError';
+import styles from './style/styles.dropdown';
 
 export interface Option {
   label: string;
@@ -74,25 +76,5 @@ const Dropdown: React.FC<DropdownProps> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  label: {
-    fontSize: 15,
-    marginBottom: 5,
-  },
-  dropdownButton: {
-    backgroundColor: '#fff',
-    padding: 15,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    marginBottom: 20,
-  },
-  option: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-});
 
 export default Dropdown;

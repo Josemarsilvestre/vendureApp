@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
+import { moderateScale } from "react-native-size-matters";
 
 const Info = () => {
   return (
@@ -16,34 +17,34 @@ const Info = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 16,
-    paddingBottom: 8,
+    paddingHorizontal: moderateScale(16),
+    paddingBottom: moderateScale(8),
   },
   header: {
-    paddingTop: 12,
-    paddingBottom: 4,
-    fontSize: 16,
+    paddingTop: moderateScale(12),
+    paddingBottom: moderateScale(4),
+    fontSize: moderateScale(16),
     fontWeight: "bold",
   },
   infoContainer: {
-    marginLeft: 4,
-    marginTop: 2,
+    marginLeft: moderateScale(4),
+    marginTop: moderateScale(2),
   },
   infoRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 4,
+    marginBottom: moderateScale(4),
   },
   title: {
     flex: 1,
-    fontSize: 14,
+    fontSize: moderateScale(14),
     color: "#666",
   },
   value: {
     flex: 1,
-    fontSize: 14,
+    fontSize: moderateScale(14),
     color: "#000",
-  },
+  }
 });
 
 export default Info;

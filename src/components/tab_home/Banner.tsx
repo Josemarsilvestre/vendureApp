@@ -13,6 +13,7 @@ import { useQuery } from "@apollo/client";
 import FeedSectionContainer from "../common/FeedSectionContainer";
 import ProductPrice from "../product/ProductPrice";
 import { Product } from "../../../utils/interface";
+import { moderateScale } from "react-native-size-matters";
 
 export interface BannerProps {
   navigation: any;
@@ -88,25 +89,25 @@ const Banner: React.FC<BannerProps> = ({ navigation, query, title }) => {
 const styles = StyleSheet.create({
   imageContainer: {
     height: "70%",
-    marginRight: -98,
+    marginRight: moderateScale(-95),
   },
   image: {
     width: "60%",
     height: "100%",
-    borderRadius: 10,
+    borderRadius: moderateScale(10),
   },
   text: {
     color: "#4d4d4d",
-    maxWidth: 155,
-    marginTop: 3,
+    maxWidth: moderateScale(155),
+    marginTop: moderateScale(3),
     textAlign: "left",
   },
   priceText: {
-    marginRight: 5,
+    marginRight: moderateScale(5),
     color: "#4d4d4d",
   },
   priceContainer: {
-    marginTop: -1,
+    marginTop: moderateScale(-1),
     flexDirection: "row",
   },
 });

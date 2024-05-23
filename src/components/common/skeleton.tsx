@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, ViewStyle, DimensionValue } from 'react-native';
+import { moderateScale } from 'react-native-size-matters';
 
 interface SkeletonProps {
   count: number;
@@ -67,7 +68,7 @@ const Item: React.FC<ItemProps> = ({ height, width, animated, style, children })
 
 const styles = StyleSheet.create({
   item: {
-    marginBottom: 10,
+    marginBottom: moderateScale(10),
   },
 });
 

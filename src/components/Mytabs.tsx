@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   Entypo,
@@ -14,12 +14,11 @@ import CartScreen from "./tabs/cart";
 import ProfileScreen from "./tabs/profile";
 import FeedHeader from "./tab_home/FeedHeader";
 
-import { Context } from "../context/context";
+import { moderateScale } from "react-native-size-matters";
 
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator({ navigation }) {
-  const { state } = useContext(Context);
 
   return (
     <Tab.Navigator
@@ -42,7 +41,7 @@ export default function TabNavigator({ navigation }) {
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color }) => (
-            <Entypo name="home" size={24} color={color} />
+            <Entypo name="home" size={moderateScale(24)} color={color} />
           ),
           header: () => (
             <FeedHeader
@@ -58,16 +57,16 @@ export default function TabNavigator({ navigation }) {
         options={{
           title: "Category",
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name="category" size={24} color={color} />
+            <MaterialIcons name="category" size={moderateScale(24)} color={color} />
           ),
           headerRight: () => (
             <>
               <Icons.EvilIcons
                 name="search"
-                size={35}
+                size={moderateScale(35)}
                 color="#1F2937"
                 onPress={() => navigation.navigate("Search")}
-                style={{ padding: 10 }}
+                style={{ padding: moderateScale(10) }}
               />
             </>
           ),
@@ -80,7 +79,7 @@ export default function TabNavigator({ navigation }) {
           title: "Cart",
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <Feather name="shopping-cart" size={24} color={color} />
+            <Feather name="shopping-cart" size={moderateScale(24)} color={color} />
           ),
         }}
       />
@@ -89,7 +88,7 @@ export default function TabNavigator({ navigation }) {
         component={ProfileScreen}
         options={{
           tabBarIcon: ({ color }) => (
-            <FontAwesome name="user" size={24} color={color} />
+            <FontAwesome name="user" size={moderateScale(24)} color={color} />
           ),
           headerShown: false,
         }}

@@ -1,25 +1,12 @@
-import { View, StyleSheet } from 'react-native'
-import { moderateScale } from 'react-native-size-matters';
+import { View } from 'react-native'
 
 import BigLoading from './BigLoading'
+import styles from './style/style.loading';
 
 export default function PageLoading() {
   return (
-    <View style={styles.container}>
+    <View style={styles.container_PageLoading}>
       <BigLoading />
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-    container: {
-      position: 'absolute',
-      height: '100%',
-      width: '100%',
-      top: 0,
-      left: 0,
-      zIndex: moderateScale(40),
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  });

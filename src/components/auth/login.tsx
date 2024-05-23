@@ -19,9 +19,9 @@ import { Button } from "../common/Buttons";
 import TextField from "../common/TextField";
 import { logInSchema } from "../../../utils/validation";
 import { Context } from "../../context/context";
-import styles from "./Styles.Auth";
-import { GET_CUSTOMER } from "../../api/mutation/profile";
-import { SHOW_ORDER } from "../../api/mutation/cart";
+import styles from "./style/styles.auth";
+import { GET_CUSTOMER } from "../../api/mutation/customer";
+import { SHOW_ORDER } from "../../api/mutation/order";
 
 type LoginFormData = {
   username: string;

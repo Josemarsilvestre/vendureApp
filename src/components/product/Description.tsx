@@ -1,5 +1,6 @@
 import React from 'react';
 import {Text, View, StyleSheet } from 'react-native'
+import { moderateScale } from 'react-native-size-matters';
 
 interface DescriptionProps {
   product: {
@@ -23,24 +24,24 @@ export default Description;
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 3,
+    paddingHorizontal: moderateScale(3),
   },
   header: {
-    paddingTop: 12,
-    paddingBottom: 8,
-    fontSize: 16,
+    paddingTop: moderateScale(12),
+    paddingBottom: moderateScale(8),
+    fontSize: moderateScale(16),
     fontWeight: 'bold',
   },
   text: {
-    marginBottom: 7,
-    borderBottomWidth: 2,
+    marginBottom: moderateScale(7),
+    borderBottomWidth: moderateScale(2),
     borderColor: 'red',
     alignSelf: 'flex-start',
   },
   sectionDivideY: {
-    borderBottomWidth: 1,
+    borderBottomWidth: moderateScale(1),
     borderBottomColor: 'black', 
-    marginBottom: 10,
+    marginBottom: moderateScale(10),
   },
 });
 

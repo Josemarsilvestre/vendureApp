@@ -5,6 +5,7 @@ import { GET_BANNER_1_QUERY, GET_BANNER_2_QUERY, GET_BANNER_3_QUERY } from "../.
 import Slider from "../tab_home/Slider";
 import Categories from "../tab_home/categories";
 import Banner from "../tab_home/Banner"
+import { moderateScale } from "react-native-size-matters";
 
 export default function FeedScreen({ navigation }) {
  
@@ -23,6 +24,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    paddingHorizontal: 3,
+    paddingHorizontal: moderateScale(3),
   },
 });

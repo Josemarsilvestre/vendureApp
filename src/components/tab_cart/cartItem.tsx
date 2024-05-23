@@ -2,7 +2,6 @@ import React from "react";
 import {
   Text,
   View,
-  StyleSheet,
   Image,
   useWindowDimensions,
 } from "react-native";
@@ -10,6 +9,7 @@ import {
 import CartButtons from "./cartButtons";
 import { OrderLine } from "../../../utils/interface";
 import formatNumber from "../../../utils/formatNumber";
+import styles from "./style/styles.cart";
 
 interface Order {
   activeOrder: {
@@ -26,14 +26,14 @@ interface Order {
   refetchCart: () => void;
 }
 
-function CartItem({ item, refetchCart }: { item: OrderLine; refetchCart: () => void; }) {
+export default function CartItem({ item, refetchCart }: { item: OrderLine; refetchCart: () => void; }) {
   const windowWidth = useWindowDimensions().width;
   const imageWidth = windowWidth * 0.7;
 
   const totalPriceWithDiscountAndQuantity = ((item.productVariant.priceWithTax ?? 0) * item.quantity) + ((item.discounts[0]?.amountWithTax ?? 0));
 
   return (
-    <View style={styles.container}>
+    <View style={styles.containerItem}>
       <View style={[styles.imageContainer, { width: imageWidth }]}>
         <Image
           source={{
@@ -87,73 +87,3 @@ function CartItem({ item, refetchCart }: { item: OrderLine; refetchCart: () => v
     </View>
   );
 }
-
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    paddingHorizontal: 16,
-    paddingVertical: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: "#E5E7EB",
-  },
-  imageContainer: {
-    marginRight: 16,
-    flex: 1,
-    position: "relative",
-  },
-  image: {
-    width: "80%",
-    height: "70%",
-    borderRadius: 10,
-  },
-  specialSellContainer: {
-    marginTop: 8,
-    alignItems: "center",
-  },
-  cartButtonsContainer: {
-    marginTop: 8,
-  },
-  name: {
-    marginBottom: 12,
-    fontSize: 14,
-  },
-  infoContainer: {
-    flex: 1,
-  },
-  info: {
-    marginBottom: 12,
-    alignItems: "flex-end",
-    justifyContent: "flex-end",
-  },
-  infoRow: {
-    flexDirection: "row",
-
-    marginBottom: 8,
-  },
-  colorBadge: {
-    width: 20,
-    height: 20,
-    borderRadius: 4,
-    marginRight: 8,
-  },
-  icon: {
-    marginRight: 8,
-  },
-  skyIcon: {
-    color: "#00B4D8",
-  },
-  infoText: {
-    fontSize: 14,
-  },
-  priceContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  price: {
-    fontSize: 14,
-    color: "#4B5563",
-  },
-});
-
-export default CartItem;

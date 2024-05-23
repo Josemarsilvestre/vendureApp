@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   View,
   Text,
   Image,
   TouchableOpacity,
-  StyleSheet,
   Dimensions,
 } from "react-native";
 import { useQuery } from "@apollo/client";
@@ -13,6 +12,7 @@ import { FlashList } from "@shopify/flash-list";
 
 import { GET_ALL_COLLECTIONS_QUERY } from "../../api/mutation/category";
 import { Category } from "../../../utils/interface";
+import styles from "../common_pages/category/styles.category";
 
 export default function CategoryScreen({ navigation }) {
   const { data, loading, error } = useQuery<{
@@ -67,40 +67,3 @@ export default function CategoryScreen({ navigation }) {
     </View>
   );
 }
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  categoryList: {
-    backgroundColor: "#f0f0f0",
-    flexDirection: "column",
-    width: "100%",
-    height: "100%",
-  },
-  categoryItem: {
-    alignItems: "center",
-    paddingVertical: moderateScale(10),
-    paddingHorizontal: moderateScale(10),
-    borderBottomWidth: moderateScale(1),
-    borderBottomColor: "#ddd",
-  },
-  categoryImageContainer: {
-    marginBottom: moderateScale(5),
-    width: "100%",
-    aspectRatio: 1,
-    borderRadius: moderateScale(10),
-    overflow: "hidden",
-  },
-  categoryImage: {
-    width: "100%",
-    aspectRatio: 1,
-    borderRadius: moderateScale(10),
-  },
-  categoryText: {
-    fontSize: moderateScale(16),
-    color: "#333",
-    textAlign: "center",
-  },
-});

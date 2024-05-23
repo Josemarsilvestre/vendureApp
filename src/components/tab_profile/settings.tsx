@@ -10,8 +10,8 @@ import {
 import { moderateScale } from "react-native-size-matters";
 import { useMutation, useQuery } from "@apollo/client";
 import { LOGOUT } from "../../api/mutation/auth";
-import { GET_CUSTOMER } from "../../api/mutation/profile";
-import { SHOW_ORDER } from "../../api/mutation/cart";
+import { GET_CUSTOMER } from "../../api/mutation/customer";
+import { SHOW_ORDER } from "../../api/mutation/order";
 import { Context } from "../../context/context";
 import * as SecureStore from "expo-secure-store";
 
