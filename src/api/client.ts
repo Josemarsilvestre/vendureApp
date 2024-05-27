@@ -61,8 +61,6 @@ export function setLanguageCode(value: string | undefined) {
 
 export const client = new ApolloClient({
   link: ApolloLink.from([
-      // If we have stored the authToken from a previous
-      // response, we attach it to all subsequent requests.
       setContext((request, operation) => {
           const authToken = SecureStore.getItem(AUTH_TOKEN_KEY);
           let headers: Record<string, any> = {};
