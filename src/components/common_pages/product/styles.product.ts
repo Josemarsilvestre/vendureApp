@@ -38,7 +38,7 @@ export default ScaledSheet.create({
   },
   reviewText: {
     marginTop: moderateScale(16),
-  },
+  }, 
   addToCartButton: {
     flexDirection: "row",
     position: "absolute",
@@ -82,8 +82,9 @@ export default ScaledSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: moderateScale(70),
-    borderRadius: moderateScale(30),
+    padding: moderateScale(70), 
+    borderTopLeftRadius: moderateScale(30),
+    borderTopRightRadius: moderateScale(30),
     borderTopWidth: moderateScale(1),
     borderTopColor: "#e0e0e0",
     backgroundColor: "white",

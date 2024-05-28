@@ -209,6 +209,7 @@ export default function PaymentScreen({ navigation }) {
                   />
                 )}
                 estimatedItemSize={900}
+                contentContainerStyle={{ paddingBottom: 0 }}
               />
             </View>
 

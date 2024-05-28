@@ -86,8 +86,10 @@ export default ScaledSheet.create({
     marginBottom: moderateScale(10),
   },
   cartItems: {
+    flex: 1,
     borderTopWidth: moderateScale(1),
     borderTopColor: "#E5E7EB",
+    height: moderateScale(200),
   },
   shippingMethod: {
     marginBottom: moderateScale(10),
@@ -133,10 +135,13 @@ export default ScaledSheet.create({
     fontSize: moderateScale(14),
   },
   bottomContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    padding: moderateScale(10),
+    padding: moderateScale(70),
+    borderTopLeftRadius: moderateScale(30),
+    borderTopRightRadius: moderateScale(30),
     borderTopWidth: moderateScale(1),
-    borderRadius: moderateScale(30),
     borderTopColor: "#e0e0e0",
     backgroundColor: "white",
     shadowColor: "#000",
@@ -162,4 +167,7 @@ export default ScaledSheet.create({
     fontSize: moderateScale(16),
     marginLeft: moderateScale(5),
   },
+  flashList: {
+    flexGrow: 0,
+  }
 });

@@ -341,16 +341,9 @@ export default function MainStackNavigator() {
         name="PaymentConfirmationScreen"
         component={PaymentConfirmationScreen}
         options={{
+          title: "Payment",
           headerShown: true,
-          headerLeft: () => (
-            <Ionicons
-              name="arrow-back"
-              size={28}
-              color="#000"
-              style={style_fix}
-              onPress={() => navigation.goBack()}
-            />
-          ),
+          headerLeft: () => null,
         }}
       />
     </Stack.Navigator>
