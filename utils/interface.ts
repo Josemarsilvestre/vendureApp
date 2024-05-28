@@ -68,3 +68,24 @@ export interface OrderLine {
     amountWithTax: number;
   }[];
 }
+
+export interface Address {
+  id: number;
+  fullName: string;
+  company: string;
+  streetLine1: string;
+  city: string;
+  province: string;
+  postalCode: string;
+  country: {
+    name: string;
+    code: string;
+  };
+  phoneNumber: string;
+}
+
+export interface ShippingMethod {
+  id: string;
+  name: string;
+  price: number;
+}

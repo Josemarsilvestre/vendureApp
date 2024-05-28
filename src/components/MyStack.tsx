@@ -31,6 +31,7 @@ import AddressEdition from "./common_pages/address/address_add_or_edit";
 import { TouchableOpacity } from "react-native";
 import PaymentScreen from "./payment/payment";
 import { moderateScale } from "react-native-size-matters";
+import PaymentConfirmationScreen from "./payment/paymentconfirmation";
 
 type RootStackParamList = {
   TabNavigator: undefined;
@@ -58,6 +59,7 @@ type RootStackParamList = {
   Products: undefined;
   CategorySection: undefined;
   Payments: undefined;
+  PaymentConfirmationScreen: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -322,6 +324,22 @@ export default function MainStackNavigator() {
       <Stack.Screen
         name="Payments"
         component={PaymentScreen}
+        options={{
+          headerShown: true,
+          headerLeft: () => (
+            <Ionicons
+              name="arrow-back"
+              size={28}
+              color="#000"
+              style={style_fix}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="PaymentConfirmationScreen"
+        component={PaymentConfirmationScreen}
         options={{
           headerShown: true,
           headerLeft: () => (

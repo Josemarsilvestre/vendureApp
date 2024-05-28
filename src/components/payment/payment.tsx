@@ -1,39 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { moderateScale } from "react-native-size-matters";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
+import { FlashList } from "@shopify/flash-list";
 
 import { GET_CUSTOMER } from "../../api/mutation/customer";
 import CartItem from "../tab_cart/cartItem";
 import styles from "./style/styles.payment";
 import AuthScreen from "../auth/auth";
-import { GET_METHOD_SHIPPING } from "../../api/mutation/payments";
+import {
+  ADD_PAYMENT_TO_ORDER,
+  GET_METHOD_SHIPPING,
+  SET_ORDER_SHIPPING_ADDRESS,
+  SET_ORDER_SHIPPING_METHOD,
+  TRANSITION_ORDER_TO_ARRAINGING_PAYMENT,
+} from "../../api/mutation/payments";
 import { Feather, Fontisto } from "@expo/vector-icons";
 import { SHOW_ORDER } from "../../api/mutation/order";
 import formatNumber from "../../../utils/formatNumber";
-import { OrderLine } from "../../../utils/interface";
 import Icons from "../common/Icons";
-import { FlashList } from "@shopify/flash-list";
 import PageLoading from "../loading/PageLoading";
-
-interface Address {
-  id: number;
-  fullName: string;
-  company: string;
-  streetLine1: string;
-  city: string;
-  province: string;
-  postalCode: string;
-  country: {
-    name: string;
-    code: string;
-  };
-  phoneNumber: string;
-}
+import { Address, ShippingMethod, OrderLine } from "../../../utils/interface";
 
 export default function PaymentScreen({ navigation }) {
-  const { data } = useQuery(GET_CUSTOMER);
+  const { data, refetch: refetchCustomer } = useQuery(GET_CUSTOMER);
   const { data: DataOrder, refetch: refetchCart } = useQuery(SHOW_ORDER);
   const insets = useSafeAreaInsets();
 
@@ -42,28 +33,111 @@ export default function PaymentScreen({ navigation }) {
   const activeCustomer = data?.activeCustomer;
   const addresses: Address[] = activeCustomer?.addresses || [];
 
-  const { data: DataShipping } = useQuery(GET_METHOD_SHIPPING);
+  const { data: DataShipping, loading: loadingShipping } = useQuery(
+    GET_METHOD_SHIPPING,
+    {
+      onCompleted: (data) => {
+        if (
+          data &&
+          data.eligibleShippingMethods &&
+          data.eligibleShippingMethods.length > 0
+        ) {
+          setSelectedShippingMethod(data.eligibleShippingMethods[0]);
+        }
+      },
+    }
+  );
+
   const shippingMethods = DataShipping?.eligibleShippingMethods || [];
 
   const firstAddressId = addresses.length > 0 ? addresses[0].id : null;
-  const firstShippingMethod =
-    shippingMethods.length > 0 ? shippingMethods[0].name : null;
   const [selectedAddressId, setSelectedAddressId] = useState<number | null>(
     firstAddressId
   );
-  const [selectedShippingMethod, setSelectedShippingMethod] = useState<
-    string | null
-  >(firstShippingMethod);
 
-  const handleCreateOrder = () => {
-    console.log("Pay");
+  const [selectedShippingMethod, setSelectedShippingMethod] =
+    useState<ShippingMethod | null>(null);
+
+  const [setOrderShippingAddress] = useMutation(SET_ORDER_SHIPPING_ADDRESS);
+  const [setOrderShippingMethod] = useMutation(SET_ORDER_SHIPPING_METHOD);
+  const [transitionOrderToArraingingPayment] = useMutation(
+    TRANSITION_ORDER_TO_ARRAINGING_PAYMENT
+  );
+  const [addPaymentToOrder] = useMutation(ADD_PAYMENT_TO_ORDER);
+
+  const handleCreateOrder = async () => {
+    if (!selectedAddressId || !selectedShippingMethod) {
+      Alert.alert(
+        "Shipping information missing",
+        "Please select a shipping address and method."
+      );
+      return;
+    }
+
+    const selectedAddress = addresses.find(
+      (address) => address.id === selectedAddressId
+    );
+    if (!selectedAddress) {
+      Alert.alert(
+        "Address information missing",
+        "Please add a address in your account."
+      );
+      return;
+    }
+
+    try {
+      await setOrderShippingAddress({
+        variables: {
+          fullName: selectedAddress.fullName,
+          company: selectedAddress.company,
+          streetLine1: selectedAddress.streetLine1,
+          city: selectedAddress.city,
+          province: selectedAddress.province,
+          postalCode: selectedAddress.postalCode,
+          countryCode: selectedAddress.country.code,
+          phoneNumber: selectedAddress.phoneNumber,
+        },
+      });
+    } catch (error) {
+      console.error("Error setting shipping address:", error);
+      return;
+    }
+
+    const selectedMethodId = selectedShippingMethod?.id;
+
+    try {
+      await setOrderShippingMethod({
+        variables: {
+          id: selectedMethodId,
+        },
+      });
+    } catch (error) {
+      console.error("Error setting shipping method:", error);
+      return;
+    }
+
+    try {
+      await transitionOrderToArraingingPayment({
+        variables: { state: "ArrangingPayment" },
+      });
+    } catch (error) {
+      console.error("Error transitioning order to ArrangingPayment:", error);
+    }
+
+    try {
+      await addPaymentToOrder({
+        variables: { method: "standard-payment" },
+      });
+      
+      navigation.navigate("PaymentConfirmationScreen");
+      refetchCart();
+      refetchCustomer();
+    } catch (error) {
+      console.error("Error transitioning order to ArrangingPayment:", error);
+    }
   };
 
-  const selectedMethodPrice =
-    selectedShippingMethod &&
-    shippingMethods &&
-    shippingMethods.find((method) => method.name === selectedShippingMethod)
-      ?.price;
+  const selectedMethodPrice = selectedShippingMethod?.price;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -75,8 +149,8 @@ export default function PaymentScreen({ navigation }) {
 
   const [loading, setLoading] = useState(true);
 
-  if (loading) return <PageLoading />
-  
+  if (loading || loadingShipping) return <PageLoading />;
+
   return (
     <AuthScreen navigation={navigation}>
       <View style={styles.container}>
@@ -178,10 +252,10 @@ export default function PaymentScreen({ navigation }) {
                       key={index}
                       style={[
                         styles.shippingMethod,
-                        selectedShippingMethod === method.name &&
+                        selectedShippingMethod === method &&
                           styles.selectedShippingMethod,
                       ]}
-                      onPress={() => setSelectedShippingMethod(method.name)}
+                      onPress={() => setSelectedShippingMethod(method)}
                     >
                       <Text style={styles.methodName}>{method.name}</Text>
                       <Text style={styles.methodPrice}>
@@ -212,7 +286,7 @@ export default function PaymentScreen({ navigation }) {
                   <Text>
                     {selectedMethodPrice
                       ? formatNumber(selectedMethodPrice)
-                      : "No shipping method selected"}
+                      : "selected a shipping method"}
                     €
                   </Text>
                 </View>
@@ -221,10 +295,18 @@ export default function PaymentScreen({ navigation }) {
                 <Text style={styles.label}>Total</Text>
                 <View style={styles.priceContainer}>
                   <Text>
-                    {formatNumber(order.totalWithTax + selectedMethodPrice)}
+                    {formatNumber(
+                      order.totalWithTax + (selectedMethodPrice || 0)
+                    )}
                   </Text>
                   <Text style={styles.currency}>€</Text>
                 </View>
+              </View>
+              <Text style={styles.title}>Payment Information</Text>
+              <View>
+                <Text style={styles.label}>
+                  This is a fictitious payment for demonstration purposes only.
+                </Text>
               </View>
             </View>
           </View>

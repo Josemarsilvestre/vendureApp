@@ -62,7 +62,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
           await refetchCart();
           setIsLogged(true);
           navigation.navigate("Profile");
-          await makeAuthenticatedRequest('http://192.168.1.70:3000/shop-api/');
+          await makeAuthenticatedRequest(`${process.env.API_URL}`); 
         } else {
           Alert.alert("Erro", "Utilizador ou senha inválidos.");
         }

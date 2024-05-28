@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   Entypo,
@@ -7,18 +7,28 @@ import {
   FontAwesome,
 } from "@expo/vector-icons";
 import Icons from "./common/Icons";
+import { useQuery } from "@apollo/client";
+import { moderateScale } from "react-native-size-matters";
 
 import FeedScreen from "./tabs/index";
 import CategoryScreen from "./tabs/category";
 import CartScreen from "./tabs/cart";
 import ProfileScreen from "./tabs/profile";
 import FeedHeader from "./tab_home/FeedHeader";
-
-import { moderateScale } from "react-native-size-matters";
+import { SHOW_ORDER } from "../api/mutation/order";
 
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator({ navigation }) {
+  const { refetch } = useQuery(SHOW_ORDER);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      refetch();
+    });
+
+    return unsubscribe;
+  }, [navigation, refetch]);
 
   return (
     <Tab.Navigator
