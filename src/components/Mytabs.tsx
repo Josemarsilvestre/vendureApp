@@ -16,19 +16,22 @@ import CartScreen from "./tabs/cart";
 import ProfileScreen from "./tabs/profile";
 import FeedHeader from "./tab_home/FeedHeader";
 import { SHOW_ORDER } from "../api/mutation/order";
+import { GET_CUSTOMER } from "../api/mutation/customer";
 
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator({ navigation }) {
-  const { refetch } = useQuery(SHOW_ORDER);
+  const { refetch: refetchCart } = useQuery(SHOW_ORDER);
+  const { refetch: refetchProfile } = useQuery(GET_CUSTOMER);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      refetch();
+      refetchCart();
+      refetchProfile();
     });
 
     return unsubscribe;
-  }, [navigation, refetch]);
+  }, [navigation, refetchCart, refetchProfile]);
 
   return (
     <Tab.Navigator
