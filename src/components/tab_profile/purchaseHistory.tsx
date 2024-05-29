@@ -110,6 +110,13 @@ export default function UserHistoryScreen() {
                       {line.productVariant?.name}
                     </Text>
                     <ProductPrice price={line.productVariant?.priceWithTax} />
+                    <Text
+                      numberOfLines={2}
+                      ellipsizeMode="tail"
+                      style={styles.title}
+                    >
+                      Price without shipping fee
+                    </Text>
                   </View>
                 </View>
               ))}
@@ -125,7 +132,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: moderateScale(10),
-    marginBottom: moderateScale(30),
+    marginBottom: moderateScale(40),
   },
   orderContainer: {
     paddingVertical: moderateScale(10),
@@ -198,10 +205,10 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     width: "100%",
     paddingHorizontal: moderateScale(10),
-    marginTop: -moderateScale(70),
+    marginTop: -moderateScale(30),
   },
   title: {
-    fontSize: moderateScale(16),
+    fontSize: moderateScale(14),
     paddingBottom: moderateScale(5),
     color: "#333",
     textAlign: "right",
