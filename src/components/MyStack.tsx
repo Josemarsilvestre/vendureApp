@@ -14,7 +14,7 @@ import TabNavigator from "./Mytabs";
 
 // Profile Screen
 import FavoriteScreen from "./tab_profile/favorite";
-import UserHistoryScreen from "./tab_profile/purchaseHistory";
+import UserHistoryScreen from "./tab_profile/purchaseHistory/purchaseHistory";
 import PersonalInfoScreen from "./tab_profile/personal-info";
 import AddressScreen from "./tab_profile/address";
 
