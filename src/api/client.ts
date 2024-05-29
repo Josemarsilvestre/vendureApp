@@ -9,8 +9,6 @@ import * as SecureStore from "expo-secure-store";
 
 const API = `${process.env.API_URL}`;
 
-// If using bearer-token based session management, we'll store the token
-// in localStorage using this key.
 const AUTH_TOKEN_KEY = 'token';
 
 let channelToken: string | undefined;
@@ -24,8 +22,6 @@ const httpLink = new HttpLink({
           return API;
       }
   },
-  // This is required if using cookie-based session management,
-  // so that any cookies get sent with the request.
   credentials: 'include',
 });
 
@@ -75,5 +71,17 @@ export const client = new ApolloClient({
       afterwareLink,
       httpLink,
   ]),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          activeCustomer: {
+            merge(existing = {}, incoming) {
+              return { ...existing, ...incoming };
+            },
+          },
+        },
+      },
+    },
+  }),
 });

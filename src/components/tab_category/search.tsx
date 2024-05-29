@@ -41,8 +41,6 @@ interface SearchData {
 
 export default function SearchScreen({ navigation }) {
   const [search, setSearch] = useState("");
-  const windowWidth = useWindowDimensions().width;
-  const imageWidth = windowWidth * 0.2;
 
   const { data, loading, error, fetchMore } = useQuery<SearchData>(SEARCH_QUERY, {
     variables: { term: search },

@@ -11,7 +11,7 @@ export const PURCHASE_HISTORY = gql`
           state
           totalWithTax
           lines {
-            quantity
+            id
             featuredAsset {
               source
             }

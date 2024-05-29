@@ -51,8 +51,8 @@ export default ScaledSheet.create({
     marginRight: moderateScale(10),
   },
   image: {
-    width: "100%",
-    height: "100%",
+    width: "90%",
+    height: "90%",
     borderRadius: moderateScale(10),
   },
   textContainer: {
@@ -61,7 +61,7 @@ export default ScaledSheet.create({
     alignItems: "flex-end",
     width: "100%",
     paddingHorizontal: moderateScale(10),
-    marginTop: -moderateScale(60),
+    marginTop: -moderateScale(40),
   },
   title: {
     fontSize: moderateScale(16),
