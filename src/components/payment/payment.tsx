@@ -128,7 +128,7 @@ export default function PaymentScreen({ navigation }) {
       await addPaymentToOrder({
         variables: { method: "standard-payment" },
       });
-      
+
       navigation.navigate("PaymentConfirmationScreen");
       refetchCart();
       refetchCustomer();
@@ -156,29 +156,6 @@ export default function PaymentScreen({ navigation }) {
       <View style={styles.container}>
         <ScrollView style={styles.scrollView}>
           <View style={styles.section}>
-            <View style={styles.header}>
-              <View style={styles.headerContent}>
-                <TouchableOpacity style={styles.headerLink}>
-                  <Icons.AntDesign
-                    name="shoppingcart"
-                    size={18}
-                    style={styles.headerIconInactive}
-                  />
-                  <Text style={styles.headerTextInactive}>cart</Text>
-                </TouchableOpacity>
-
-                <View style={styles.headerDivider} />
-                <View style={styles.headerActive}>
-                  <Icons.AntDesign
-                    name="wallet"
-                    size={16}
-                    style={styles.headerIconActive}
-                  />
-                  <Text style={styles.headerTextActive}>Payment Method</Text>
-                </View>
-              </View>
-            </View>
-
             <Text style={styles.title}>Contact Information</Text>
             <View
               style={{

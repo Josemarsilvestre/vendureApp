@@ -11,48 +11,6 @@ export default ScaledSheet.create({
   section: {
     padding: moderateScale(10),
   },
-  divider: {
-    height: moderateScale(1),
-    backgroundColor: "lightgray",
-    marginVertical: moderateScale(8),
-  },
-  header: {
-    paddingVertical: moderateScale(5),
-    borderWidth: moderateScale(1),
-    borderColor: "#e0e0e0",
-    borderRadius: moderateScale(10),
-    marginBottom: moderateScale(10),
-  },
-  headerContent: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-evenly",
-  },
-  headerLink: {
-    alignItems: "center",
-  },
-  headerIconInactive: {
-    color: "#878787",
-  },
-  headerTextInactive: {
-    color: "#878787",
-    fontSize: moderateScale(14),
-  },
-  headerDivider: {
-    height: moderateScale(1),
-    width: moderateScale(40),
-    backgroundColor: "#878787",
-  },
-  headerActive: {
-    alignItems: "center",
-  },
-  headerIconActive: {
-    color: "green",
-  },
-  headerTextActive: {
-    color: "green",
-    fontSize: moderateScale(14),
-  },
   contact: {
     fontSize: moderateScale(14),
     fontWeight: "bold",
