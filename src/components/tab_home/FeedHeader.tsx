@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-} from "react-native";
+import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import Icons from "../common/Icons";
@@ -31,10 +26,20 @@ const FeedHeader: React.FC<FeedHeaderProps> = ({
         <Text style={styles.text}>Vendure App</Text>
         <View style={styles.iconsContainer}>
           <TouchableOpacity
+            onPress={() => navigation.navigate("Search")}
+            style={styles.cartIconContainer}
+          >
+            <Icons.EvilIcons
+              name="search"
+              size={moderateScale(30)}
+              color="#1F2937"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={() => navigation.navigate("Cart")}
             style={styles.cartIconContainer}
           >
-            <Icons.AntDesign name="shoppingcart" size={24} color="#1F2937" />
+            <Icons.AntDesign name="shoppingcart" size={moderateScale(24)} color="#1F2937" />
           </TouchableOpacity>
         </View>
       </View>
@@ -69,10 +74,10 @@ const styles = StyleSheet.create({
     position: "relative",
     marginLeft: moderateScale(15),
   },
-  text:{
+  text: {
     fontSize: moderateScale(16),
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
 });
 
 export default FeedHeader;
