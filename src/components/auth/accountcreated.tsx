@@ -10,7 +10,8 @@ export default function AccountCreatedScreen({ navigation }) {
   const confettiRef = useRef(null);
 
   const handleContinueShopping = () => {
-    navigation.goBack(2);
+    navigation.goBack();
+    navigation.goBack();
   };
 
   return (
