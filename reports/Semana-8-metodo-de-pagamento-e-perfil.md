@@ -14,7 +14,7 @@ Aprendi a utilizar melhor a api do vendure. Agora tudo tem se tornado mais fáci
 
 ### Objetivos para a próxima semana
 
-- Na semana 9, o objetivo seria fazer algumas melhorias nas categorias, como o filtro, mostrar um pesquisar no top, aumentar os produtos, quando chego no final da página. E na página perfil, seria alterar o idioma da aplicação e conseguir alterar o email. Depois, acho que termino.
+- Na semana 9, o objetivo seria fazer algumas melhorias nas categorias, como o filtro, mostrar um pesquisar no top, aumentar os produtos, quando chego no final da página. E na página perfil, seria alterar o idioma da aplicação e conseguir alterar o email. Depois, termino a aplicação. 
 
 ### Feedback/Questões para a equipa
 
