@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
@@ -16,7 +16,6 @@ import { REGISTER_MUTATION } from "../../api/mutation/auth";
 import { Button } from "../common/Buttons";
 import TextField from "../common/TextField";
 import { registerSchema } from "../../../utils/validation";
-import { Context } from "../../context/context";
 import {client} from "../../api/client";
 import styles from "./style/styles.auth";
 
@@ -33,11 +32,6 @@ interface RegisterScreenProps {
 }
 
 export default function RegisterScreen({ navigation }: RegisterScreenProps) {
-  const { dispatch } = useContext(Context);
-
-  const setIsLogged = (boolean: boolean) => {
-    dispatch({ type: "isLogged", payload: boolean });
-  };
 
   const {
     handleSubmit,
@@ -65,8 +59,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
         const { registerCustomerAccount } = data;
 
         if (registerCustomerAccount.__typename === "Success") {
-          setIsLogged(true);
-          navigation.navigate("Profile");
+          navigation.navigate("AccountCreatedScreen");
         } else {
           switch (registerCustomerAccount.__typename) {
             case "MissingPasswordError":

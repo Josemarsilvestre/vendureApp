@@ -32,6 +32,7 @@ import { TouchableOpacity } from "react-native";
 import PaymentScreen from "./payment/payment";
 import { moderateScale } from "react-native-size-matters";
 import PaymentConfirmationScreen from "./payment/paymentconfirmation";
+import AccountCreatedScreen from "./auth/accountcreated";
 
 type RootStackParamList = {
   TabNavigator: undefined;
@@ -60,6 +61,7 @@ type RootStackParamList = {
   CategorySection: undefined;
   Payments: undefined;
   PaymentConfirmationScreen: undefined;
+  AccountCreatedScreen: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -342,6 +344,15 @@ export default function MainStackNavigator() {
         component={PaymentConfirmationScreen}
         options={{
           title: "Payment",
+          headerShown: true,
+          headerLeft: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="AccountCreatedScreen"
+        component={AccountCreatedScreen}
+        options={{
+          title: "Account Created",
           headerShown: true,
           headerLeft: () => null,
         }}
