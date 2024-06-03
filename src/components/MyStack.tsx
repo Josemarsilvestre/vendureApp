@@ -1,22 +1,24 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   createStackNavigator,
   StackNavigationProp,
 } from "@react-navigation/stack";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { BackHandler, TouchableOpacity } from "react-native";
 import { Entypo, Ionicons } from "@expo/vector-icons";
+import { moderateScale } from "react-native-size-matters";
 
 // Auth Pages
 import LoginScreen from "./auth/login";
 import RegisterScreen from "./auth/register";
-
-import TabNavigator from "./Mytabs";
+import AccountCreatedScreen from "./auth/accountcreated";
 
 // Profile Screen
 import FavoriteScreen from "./tab_profile/favorite";
 import UserHistoryScreen from "./tab_profile/purchaseHistory/purchaseHistory";
 import PersonalInfoScreen from "./tab_profile/personal-info";
 import AddressScreen from "./tab_profile/address";
+import PasswordScreen from "./tab_profile/password";
 
 // Search
 import SearchScreen from "./tab_category/search";
@@ -24,15 +26,18 @@ import SearchScreen from "./tab_category/search";
 // Products
 import ProductScreen from "./common_pages/product/product";
 import CategorySectionScreen from "./common_pages/category/category_section";
-import SettingScreen from "./tab_profile/settings";
 import ProductSearchedScreen from "./product/productSearched";
-import PasswordScreen from "./tab_profile/password";
-import AddressEdition from "./common_pages/address/address_add_or_edit";
-import { TouchableOpacity } from "react-native";
+
+// Settings
+import SettingScreen from "./tab_profile/settings";
+
+// Payment
 import PaymentScreen from "./payment/payment";
-import { moderateScale } from "react-native-size-matters";
 import PaymentConfirmationScreen from "./payment/paymentconfirmation";
-import AccountCreatedScreen from "./auth/accountcreated";
+import AddressEdition from "./common_pages/address/address_add_or_edit";
+
+// Tab Navigator
+import TabNavigator from "./Mytabs";
 
 type RootStackParamList = {
   TabNavigator: undefined;
@@ -66,9 +71,41 @@ type RootStackParamList = {
 
 const Stack = createStackNavigator<RootStackParamList>();
 
+function PaymentConfirmationScreenWrapper({ navigation }) {
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        return true;
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [])
+  );
+
+  return <PaymentConfirmationScreen navigation={navigation}/>;
+}
+
+function AccountCreatedScreenWrapper({ navigation }) {
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        return true;
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [])
+  );
+
+  return <AccountCreatedScreen navigation={navigation}/>;
+}
+
 export default function MainStackNavigator() {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const style_fix = {marginLeft: moderateScale(16)}
+  const style_fix = { marginLeft: moderateScale(16) };
 
   return (
     <Stack.Navigator
@@ -341,20 +378,22 @@ export default function MainStackNavigator() {
       />
       <Stack.Screen
         name="PaymentConfirmationScreen"
-        component={PaymentConfirmationScreen}
+        component={PaymentConfirmationScreenWrapper}
         options={{
           title: "Payment",
           headerShown: true,
           headerLeft: () => null,
+          gestureEnabled: false
         }}
       />
       <Stack.Screen
         name="AccountCreatedScreen"
-        component={AccountCreatedScreen}
+        component={AccountCreatedScreenWrapper}
         options={{
           title: "Account Created",
           headerShown: true,
           headerLeft: () => null,
+          gestureEnabled: false
         }}
       />
     </Stack.Navigator>
