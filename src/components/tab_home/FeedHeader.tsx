@@ -50,7 +50,7 @@ const FeedHeader: React.FC<FeedHeaderProps> = ({
 const styles = StyleSheet.create({
   container: {
     paddingVertical: moderateScale(10),
-    paddingHorizontal: moderateScale(20),
+    paddingHorizontal: moderateScale(10),
     backgroundColor: "white",
     shadowColor: "#000",
     shadowOffset: {
