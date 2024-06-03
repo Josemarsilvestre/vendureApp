@@ -110,7 +110,7 @@ export default function SearchScreen({ navigation }) {
                         <Text
                           numberOfLines={3}
                           ellipsizeMode="tail"
-                          style={styles.title}
+                          style={styles.title} 
                         >
                           {item?.productVariantName}
                         </Text>

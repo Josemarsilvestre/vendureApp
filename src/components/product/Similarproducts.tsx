@@ -54,7 +54,7 @@ const SimilarProducts: React.FC<SimilarProductsProps> = ({
                 key={items_.id}
               >
                 <Image
-                  source={{ uri: item.featuredAsset.source || "" }}
+                  source={{ uri: item.featuredAsset?.source || "" }}
                   style={styles.image}
                   resizeMode="cover"
                 />

@@ -7,11 +7,16 @@ interface ImageProps {
 }
 
 const ImageGallery: React.FC<ImageProps> = ({ product }) => {
+  if (!product || typeof product !== 'string' || product.trim() === '') {
+    // Se a URL da imagem estiver vazia ou não for uma string válida, retorne null ou defina uma imagem padrão
+    return null;
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
         <Image
-          source={{ uri: product || "" }}
+          source={{ uri: product }}
           style={styles.image}
           resizeMode="cover"
         />

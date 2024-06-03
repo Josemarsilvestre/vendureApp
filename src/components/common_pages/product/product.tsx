@@ -1,10 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity
-} from "react-native";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useMutation, useQuery } from "@apollo/client";
 
@@ -73,16 +68,16 @@ export default function ProductScreen({ route, navigation }) {
       >
         <View style={styles.content}>
           <ImageGallery
-            product={selectedProducts.product.featuredAsset.source}
+            product={selectedProducts?.product?.featuredAsset?.source}
           />
-          <Text style={styles.title}>{selectedProducts.name}</Text>
-          <Text>{selectedProducts.product.variants[0].sku}</Text>
+          <Text style={styles.title}>{selectedProducts?.name}</Text>
+          <Text>{selectedProducts?.product?.variants[0]?.sku}</Text>
           <View style={styles.divider} />
 
           <View style={styles.priceContainer}>
             <Text style={styles.header}>Price: </Text>
             <ProductPrice
-              price={selectedProducts.product.variants[0].priceWithTax}
+              price={selectedProducts?.product?.variants[0]?.priceWithTax}
             />
           </View>
 
@@ -90,7 +85,7 @@ export default function ProductScreen({ route, navigation }) {
             <Info />
             <FreeShipping />
           </View>
-          <Description product={selectedProducts.product} />
+          <Description product={selectedProducts?.product} />
           <Similarproducts
             navigation={navigation}
             items={products}

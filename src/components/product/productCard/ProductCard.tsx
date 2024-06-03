@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   Image,
   Text,
   View,
   TouchableOpacity,
   useWindowDimensions,
+  ActivityIndicator,
 } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { useMutation, useQuery } from "@apollo/client";
@@ -15,23 +16,14 @@ import { Product } from "../../../../utils/interface";
 import { Button } from "../../common/Buttons";
 import { ADD_TO_CART } from "../../../api/mutation/order";
 import { SHOW_ORDER } from "../../../api/mutation/order";
+import { GET_PRODUCTS_BY_CATEGORY_QUERY } from "../../../api/mutation/category";
 import styles from "./style/style.productCard";
 
-interface Category {
-  productVariants: {
-    items: {
-      id: string;
-      name: string;
-      product: Product;
-    }[];
-  };
-}
-
 export default function ProductCard({
-  category,
+  categoryID,
   navigation,
 }: {
-  category: Category;
+  categoryID: string;
   navigation: any;
 }) {
   const windowWidth = useWindowDimensions().width;
@@ -39,16 +31,46 @@ export default function ProductCard({
 
   const [addedToCartMap, setAddedToCartMap] = useState<{
     [key: string]: boolean;
-  }>(
-    category.productVariants.items.reduce((acc, curr) => {
-      acc[curr.id] = false;
-      return acc;
-    }, {})
-  );
+  }>({});
+
   const [addToCart] = useMutation(ADD_TO_CART);
   const { refetch } = useQuery(SHOW_ORDER);
+  const [products, setProducts] = useState<Product[]>([]);
 
-  const products = category.productVariants.items.map((item) => item.product);
+  const { loading, data, fetchMore } = useQuery(
+    GET_PRODUCTS_BY_CATEGORY_QUERY,
+    {
+      variables: {
+        id: categoryID,
+        skip: 0,
+        take: 9,
+      },
+      onCompleted: (data) => {
+        const newProducts =
+          data?.collections?.items[0]?.productVariants?.items?.map(
+            (item: any) => item.product
+          ) || [];
+        setProducts(newProducts);
+      },
+    }
+  );
+
+  const handleLoadMore = useCallback(() => {
+    if (!loading) {
+      fetchMore({
+        variables: { skip: products.length, take: 9 },
+        updateQuery: (prev, { fetchMoreResult }) => {       
+          if (!fetchMoreResult) return prev;        
+          const newProducts =
+            fetchMoreResult.collections.items[0].productVariants.items.map(
+              (item: any) => item.product
+            );
+          setProducts((prevProducts) => [...prevProducts, ...newProducts]);
+          return prev;
+        },
+      });      
+    }
+  }, [loading, fetchMore, products.length]);
 
   const handleAddToCart = (itemId: string) => {
     addToCart({ variables: { id_: itemId, quantity_: 1 } });
@@ -71,21 +93,25 @@ export default function ProductCard({
     <FlashList
       data={products}
       renderItem={({ item, index }: { item: Product; index: number }) => {
-        const items_ = category.productVariants.items[index];
-        
+        const items_ =
+          data?.collections?.items[0]?.productVariants?.items[index];
+
+        // Verificar se items_ existe antes de acessar suas propriedades
+        if (!items_) return null;
+
         return (
           <TouchableOpacity
             style={styles.container}
             onPress={() =>
               navigation.navigate("Products", {
-                products: category.productVariants.items,
+                products: data?.collections?.items[0]?.productVariants?.items,
                 selectedIndex: index,
-                productVariantId: items_.id,
+                productVariantId: items_?.id,
               })
             }
           >
-            <View style={styles.cardContent} key={items_.id}>
-              <View style={[styles.imageContainer, { width: imageWidth }]}> 
+            <View style={styles.cardContent} key={items_?.id}>
+              <View style={[styles.imageContainer, { width: imageWidth }]}>
                 <Image
                   source={{
                     uri: item.featuredAsset.source || "",
@@ -140,6 +166,13 @@ export default function ProductCard({
       }}
       estimatedItemSize={900}
       showsVerticalScrollIndicator={false}
+      onEndReached={handleLoadMore}
+      onEndReachedThreshold={0.5}
+      ListFooterComponent={
+        <View style={{ alignItems: "center" }}>
+          {loading ? <ActivityIndicator size="large" /> : null}
+        </View>
+      }
     />
   );
 }

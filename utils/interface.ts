@@ -11,23 +11,6 @@ export interface Category {
       source: string;
     };
   };
-  productVariants: {
-    items: {
-      product: {
-        id: string;
-        name: string;
-        featuredAsset: {
-          source: string;
-        };
-        description: string;
-        variants: {
-          priceWithTax: number;
-          stockLevel: number;
-          sku: string;
-        };
-      };
-    };
-  }[];
 }
 
 export interface Product {

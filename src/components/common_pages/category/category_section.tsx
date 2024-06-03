@@ -29,7 +29,7 @@ export default function CategorySectionScreen({ route, navigation }) {
       </View>
       <View style={styles.content}>
         <View style={styles.productsContainer}>
-          <ProductCard category={category} navigation={navigation} />
+          <ProductCard categoryID={category.id} navigation={navigation} />
         </View>
       </View>
     </View>

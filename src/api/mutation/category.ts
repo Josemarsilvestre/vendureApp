@@ -1,8 +1,8 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const GET_ALL_COLLECTIONS_QUERY = gql`
-  query GetAllCollections {
-    collections(options: { take: 9 }) {
+  query GetAllCollections($skip: Int, $take: Int) {
+    collections {
       items {
         id
         name
@@ -16,7 +16,33 @@ export const GET_ALL_COLLECTIONS_QUERY = gql`
             source
           }
         }
-        productVariants(options: { take: 8 }) {
+        productVariants(options: { take: $take, skip: $skip }) {
+          items {
+            id
+            name
+            product {
+              featuredAsset {
+                source
+              }
+              description
+              variants {
+                priceWithTax
+                stockLevel
+                sku
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_PRODUCTS_BY_CATEGORY_QUERY = gql`
+  query GetProductsByCategory($skip: Int, $take: Int, $id: String!) {
+    collections(options: { filter: { id: { eq: $id } } }) {
+      items {
+        productVariants(options: { take: $take, skip: $skip }) {
           items {
             id
             name

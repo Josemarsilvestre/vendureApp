@@ -14,7 +14,7 @@ const Description: React.FC<DescriptionProps> = ({ product }) => {
     <View>
       <Text style={styles.header}>Description</Text>
       <View style={styles.container}>
-        <Text style={styles.text}>{product.description}</Text>
+        <Text style={styles.text}>{product?.description}</Text>
       </View>
     </View>
   )

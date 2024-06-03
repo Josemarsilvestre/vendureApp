@@ -13,25 +13,33 @@ export interface CategoriesProps {
 }
 
 const Categories: React.FC<CategoriesProps> = ({ navigation }) => {
-  const { data, loading, error } = useQuery<{ collections: { items: Category[] } }>(GET_ALL_COLLECTIONS_QUERY);
+  const take = 9;
+  const { loading, error, data, refetch } = useQuery<{ collections: { items: Category[] } }>(
+    GET_ALL_COLLECTIONS_QUERY,
+    { variables: { take } }
+  );
 
-  if (loading || error) {
+  const handleLoadMore = () => {
+    refetch();
+  };
+
+  if (loading || error || !data || !data.collections) {
     return null;
   }
 
-  const categories: Category[] = data?.collections?.items || [];
+  const categories: Category[] = data.collections.items || [];
 
   return (
     <FeedSectionContainer title="Category">
       <FlashList
         data={categories}
         horizontal
-        renderItem={({ item, index }) => (
+        renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.categoryItem}
             onPress={() => {
               navigation.navigate("CategorySection", {
-                category: item
+                category: item,
               });
             }}
           >
@@ -47,8 +55,10 @@ const Categories: React.FC<CategoriesProps> = ({ navigation }) => {
           </TouchableOpacity>
         )}
         estimatedItemSize={900}
-        estimatedListSize={{height: 108, width: 100 }}
+        estimatedListSize={{ height: 110, width: 100 }}
         showsHorizontalScrollIndicator={false}
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={0.5}
       />
     </FeedSectionContainer>
   );
