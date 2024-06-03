@@ -28,7 +28,7 @@ export default function AccountCreatedScreen({ navigation }) {
               { fontSize: moderateScale(17), marginTop: moderateScale(50) },
             ]}
           >
-            Check the account in the email, to log in.
+            Check the email to access the account.
           </Text>
         </View>
       </View>
