@@ -21,13 +21,13 @@ export const GET_PRODUCTS_BY_CATEGORY_QUERY = gql`
         items {
           id
           name
+          priceWithTax
           product {
             featuredAsset {
               source
             }
             description
             variants {
-              priceWithTax
               stockLevel
               sku
             }

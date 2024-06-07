@@ -12,7 +12,7 @@ import { useMutation, useQuery } from "@apollo/client";
 
 import ProductPrice from "../ProductPrice";
 import Icons from "../../common/Icons";
-import { Product } from "../../../../utils/interface";
+import { Product2 as Product } from "../../../../utils/interface";
 import { ADD_TO_CART } from "../../../api/mutation/order";
 import { SHOW_ORDER } from "../../../api/mutation/order";
 import styles from "./style/style.productCard";
@@ -174,7 +174,7 @@ export default function ProductCard({
                   </Text>
                   <View style={styles.priceContainer}>
                     {item.variants[0].stockLevel !== 0 ? (
-                      <ProductPrice price={item.variants[0].priceWithTax} />
+                      <ProductPrice price={items_.priceWithTax} />
                     ) : (
                       <Text style={styles.notAvailableText}>Not available</Text>
                     )}

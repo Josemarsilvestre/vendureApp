@@ -18,6 +18,17 @@ export interface Product {
   }
 }
 
+export interface Product2 {
+  featuredAsset: {
+    source: string;
+  };
+  description: string;
+  variants: {
+    stockLevel: number;
+    sku: string;
+  }
+}
+
 export interface Customer {
   id: string;
   firstName: string;
