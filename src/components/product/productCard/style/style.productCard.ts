@@ -94,5 +94,5 @@ export default ScaledSheet.create({
     fontSize: moderateScale(14),
     color: "#6B7280",
     height: moderateScale(24),
-  },
+  }
 });
