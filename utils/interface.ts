@@ -4,13 +4,6 @@ export interface Category {
   assets: {
     source: string;
   };
-  children: {
-    id: string;
-    name: string;
-    assets: {
-      source: string;
-    };
-  };
 }
 
 export interface Product {

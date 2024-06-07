@@ -13,11 +13,10 @@ export interface CategoriesProps {
 }
 
 const Categories: React.FC<CategoriesProps> = ({ navigation }) => {
-  const take = 9;
   const { loading, error, data } = useQuery<{ collections: { items: Category[] } }>(
     GET_ALL_COLLECTIONS_QUERY,
-    { variables: { take } }
-  );
+    { variables: { skip: 0, take: 9 } }
+  );  
 
   if (loading || error || !data || !data.collections) {
     return null;
@@ -25,12 +24,10 @@ const Categories: React.FC<CategoriesProps> = ({ navigation }) => {
 
   const categories: Category[] = data.collections.items || [];
 
-  const displayedCategories = categories.slice(0, 9); //Limited categories up to 9
-
   return (
     <FeedSectionContainer title="Category">
       <FlashList
-        data={displayedCategories}
+        data={categories}
         horizontal
         renderItem={({ item }) => (
           <TouchableOpacity

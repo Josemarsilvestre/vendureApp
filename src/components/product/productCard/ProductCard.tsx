@@ -15,9 +15,10 @@ import Icons from "../../common/Icons";
 import { Product } from "../../../../utils/interface";
 import { ADD_TO_CART } from "../../../api/mutation/order";
 import { SHOW_ORDER } from "../../../api/mutation/order";
-import { GET_PRODUCTS_BY_CATEGORY_QUERY } from "../../../api/mutation/category";
 import styles from "./style/style.productCard";
 import { moderateScale } from "react-native-size-matters";
+
+import { GET_PRODUCTS_BY_CATEGORY_QUERY } from "../../../api/mutation/category";
 
 export default function ProductCard({
   categoryID,
@@ -43,14 +44,14 @@ export default function ProductCard({
     GET_PRODUCTS_BY_CATEGORY_QUERY,
     {
       variables: {
-        id: categoryID,
-        skip: 0,
         take,
+        skip: 0,
+        id: categoryID,
       },
       onCompleted: (data) => {
         if (data) {
           const initialProducts =
-            data?.collections?.items?.[0]?.productVariants?.items?.map(
+            data?.collection?.productVariants?.items?.map(
               (item: any) => item.product
             ) || [];
           setProducts(initialProducts);
@@ -79,20 +80,21 @@ export default function ProductCard({
   const handleLoadMore = () => {
     fetchMore({
       variables: {
-        skip: products.length,
         take,
+        skip: products.length,
       },
       updateQuery: (prevResult, { fetchMoreResult }) => {
         if (
           !fetchMoreResult ||
-          !fetchMoreResult.collections?.items ||
-          fetchMoreResult.collections.items.length === 0
+          !fetchMoreResult.collection ||
+          !fetchMoreResult.collection.productVariants ||
+          fetchMoreResult.collection.productVariants.items.length === 0
         ) {
           return prevResult;
         }
 
         const newProducts =
-          fetchMoreResult.collections?.items?.[0]?.productVariants?.items?.map(
+          fetchMoreResult.collection.productVariants.items.map(
             (item: any) => item.product
           ) || [];
 
@@ -100,24 +102,21 @@ export default function ProductCard({
 
         return {
           ...prevResult,
-          collections: {
-            ...prevResult.collections,
-            items: [
-              {
-                ...prevResult.collections.items[0],
-                productVariants: {
-                  ...prevResult.collections.items[0].productVariants,
-                  items: [
-                    ...prevResult.collections.items[0].productVariants.items,
-                    ...(fetchMoreResult.collections.items[0]?.productVariants
-                      ?.items || []),
-                  ],
-                },
-              },
-            ],
+          collection: {
+            ...prevResult.collection,
+            productVariants: {
+              ...prevResult.collection.productVariants,
+              items: [
+                ...prevResult.collection.productVariants.items,
+                ...(fetchMoreResult.collection.productVariants
+                  ?.items || []),
+              ],
+            },
           },
         };
       },
+    }).catch((error) => {
+      console.error("Erro:", error);
     });
   };
 
@@ -128,7 +127,7 @@ export default function ProductCard({
   useEffect(() => {
     if (data) {
       const initialProducts =
-        data?.collections?.items?.[0]?.productVariants?.items?.map(
+        data?.collection?.productVariants?.items?.map(
           (item: any) => item.product
         ) || [];
       setProducts(initialProducts);
@@ -141,9 +140,7 @@ export default function ProductCard({
         ref={scrollViewRef}
         data={products}
         renderItem={({ item, index }: { item: Product; index: number }) => {
-          const items_ =
-            data?.collections?.items?.[0]?.productVariants?.items?.[index];
-
+          const items_ = data?.collection?.productVariants?.items?.[index];
           if (!items_) return null;
 
           return (
@@ -151,8 +148,7 @@ export default function ProductCard({
               style={styles.container}
               onPress={() =>
                 navigation.navigate("Products", {
-                  products:
-                    data?.collections?.items?.[0]?.productVariants?.items,
+                  products: data?.collection?.productVariants?.items,
                   selectedIndex: index,
                   productVariantId: items_?.id,
                 })
