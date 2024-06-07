@@ -18,6 +18,7 @@ import { ADD_TO_CART } from "../../../api/mutation/order";
 import { SHOW_ORDER } from "../../../api/mutation/order";
 import { GET_PRODUCTS_BY_CATEGORY_QUERY } from "../../../api/mutation/category";
 import styles from "./style/style.productCard";
+import { moderateScale } from "react-native-size-matters";
 
 export default function ProductCard({
   categoryID,
@@ -29,30 +30,37 @@ export default function ProductCard({
   const windowWidth = useWindowDimensions().width;
   const imageWidth = windowWidth * 0.7;
 
-  const [addedToCartMap, setAddedToCartMap] = useState<{ [key: string]: boolean }>({});
+  const [addedToCartMap, setAddedToCartMap] = useState<{
+    [key: string]: boolean;
+  }>({});
 
   const [addToCart] = useMutation(ADD_TO_CART);
   const { refetch } = useQuery(SHOW_ORDER);
   const [products, setProducts] = useState<Product[]>([]);
   const scrollViewRef = useRef<FlashList<Product>>(null);
-  const [skip, setSkip] = useState(0);
   const take = 9;
 
-  const { loading, data, fetchMore } = useQuery(GET_PRODUCTS_BY_CATEGORY_QUERY, {
-    variables: {
-      id: categoryID,
-      skip,
-      take,
-    },
-    onCompleted: (data) => {
-      if (data) {
-        const initialProducts = data?.collections?.items?.[0]?.productVariants?.items?.map((item: any) => item.product) || [];
-        setProducts(initialProducts);
-      }
-    },
-  });
+  const { loading, data, fetchMore } = useQuery(
+    GET_PRODUCTS_BY_CATEGORY_QUERY,
+    {
+      variables: {
+        id: categoryID,
+        skip: 0,
+        take,
+      },
+      onCompleted: (data) => {
+        if (data) {
+          const initialProducts =
+            data?.collections?.items?.[0]?.productVariants?.items?.map(
+              (item: any) => item.product
+            ) || [];
+          setProducts(initialProducts);
+        }
+      },
+    }
+  );
 
-  const handleAddToCart = (itemId: string) => {
+  const handleAddToCart = (itemId) => {
     addToCart({ variables: { id_: itemId, quantity_: 1 } });
     refetch();
 
@@ -76,11 +84,18 @@ export default function ProductCard({
         take,
       },
       updateQuery: (prevResult, { fetchMoreResult }) => {
-        if (!fetchMoreResult || !fetchMoreResult.collections?.items || fetchMoreResult.collections.items.length === 0) {
+        if (
+          !fetchMoreResult ||
+          !fetchMoreResult.collections?.items ||
+          fetchMoreResult.collections.items.length === 0
+        ) {
           return prevResult;
         }
 
-        const newProducts = fetchMoreResult.collections?.items?.[0]?.productVariants?.items?.map((item: any) => item.product) || [];
+        const newProducts =
+          fetchMoreResult.collections?.items?.[0]?.productVariants?.items?.map(
+            (item: any) => item.product
+          ) || [];
 
         setProducts((prevProducts) => [...prevProducts, ...newProducts]);
 
@@ -95,7 +110,8 @@ export default function ProductCard({
                   ...prevResult.collections.items[0].productVariants,
                   items: [
                     ...prevResult.collections.items[0].productVariants.items,
-                    ...(fetchMoreResult.collections.items[0]?.productVariants?.items || []),
+                    ...(fetchMoreResult.collections.items[0]?.productVariants
+                      ?.items || []),
                   ],
                 },
               },
@@ -114,7 +130,10 @@ export default function ProductCard({
 
   useEffect(() => {
     if (data) {
-      const initialProducts = data?.collections?.items?.[0]?.productVariants?.items?.map((item: any) => item.product) || [];
+      const initialProducts =
+        data?.collections?.items?.[0]?.productVariants?.items?.map(
+          (item: any) => item.product
+        ) || [];
       setProducts(initialProducts);
     }
   }, [data]);
@@ -125,7 +144,8 @@ export default function ProductCard({
         ref={scrollViewRef}
         data={products}
         renderItem={({ item, index }: { item: Product; index: number }) => {
-          const items_ = data?.collections?.items?.[0]?.productVariants?.items?.[index];
+          const items_ =
+            data?.collections?.items?.[0]?.productVariants?.items?.[index];
 
           if (!items_) return null;
 
@@ -134,7 +154,8 @@ export default function ProductCard({
               style={styles.container}
               onPress={() =>
                 navigation.navigate("Products", {
-                  products: data?.collections?.items?.[0]?.productVariants?.items,
+                  products:
+                    data?.collections?.items?.[0]?.productVariants?.items,
                   selectedIndex: index,
                   productVariantId: items_?.id,
                 })
@@ -166,28 +187,25 @@ export default function ProductCard({
                     )}
                   </View>
                   <View style={styles.AddContainer}>
-                    {addedToCartMap[items_.id] ? (
-                      <TouchableOpacity style={styles.addedButton} disabled>
-                        <Text style={styles.addButtonText}>Added to cart </Text>
-                        <Icons.Feather
-                          name="shopping-cart"
-                          size={14}
-                          style={styles.addButtonIcon}
-                        />
-                      </TouchableOpacity>
-                    ) : (
-                      <Button
-                        style={styles.addButton}
-                        onPress={() => handleAddToCart(items_.id)}
-                      >
-                        <Text style={styles.addButtonText}>Add to cart </Text>
-                        <Icons.Feather
-                          name="shopping-cart"
-                          size={12}
-                          style={styles.addButtonIcon}
-                        />
-                      </Button>
-                    )}
+                    <TouchableOpacity
+                      style={
+                        addedToCartMap[items_.id]
+                          ? styles.addedButton
+                          : styles.addButton
+                      }
+                      onPress={() => handleAddToCart(items_.id)}
+                    >
+                      <Text style={styles.addButtonText}>
+                        {addedToCartMap[items_.id]
+                          ? "Added to cart "
+                          : "Add to cart "}
+                      </Text>
+                      <Icons.Feather
+                        name="shopping-cart"
+                        size={addedToCartMap[items_.id] ? 14 : 12}
+                        style={styles.addButtonIcon}
+                      />
+                    </TouchableOpacity>
                   </View>
                 </View>
               </View>
@@ -199,16 +217,37 @@ export default function ProductCard({
         estimatedItemSize={900}
         ListFooterComponent={
           <View style={{ alignItems: "center" }}>
-            {loading ? <ActivityIndicator size="large" /> : (
-              <TouchableOpacity onPress={handleLoadMore} style={{marginBottom: 15}}>
-                <Text style={{ color: '#1F2937', fontWeight: 'bold' }}>Load More</Text>
+            {loading ? (
+              <ActivityIndicator size="large" />
+            ) : (
+              <TouchableOpacity onPress={handleLoadMore}>
+                <Text
+                  style={{
+                    color: "#1F2937",
+                    fontWeight: "bold",
+                    paddingBottom: moderateScale(15),
+                  }}
+                >
+                  Load More
+                </Text>
               </TouchableOpacity>
             )}
           </View>
         }
       />
-      <TouchableOpacity onPress={handleScrollToTop} style={{ position: 'absolute', bottom: 20, right: 20 }}>
-        <Icons.FontAwesome5 name="arrow-alt-circle-up" size={35} color="#3b4d68" />
+      <TouchableOpacity
+        onPress={handleScrollToTop}
+        style={{
+          position: "absolute",
+          bottom: moderateScale(20),
+          right: moderateScale(20),
+        }}
+      >
+        <Icons.FontAwesome5
+          name="arrow-alt-circle-up"
+          size={35}
+          color="#3b4d68"
+        />
       </TouchableOpacity>
     </View>
   );

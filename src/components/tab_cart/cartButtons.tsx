@@ -44,18 +44,18 @@ const CartButtons: React.FC<CartButtonsProps> = ({ itemID, quantity, refetchCart
   return (
     <View style={styles.container_CartButtons}>
       <TouchableOpacity onPress={increase} style={styles.pressable}>
-        <Icons.AntDesign name="plus" size={18} style={styles.icon_CartButtons} />
+        <Icons.AntDesign name="plus" size={20} style={styles.icon_CartButtons} />
       </TouchableOpacity>
 
       <Text style={styles.quantity}>{quantity}</Text>
 
       {quantity === 1 ? (
         <TouchableOpacity onPress={removeFromCart} style={styles.pressable}>
-          <Icons.AntDesign name="delete" size={18} style={styles.icon_CartButtons} />
+          <Icons.AntDesign name="delete" size={20} style={styles.icon_CartButtons} />
         </TouchableOpacity>
       ) : (
         <TouchableOpacity onPress={decrease} style={styles.pressable}>
-          <Icons.AntDesign name="minus" size={18} style={styles.icon_CartButtons} />
+          <Icons.AntDesign name="minus" size={20} style={styles.icon_CartButtons} />
         </TouchableOpacity>
       )}
     </View>

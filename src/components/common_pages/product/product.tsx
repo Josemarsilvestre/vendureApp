@@ -35,9 +35,11 @@ export default function ProductScreen({ route, navigation }) {
   const [addedToCartMap, setAddedToCartMap] = useState<{
     [key: string]: boolean;
   }>({});
+
   const [addToCart] = useMutation(ADD_TO_CART, {
     variables: { id_: productVariantId, quantity_: 1 },
   });
+  
   const { refetch } = useQuery(SHOW_ORDER);
 
   const handleAddToCart = (product) => {
@@ -96,31 +98,24 @@ export default function ProductScreen({ route, navigation }) {
         </View>
       </ScrollView>
       <View style={[styles.bottomContainer, { paddingBottom: insets.bottom }]}>
-        {addedToCartMap[selectedProducts.id] ? (
-          <TouchableOpacity style={styles.addedButton} disabled>
-            <Text style={styles.addToCartButtonText}>Added to cart</Text>
-            <Icons.Feather
-              name="shopping-cart"
-              size={22}
-              style={{ color: "#F59E0B" }}
-            />
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            style={styles.addToCartButton}
-            onPress={() => handleAddToCart(selectedProducts)}
-          >
-            <Text style={styles.addToCartButtonText}>Add to cart</Text>
-            <Icons.Feather
-              name="shopping-cart"
-              size={22}
-              style={{ color: "#F59E0B" }}
-            />
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          style={
+            addedToCartMap[selectedProducts.id] ? styles.addedButton : styles.addToCartButton
+          }
+          onPress={() => handleAddToCart(selectedProducts)}
+        >
+          <Text style={styles.addToCartButtonText}>
+            {addedToCartMap[selectedProducts.id] ? "Added to cart" : "Add to cart"}
+          </Text>
+          <Icons.Feather
+            name="shopping-cart"
+            size={22}
+            style={{ color: "#F59E0B" }}
+          />
+        </TouchableOpacity>
         <View style={styles.iconContainer}>
           <TouchableOpacity
-            onPress={() => console.log("Navegar para Lista de Desejos")}
+            onPress={() => console.log("Navigate to Wishlist")}
           >
             <Icons.Feather
               name="heart"
