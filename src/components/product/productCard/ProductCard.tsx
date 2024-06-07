@@ -6,14 +6,13 @@ import {
   TouchableOpacity,
   useWindowDimensions,
   ActivityIndicator,
+  FlatList,
 } from "react-native";
-import { FlashList } from "@shopify/flash-list";
 import { useMutation, useQuery } from "@apollo/client";
 
 import ProductPrice from "../ProductPrice";
 import Icons from "../../common/Icons";
 import { Product } from "../../../../utils/interface";
-import { Button } from "../../common/Buttons";
 import { ADD_TO_CART } from "../../../api/mutation/order";
 import { SHOW_ORDER } from "../../../api/mutation/order";
 import { GET_PRODUCTS_BY_CATEGORY_QUERY } from "../../../api/mutation/category";
@@ -37,7 +36,7 @@ export default function ProductCard({
   const [addToCart] = useMutation(ADD_TO_CART);
   const { refetch } = useQuery(SHOW_ORDER);
   const [products, setProducts] = useState<Product[]>([]);
-  const scrollViewRef = useRef<FlashList<Product>>(null);
+  const scrollViewRef = useRef<FlatList<Product>>(null);
   const take = 9;
 
   const { loading, data, fetchMore } = useQuery(
@@ -66,13 +65,13 @@ export default function ProductCard({
 
     setAddedToCartMap((prevState) => ({
       ...prevState,
-      [itemId]: true,
+      [String(itemId)]: true,
     }));
 
     setTimeout(() => {
       setAddedToCartMap((prevState) => ({
         ...prevState,
-        [itemId]: false,
+        [String(itemId)]: false,
       }));
     }, 3000);
   };
@@ -123,9 +122,7 @@ export default function ProductCard({
   };
 
   const handleScrollToTop = () => {
-    if (scrollViewRef.current) {
-      scrollViewRef.current.scrollToOffset({ offset: 0, animated: true });
-    }
+    scrollViewRef.current?.scrollToOffset({ offset: 0, animated: true });
   };
 
   useEffect(() => {
@@ -140,7 +137,7 @@ export default function ProductCard({
 
   return (
     <View style={{ flex: 1 }}>
-      <FlashList
+      <FlatList
         ref={scrollViewRef}
         data={products}
         renderItem={({ item, index }: { item: Product; index: number }) => {
@@ -193,7 +190,7 @@ export default function ProductCard({
                           ? styles.addedButton
                           : styles.addButton
                       }
-                      onPress={() => handleAddToCart(items_.id)}
+                      onPress={() => handleAddToCart(String(items_.id))}
                     >
                       <Text style={styles.addButtonText}>
                         {addedToCartMap[items_.id]
@@ -202,7 +199,7 @@ export default function ProductCard({
                       </Text>
                       <Icons.Feather
                         name="shopping-cart"
-                        size={addedToCartMap[items_.id] ? 14 : 12}
+                        size={addedToCartMap[items_.id] ? 14 : 14}
                         style={styles.addButtonIcon}
                       />
                     </TouchableOpacity>
@@ -214,7 +211,6 @@ export default function ProductCard({
         }}
         ListHeaderComponent={<View style={{ height: 1 }} />}
         showsVerticalScrollIndicator={false}
-        estimatedItemSize={900}
         ListFooterComponent={
           <View style={{ alignItems: "center" }}>
             {loading ? (

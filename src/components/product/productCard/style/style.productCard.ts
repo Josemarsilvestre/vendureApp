@@ -25,7 +25,7 @@ export default ScaledSheet.create({
   },
   image: {
     width: "80%",
-    height: "100%",
+    aspectRatio: 1,
     borderRadius: moderateScale(10),
   },
   colorContainer: {
