@@ -12,7 +12,7 @@ export default function FreeShipping() {
         </View>
         <View>
           <Image
-            source={require("../../../assets/freeShipping.jpg")}
+            source={require("../../../assets/freeShipping.jpg")} 
             style={styles.image}
           />
         </View>
