@@ -1,5 +1,5 @@
 <h1 style="margin: 30px 0 30px; font-weight: bold;">Vendure App</h1>
-<h3>E-Commerce application with React Native, GraphQL and TypeScript</h4>
+<h2>E-Commerce application with React Native, GraphQL and TypeScript</h4>
 
 Welcome to the React Native-powered eCommerce application inspired by Vendure.
 This application allows companies, which use Vendure for the web, to have the opportunity to enter the mobile application market, without having to create a new application.
