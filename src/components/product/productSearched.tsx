@@ -19,9 +19,10 @@ import { PRODUCT_SEARCHED_QUERY } from "../../api/mutation/search";
 import { ADD_TO_CART, SHOW_ORDER } from "../../api/mutation/order";
 import styles from "../common_pages/product/styles.product";
 import PageLoading from "../loading/PageLoading";
+import SimilarProducts from "./Similarproducts";
 
 export default function ProductSearchedScreen({ route, navigation }) {
-  const { productId, productVariantID } = route.params;
+  const { productId, productVariantID, name, price, categoryID } = route.params;
   const { data, loading, error } = useQuery(PRODUCT_SEARCHED_QUERY, {
     variables: { id: productId },
   });
@@ -40,15 +41,9 @@ export default function ProductSearchedScreen({ route, navigation }) {
   const scrollViewRef = useRef<ScrollView>(null);
 
   useEffect(() => {
-    if (
-      !loading &&
-      !error &&
-      data &&
-      data.products &&
-      data.products.items.length > 0
-    ) {
+    if (!loading && !error && data && data.product) {
       navigation.setOptions({
-        title: data.products.items[0].name || "Loading...",
+        title: data.product.name || "Loading...",
       });
     }
 
@@ -57,11 +52,11 @@ export default function ProductSearchedScreen({ route, navigation }) {
     }
   }, [navigation, scrollViewRef, data, loading, error]);
 
-  if (error || !data || !data.products || data.products.items.length === 0) {
-    return null;
+  if (error || !data || !data.product) {
+    return <Text>Error: Product not found!</Text>;
   }
 
-  const product = data.products.items[0];
+  const product = data.product;
 
   if (!product.featuredAsset || !product.featuredAsset.source) {
     return <Text>Error: Product image not found!</Text>;
@@ -97,13 +92,13 @@ export default function ProductSearchedScreen({ route, navigation }) {
       >
         <View style={styles.content}>
           <ImageGallery product={product.featuredAsset.source} />
-          <Text style={styles.title}>{product.name}</Text>
+          <Text style={styles.title}>{name}</Text>
           <Text>{product.variants[0].sku}</Text>
           <View style={styles.divider} />
 
           <View style={styles.priceContainer}>
             <Text style={styles.header}>Price: </Text>
-            <ProductPrice price={product.variants[0].priceWithTax} />
+            <ProductPrice price={price} />
           </View>
 
           <View style={styles.infoContainer}>
@@ -111,6 +106,12 @@ export default function ProductSearchedScreen({ route, navigation }) {
             <FreeShipping />
           </View>
           <Description product={product} />
+          <SimilarProducts
+            navigation={navigation}
+            categoryID={categoryID}
+            title="Similar products"
+          />
+          <View style={styles.divider} />
           <Text style={styles.reviewText}>Recent reviews</Text>
         </View>
       </ScrollView>

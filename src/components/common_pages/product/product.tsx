@@ -16,7 +16,7 @@ import styles from "./styles.product";
 //import AddToCartOperation from "./AddToCartOperation";
 
 export default function ProductScreen({ route, navigation }) {
-  const { products, selectedIndex, productVariantId } = route.params;
+  const { products, selectedIndex, productVariantId, price, categoryID } = route.params;
   const selectedProducts = products[selectedIndex];
 
   const insets = useSafeAreaInsets();
@@ -79,7 +79,7 @@ export default function ProductScreen({ route, navigation }) {
           <View style={styles.priceContainer}>
             <Text style={styles.header}>Price: </Text>
             <ProductPrice
-              price={selectedProducts?.product?.variants[0]?.priceWithTax}
+              price={price}
             />
           </View>
 
@@ -90,7 +90,7 @@ export default function ProductScreen({ route, navigation }) {
           <Description product={selectedProducts?.product} />
           <Similarproducts
             navigation={navigation}
-            items={products}
+            categoryID={categoryID}
             title="Similar products"
           />
           <View style={styles.divider} />

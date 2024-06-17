@@ -1,20 +1,17 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const PRODUCT_SEARCHED_QUERY = gql`
-  query GetProductList($id: String!) {
-    products(options: { take: 1, filter: { id: { eq: $id } } }) {
-      items {
-        id
-        name
-        featuredAsset {
-          source
-        }
-        description
-        variants {
-          priceWithTax
-          stockLevel
-          sku
-        }
+  query GetProduct($id: ID!) {
+    product(id: $id) {
+      id
+      name
+      featuredAsset {
+        source
+      }
+      description
+      variants {
+        stockLevel
+        sku
       }
     }
   }
@@ -28,6 +25,7 @@ export const SEARCH_QUERY = gql`
         productId
         productVariantId
         productVariantName
+        collectionIds
         productAsset {
           preview
         }

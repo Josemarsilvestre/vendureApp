@@ -14,7 +14,6 @@ import { GET_ALL_COLLECTIONS_QUERY } from "../../api/mutation/category";
 import { Category } from "../../../utils/interface";
 import styles from "../common_pages/category/styles.category";
 import PageLoading from "../loading/PageLoading";
-import Icons from "../common/Icons";
 
 export default function CategoryScreen({ navigation }) {
   const [take] = useState(9);
@@ -49,13 +48,6 @@ export default function CategoryScreen({ navigation }) {
       },
     });
   };
-  
-
-  const handleScrollToTop = () => {
-    if (flatListRef.current) {
-      flatListRef.current.scrollToOffset({ animated: true, offset: 0 });
-    }
-  };
 
   if (loading) return <PageLoading />;
   if (error) return <Text>Erro: {error.message}</Text>;
@@ -82,7 +74,7 @@ export default function CategoryScreen({ navigation }) {
           >
             <View style={styles.categoryImageContainer}>
               <Image
-                source={{ uri: item.assets[0].source }}
+                source={{ uri: item.assets?.[0]?.source ?? 'https://www.arquivomedico.com.br/arquivomedicov3/assets/images/sem_imagem.png' }}
                 style={styles.categoryImage}
                 resizeMode="cover"
               />
@@ -90,16 +82,13 @@ export default function CategoryScreen({ navigation }) {
             <Text style={styles.categoryText}>{item.name}</Text>
           </TouchableOpacity>
         )}
-        keyExtractor={(item) => item.id.toString()} // Usar o ID como chave única
+        keyExtractor={(item) => item.id}
         numColumns={2}
         showsVerticalScrollIndicator={false}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.1}
         ListFooterComponent={loadingMore ? <ActivityIndicator size="large" /> : null}
       />
-      <TouchableOpacity onPress={handleScrollToTop} style={{ position: 'absolute', bottom: 20, right: 20 }}>
-        <Icons.FontAwesome5 name="arrow-alt-circle-up" size={35} color="#3b4d68"  />
-      </TouchableOpacity>
     </View>
   );
 }

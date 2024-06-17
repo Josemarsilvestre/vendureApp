@@ -6,17 +6,19 @@ export const GET_ALL_COLLECTIONS_QUERY = gql`
       items {
         id
         name
+        slug
         assets {
           source
         }
       }
     }
   }
-`;
+`; 
 
 export const GET_PRODUCTS_BY_CATEGORY_QUERY = gql`
   query GetProductsByCategory($take: Int, $skip: Int, $id: ID!) {
     collection(id: $id) {
+      id
       productVariants(options: { take: $take, skip: $skip }) {
         items {
           id

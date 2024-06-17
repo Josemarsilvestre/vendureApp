@@ -22,6 +22,7 @@ interface Product {
   productId: string;
   productVariantId: string;
   productVariantName: string;
+  collectionIds: string[],
   productAsset: {
     preview: string;
   };
@@ -42,9 +43,12 @@ interface SearchData {
 export default function SearchScreen({ navigation }) {
   const [search, setSearch] = useState("");
 
-  const { data, loading, error, fetchMore } = useQuery<SearchData>(SEARCH_QUERY, {
-    variables: { term: search },
-  });
+  const { data, loading, error, fetchMore } = useQuery<SearchData>(
+    SEARCH_QUERY,
+    {
+      variables: { term: search },
+    }
+  );
 
   const handleChange = (value: string) => {
     setSearch(value);
@@ -54,7 +58,7 @@ export default function SearchScreen({ navigation }) {
     setSearch("");
   };
 
-  const SearchItems = data?.search.items.map(item => item)
+  const SearchItems = data?.search.items.map((item) => item);
 
   return (
     <>
@@ -96,7 +100,13 @@ export default function SearchScreen({ navigation }) {
                       onPress={() =>
                         navigation.navigate("ProductSearched", {
                           productId: item?.productId,
-                          productVariantID: item?.productVariantId
+                          productVariantID: item?.productVariantId,
+                          name: item?.productVariantName,
+                          price:
+                            item?.priceWithTax.__typename === "SinglePrice"
+                              ? item?.priceWithTax.value
+                              : 0,
+                          categoryID: item?.collectionIds[0]
                         })
                       }
                     >
@@ -110,7 +120,7 @@ export default function SearchScreen({ navigation }) {
                         <Text
                           numberOfLines={3}
                           ellipsizeMode="tail"
-                          style={styles.title} 
+                          style={styles.title}
                         >
                           {item?.productVariantName}
                         </Text>

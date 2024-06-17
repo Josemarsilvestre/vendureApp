@@ -18,7 +18,7 @@
     "@react-navigation/stack": "^6.3.29",
     "@shopify/flash-list": "1.6.4",
     "@types/yup": "^0.32.0",
-    "expo": "~51.0.11",
+    "expo": "~51.0.14",
     "expo-secure-store": "~13.0.1",
     "react": "18.2.0",
     "react-hook-form": "^7.50.1",

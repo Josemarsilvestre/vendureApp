@@ -8,73 +8,96 @@ import {
   Text,
 } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-
+import { useQuery } from "@apollo/client";
 import FeedSectionContainer from "../common/FeedSectionContainer";
 import ProductPrice from "./ProductPrice";
-import { Product } from "../../../utils/interface";
 import { moderateScale } from "react-native-size-matters";
+import PageLoading from "../loading/PageLoading";
+import { ProductVariant } from "../../../utils/interface";
+import { GET_PRODUCTS_BY_CATEGORY_QUERY } from "../../api/mutation/category";
 
 export interface SimilarProductsProps {
   navigation: any;
-  items: {
-    id: string;
-    name: string;
-    product: Product;
-  }[];
+  categoryID: string;
   title: string;
 }
 
 const SimilarProducts: React.FC<SimilarProductsProps> = ({
   navigation,
-  items,
+  categoryID,
   title,
 }) => {
   const windowWidth = useWindowDimensions().width;
   const imageWidth = windowWidth * 0.7;
-  const product = items.map((item) => item.product);
+
+  const { data, loading, error } = useQuery(GET_PRODUCTS_BY_CATEGORY_QUERY, {
+    variables: { id: parseInt(categoryID), take: 9 },
+  });
+
+  if (loading) return <PageLoading />
+
+  if (error) {
+    console.error("Error fetching similar products:", error);
+    return <Text>Error loading similar products!</Text>;
+  }
+
+  const similarProducts = data?.collection?.productVariants?.items || [];
+
+  if (similarProducts.length === 0) {
+    return <Text>No similar products found!</Text>;
+  }
 
   return (
     <FeedSectionContainer title={title}>
       <FlashList
-        data={product}
-        renderItem={({ item, index }) => {
-          const items_ = items[index];
-          return (
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("Products", {
-                  products: items,
-                  selectedIndex: index,
-                  productVariantId: items_.id,
-                });
-              }}
-            >
-              <View
-                style={[styles.imageContainer, { width: imageWidth }]}
-                key={items_.id}
-              >
-                <Image
-                  source={{ uri: item.featuredAsset?.source || "" }}
-                  style={styles.image}
-                  resizeMode="cover"
-                />
-              </View>
-              <View>
-                <Text
-                  numberOfLines={1}
-                  ellipsizeMode="tail"
-                  style={styles.text}
-                >
-                  {items_.name}
-                </Text>
+        data={similarProducts}
+        renderItem={({ item, index }: { item: ProductVariant; index: number }) => {
+          try {
+            const items_ = data?.collection?.productVariants?.items?.[index];
+            if (!items_) return null;
 
-                <View style={styles.priceContainer}>
-                  <Text style={styles.priceText}>Price: </Text>
-                  <ProductPrice price={item.variants[0].priceWithTax} />
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("Products", {
+                    products: data?.collection?.productVariants?.items,
+                    selectedIndex: index,
+                    productVariantId: items_?.id,
+                    price: items_.priceWithTax,
+                    categoryID: categoryID
+                  });
+                }}
+              >
+                <View
+                  style={[styles.imageContainer, { width: imageWidth }]}
+                  key={item.id}
+                >
+                  <Image
+                    source={{ uri: item.product.featuredAsset.source || "" }}
+                    style={styles.image}
+                    resizeMode="cover"
+                  />
                 </View>
-              </View>
-            </TouchableOpacity>
-          );
+                <View>
+                  <Text
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                    style={styles.text}
+                  >
+                    {item.name}
+                  </Text>
+
+                  <View style={styles.priceContainer}>
+                    <Text style={styles.priceText}>Price: </Text>
+                    <ProductPrice price={item.priceWithTax} />
+                  </View>
+                </View>
+              </TouchableOpacity>
+            );
+          } catch (err) {
+            console.error("Error rendering item:", err);
+            return null;
+          }
         }}
         horizontal={true}
         estimatedItemSize={300}

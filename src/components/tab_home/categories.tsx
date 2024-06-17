@@ -34,7 +34,7 @@ const Categories: React.FC<CategoriesProps> = ({ navigation }) => {
             style={styles.categoryItem}
             onPress={() => {
               navigation.navigate("CategorySection", {
-                category: item,
+                category: item
               });
             }}
           >

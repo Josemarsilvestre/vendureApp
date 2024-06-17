@@ -18,7 +18,7 @@ export interface Product {
   }
 }
 
-export interface Product2 {
+export interface ProductCard {
   featuredAsset: {
     source: string;
   };
@@ -27,6 +27,22 @@ export interface Product2 {
     stockLevel: number;
     sku: string;
   }
+}
+
+export interface ProductVariant { 
+  id: string;
+  name: string;
+  priceWithTax: number;
+  product: {
+    featuredAsset: {
+      source: string;
+    };
+    description: string;
+    variants: {
+      stockLevel: string;
+      sku: string;
+    }[];
+  };
 }
 
 export interface Customer {

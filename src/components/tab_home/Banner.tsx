@@ -39,7 +39,9 @@ const Banner: React.FC<BannerProps> = ({ navigation, query, title }) => {
       <FlashList
         data={products}
         renderItem={({ item, index }) => {
-          const items_ = data?.collection?.productVariants?.items[index]
+          const items_ = data?.collection?.productVariants?.items[index];
+          const categoryID = data?.collection?.id;
+
           return (
             <TouchableOpacity
               onPress={() => {
@@ -47,6 +49,8 @@ const Banner: React.FC<BannerProps> = ({ navigation, query, title }) => {
                   products: data?.collection?.productVariants?.items,
                   selectedIndex: index,
                   productVariantId: items_.id,
+                  price: item.variants[0].priceWithTax,
+                  categoryID: categoryID
                 });
               }}
             >

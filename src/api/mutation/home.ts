@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const GET_SLIDERS = gql`
   query GetSliders {
@@ -23,6 +23,7 @@ export const GET_SLIDERS = gql`
 export const GET_BANNER_1_QUERY = gql`
   query GetBanner1 {
     collection(id: "4") {
+      id
       productVariants(options: { take: 9 }) {
         items {
           id
@@ -47,6 +48,7 @@ export const GET_BANNER_1_QUERY = gql`
 export const GET_BANNER_2_QUERY = gql`
   query GetBanner2 {
     collection(id: "8") {
+      id
       productVariants(options: { take: 9 }) {
         items {
           id
@@ -71,6 +73,7 @@ export const GET_BANNER_2_QUERY = gql`
 export const GET_BANNER_3_QUERY = gql`
   query GetBanner3 {
     collection(id: "5") {
+      id
       productVariants(options: { take: 9 }) {
         items {
           id
