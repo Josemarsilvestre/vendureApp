@@ -7,9 +7,13 @@ This application allows companies, which use Vendure for the web, to have the op
 Note: This application is only for client mode, i.e. front-end.
 
 ## Feature Demo
-| Page | Home                                                                                        | Home                                                                                       | Furniture                                                                                        |Equipment                                                                                 |
+| Module | Home                                                                                        | Home                                                                                       | Furniture                                                                                        |Equipment                                                                                 |
 | ------ | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | Home   | ![Home](assets/feature_demo/Home/home.png) | ![Home2](assets/feature_demo/Home/home2.png) | ![Furniture](assets/feature_demo/Home/category_furniture.png) | ![Equipment](assets/feature_demo/Home/category_equipment.png) |
+
+| Module | Category                                                                                        | Search                                                                                       | Searching                                                                                        |Product                                                                                 |
+| ------ | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Home   | ![Category](assets/feature_demo/Category/Category.png) | ![Button_search](assets/feature_demo/Category/Button_search.png) | ![Searching](assets/feature_demo/Category/Searching.png) | ![Product](assets/feature_demo/Category/Product.png) |
 
 
 
