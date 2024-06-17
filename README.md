@@ -7,7 +7,11 @@ This application allows companies, which use Vendure for the web, to have the op
 Note: This application is only for client mode, i.e. front-end.
 
 ## Feature Demo
-![Home](assets/feature_demo/Home/home.png)
+| Module | loading                                                                                        | skeleton                                                                                       | success                                                                                        | error or empty                                                                                 |
+| ------ | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| feed   | ![](https://www.cheerspublishing.com/uploads/article/e1f91a01-bf5e-46f4-8cbd-7f485e5039ba.png) | ![](https://www.cheerspublishing.com/uploads/article/d09fc3af-1bf7-49fa-8957-227a3add172a.png) | ![](https://www.cheerspublishing.com/uploads/article/efee1d79-9c95-4be5-9a6a-ec5160b7e6ae.png) | ![](https://www.cheerspublishing.com/uploads/article/c3d29b64-c6be-4716-8b4d-30becfbe4246.png) |
+
+
 
 ## System Requirements
    - Node.js (v14.x or higher)
