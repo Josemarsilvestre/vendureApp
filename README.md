@@ -7,9 +7,9 @@ This application allows companies, which use Vendure for the web, to have the op
 Note: This application is only for client mode, i.e. front-end.
 
 ## Feature Demo
-| Module | Home                                                                                        | skeleton                                                                                       | success                                                                                        | error or empty                                                                                 |
+| Module | Home                                                                                        | Home2                                                                                       | Category Furniture                                                                                        |Categgory Equipment                                                                                 |
 | ------ | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| Home   | ![Home](assets/feature_demo/Home/home.png) | ![](https://www.cheerspublishing.com/uploads/article/d09fc3af-1bf7-49fa-8957-227a3add172a.png) | ![](https://www.cheerspublishing.com/uploads/article/efee1d79-9c95-4be5-9a6a-ec5160b7e6ae.png) | ![](https://www.cheerspublishing.com/uploads/article/c3d29b64-c6be-4716-8b4d-30becfbe4246.png) |
+| Home   | ![Home](assets/feature_demo/Home/home.png) | ![Home2](assets/feature_demo/Home/home2.png) | ![Furniture](assets/feature_demo/Home/category_furniture.png) | ![Equipment](assets/feature_demo/Home/category_equipment.png) |
 
 
 
