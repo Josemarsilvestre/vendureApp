@@ -12,7 +12,7 @@ Note: This application is only for client mode, i.e. front-end.
 | Home   | ![Home](assets/feature_demo/Home/home.png) | ![Home2](assets/feature_demo/Home/home2.png) | ![Furniture](assets/feature_demo/Home/category_furniture.png) | ![Equipment](assets/feature_demo/Home/category_equipment.png) |
 
 | Module | Category                                                                                        | Search                                                                                       | Searching                                                                                        |Product                                                                                 |
-| ------ | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| ------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | Category   | ![Category](assets/feature_demo/Category/Category.png) | ![Button_search](assets/feature_demo/Category/Button_search.png) | ![Searching](assets/feature_demo/Category/Searching.png) | ![Product](assets/feature_demo/Category/Product.png) |
 
 
