@@ -7,7 +7,7 @@ This application allows companies, which use Vendure for the web, to have the op
 Note: This application is only for client mode, i.e. front-end.
 
 ## Feature Demo
-| Module | Home                                                                                        | Home                                                                                       | Furniture                                                                                        |Equipment                                                                                 |
+| Page | Home                                                                                        | Home                                                                                       | Furniture                                                                                        |Equipment                                                                                 |
 | ------ | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | Home   | ![Home](assets/feature_demo/Home/home.png) | ![Home2](assets/feature_demo/Home/home2.png) | ![Furniture](assets/feature_demo/Home/category_furniture.png) | ![Equipment](assets/feature_demo/Home/category_equipment.png) |
 
