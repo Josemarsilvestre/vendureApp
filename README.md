@@ -66,6 +66,15 @@ To launch the app on an emulator or physical device, type:
 
 From there, you can choose to run the app on an emulator, on a connected device, or through Expo Go, via the QR code.
 
+## To sign in
+
+To log in, you can use the same methodologies that are on the Vendure website, the demo.
+
+   ```bash
+      username: test@vendure.io
+      password: test
+   ```
+
 ## Project Structure
 
 The structure of the project is organized as follows:
