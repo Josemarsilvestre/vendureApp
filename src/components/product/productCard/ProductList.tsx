@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   FlatList,
@@ -8,15 +8,15 @@ import {
   Image,
   useWindowDimensions,
 } from "react-native";
-import { Product } from "../../../../utils/interface";
+import { ProductCard as Product  } from "../../../../utils/interface";
 import { moderateScale } from "react-native-size-matters";
-import { useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
 import Icons from "../../common/Icons";
 import ProductPrice from "../ProductPrice";
-import { GET_PRODUCTS_BY_CATEGORY_QUERY } from "../../../api/mutation/category";
 import styles from "./style/style.productCard";
 import styles2 from "../../common_pages/category/styles.category";
+import { ADD_TO_CART } from "../../../api/mutation/order";
 
 interface ProductListProps {
   products: Product[];
@@ -25,8 +25,7 @@ interface ProductListProps {
   scrollViewRef: React.MutableRefObject<FlatList<Product> | null>;
   loading: boolean;
   handleLoadMore: () => void;
-  handleAddToCart: (itemId: string) => void;
-  addedToCartMap: { [key: string]: boolean };
+  refetch: any;
 }
 
 const ProductList: React.FC<ProductListProps> = ({
@@ -36,15 +35,34 @@ const ProductList: React.FC<ProductListProps> = ({
   scrollViewRef,
   loading,
   handleLoadMore,
-  handleAddToCart,
-  addedToCartMap
+  refetch
 }) => {
   const handleScrollToTop = () => {
     scrollViewRef.current?.scrollToOffset({ offset: 0, animated: true });
   };
 
+  const [addedToCartMap, setAddedToCartMap] = useState<{ [key: string]: boolean }>({});
+  const [addToCart] = useMutation(ADD_TO_CART);
+
   const windowWidth = useWindowDimensions().width;
   const imageWidth = windowWidth * 0.7;
+
+  const handleAddToCart = (itemId: string) => {
+    addToCart({ variables: { id_: itemId, quantity_: 1 } });
+    refetch();
+
+    setAddedToCartMap((prevState) => ({
+      ...prevState,
+      [String(itemId)]: true,
+    }));
+
+    setTimeout(() => {
+      setAddedToCartMap((prevState) => ({
+        ...prevState,
+        [String(itemId)]: false,
+      }));
+    }, 3000);
+  };
 
   return (
     <View style={styles2.productsContainer}>
