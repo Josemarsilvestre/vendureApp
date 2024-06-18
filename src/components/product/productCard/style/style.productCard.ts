@@ -100,12 +100,12 @@ export default ScaledSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: 40,
-    paddingBottom: 200,
+    paddingBottom: 20,
   },
   modalContent: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    paddingVertical: 20,
   },
   modalHeader: {
     flexDirection: "row",
@@ -137,7 +137,7 @@ export default ScaledSheet.create({
   },
   applyButton: {
     backgroundColor: "#1F2937",
-    paddingVertical: 10,
+    paddingVertical: 20,
     paddingHorizontal: 20,
     borderRadius: 5,
   },

@@ -11,7 +11,7 @@ interface ProductFiltersProps {
   setModalVisible: (visible: boolean) => void;
   priceRange: { start: number; end: number };
   setPriceRange: (range: { start: number; end: number }) => void;
-  applyPriceFilter: () => void;
+  applyPriceFilter: (start: number, end: number) => void;
 }
 
 const ProductFilters: React.FC<ProductFiltersProps> = ({
@@ -21,6 +21,17 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
   setPriceRange,
   applyPriceFilter,
 }) => {
+  const [localPriceRange, setLocalPriceRange] = React.useState(priceRange);
+
+  const handleApplyFilter = () => {
+    setModalVisible(false);
+    applyPriceFilter(localPriceRange.start, localPriceRange.end);
+  };
+
+  const handleSliderChange = (value: number) => {
+    setLocalPriceRange((prevRange) => ({ ...prevRange, end: value }));
+  };
+
   return (
     <Modal
       isVisible={modalVisible}
@@ -40,27 +51,27 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
             </TouchableOpacity>
           </View>
           <View style={styles.rangeContainer}>
-            <Text style={styles.rangeText}>${priceRange.start}</Text>
-            <Text style={styles.rangeText}>${priceRange.end}</Text>
+            <Text style={styles.rangeText}>${localPriceRange.start}</Text>
+            <Text style={styles.rangeText}>${localPriceRange.end}</Text>
           </View>
           <Slider
             style={styles.slider}
             minimumValue={0}
-            maximumValue={1000}
+            maximumValue={5000}
             step={10}
             minimumTrackTintColor="#1F2937"
             maximumTrackTintColor="#CCCCCC"
             thumbTintColor="#1F2937"
-            value={priceRange.end}
-            onValueChange={(value) => setPriceRange({ ...priceRange, end: value })}
+            value={localPriceRange.end}
+            onValueChange={handleSliderChange}
           />
-          <TouchableOpacity onPress={applyPriceFilter} style={styles.applyButton}>
+          <TouchableOpacity onPress={handleApplyFilter} style={styles.applyButton}>
             <Text style={styles.applyButtonText}>Apply Filter</Text>
           </TouchableOpacity>
         </View>
       </View>
     </Modal>
   );
-}
+};
 
 export default ProductFilters;

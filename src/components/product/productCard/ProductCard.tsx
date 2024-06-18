@@ -4,7 +4,6 @@ import { useQuery } from "@apollo/client";
 
 import ProductList from "./ProductList";
 import ProductFilters from "./ProductFilters";
-import { SHOW_ORDER } from "../../../api/mutation/order";
 import { GET_PRODUCTS_BY_CATEGORY_QUERY } from "../../../api/mutation/category";
 import styles2 from "../../common_pages/category/styles.category";
 import { ProductCard as Product } from "../../../../utils/interface";
@@ -17,36 +16,53 @@ export default function ProductCard({
   categoryID: string;
   navigation: any;
 }) {
-  const [sortOrder, setSortOrder] = useState<{ priceWithTax?: "ASC" | "DESC" | undefined }>({ priceWithTax: undefined });
-  const [sortByPrice, setSortByPrice] = useState(false);
+  const [sortOrder, setSortOrder] = useState<"ASC" | "DESC" | undefined>(undefined);
   const [modalVisible, setModalVisible] = useState(false);
-  const [priceRange, setPriceRange] = useState<{ start: number; end: number }>({ start: 0, end: 1000 });
-  const { refetch } = useQuery(SHOW_ORDER);
+  const [priceRange, setPriceRange] = useState<{ start: number; end: number }>({ start: 0, end: 500000 });
   const [products, setProducts] = useState<Product[]>([]);
   const scrollViewRef = useRef<FlatList<Product>>(null);
   const take = 9;
 
-  const { loading, data, fetchMore } = useQuery(GET_PRODUCTS_BY_CATEGORY_QUERY, {
+  const { loading, data, fetchMore, refetch } = useQuery(GET_PRODUCTS_BY_CATEGORY_QUERY, {
     variables: {
       take,
       skip: 0,
       id: parseInt(categoryID),
-      sort: sortOrder.priceWithTax ? sortOrder : undefined,
+      sort: sortOrder ? { priceWithTax: sortOrder } : undefined,
+      priceStart: priceRange.start,
+      priceEnd: priceRange.end,
     },
     onCompleted: (data) => {
-      if (data) {
-        const initialProducts = data?.collection?.productVariants?.items?.map((item: any) => item.product) || [];
-        setProducts(initialProducts);
-      }
+      const initialProducts = data?.collection?.productVariants?.items?.map((item: any) => item.product) || [];
+      setProducts(initialProducts);
     },
   });
+
+  const applyPriceFilter = (start: number, end: number) => {
+    setModalVisible(false);
+    refetch({
+      take,
+      skip: 0,
+      id: parseInt(categoryID),
+      sort: sortOrder ? { priceWithTax: sortOrder } : undefined,
+      priceStart: start,
+      priceEnd: end,
+    }).then(({ data }) => {
+      const updatedProducts = data?.collection?.productVariants?.items?.map((item: any) => item.product) || [];
+      setProducts(updatedProducts);
+    }).catch((error) => {
+      console.error("Error applying price filter:", error);
+    });
+  };
 
   const handleLoadMore = () => {
     fetchMore({
       variables: {
         take,
         skip: products.length,
-        sort: sortOrder.priceWithTax ? sortOrder : undefined,
+        sort: sortOrder ? { priceWithTax: sortOrder } : undefined,
+        priceStart: priceRange.start,
+        priceEnd: priceRange.end,
       },
       updateQuery: (prevResult, { fetchMoreResult }) => {
         if (!fetchMoreResult || !fetchMoreResult.collection || !fetchMoreResult.collection.productVariants ||
@@ -77,33 +93,13 @@ export default function ProductCard({
     });
   };
 
-  const applyPriceFilter = () => {
-    setModalVisible(false);
-    refetch({
-      take,
-      skip: 0,
-      id: parseInt(categoryID),
-      sort: sortOrder,
-      filter: {
-        price: {
-          between: { start: priceRange.start, end: priceRange.end },
-        },
-      },
-    }).catch((error) => {
-      console.error("Erro ao aplicar filtro de preço:", error);
-    });
-  };
-  
-
   const handleSortChange = () => {
-    if (!sortByPrice) {
-      setSortByPrice(true);
-      setSortOrder({ priceWithTax: "ASC" });
-    } else if (sortOrder.priceWithTax === "ASC") {
-      setSortOrder({ priceWithTax: "DESC" });
+    if (!sortOrder) {
+      setSortOrder("ASC");
+    } else if (sortOrder === "ASC") {
+      setSortOrder("DESC");
     } else {
-      setSortByPrice(false);
-      setSortOrder({ priceWithTax: undefined });
+      setSortOrder(undefined);
     }
   };
 
@@ -114,15 +110,17 @@ export default function ProductCard({
 
         <TouchableOpacity style={styles2.filterContainer} onPress={handleSortChange}>
           <Text style={styles2.infoText}>Order by </Text>
-          <Icons.MaterialCommunityIcons name={
-            sortByPrice
-              ? sortOrder.priceWithTax === "ASC"
+          <Icons.MaterialCommunityIcons
+            name={
+              sortOrder === "ASC"
                 ? "sort-ascending"
-                : "sort-descending"
-              : "sort"
-          }
+                : sortOrder === "DESC"
+                ? "sort-descending"
+                : "sort"
+            }
             size={22}
-            color="#1F2937" />
+            color="#1F2937"
+          />
         </TouchableOpacity>
         <TouchableOpacity style={styles2.filterContainer} onPress={() => setModalVisible(true)}>
           <Text style={styles2.infoText}>Filter</Text>
