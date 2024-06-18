@@ -18,7 +18,7 @@ export default function ProductCard({
 }) {
   const [sortOrder, setSortOrder] = useState<"ASC" | "DESC" | undefined>(undefined);
   const [modalVisible, setModalVisible] = useState(false);
-  const [priceRange, setPriceRange] = useState<{ start: number; end: number }>({ start: 0, end: 500000 });
+  const [priceRange, setPriceRange] = useState<{ start: number; end: number }>({ start: 0, end: 5000 });
   const [products, setProducts] = useState<Product[]>([]);
   const scrollViewRef = useRef<FlatList<Product>>(null);
   const take = 9;
@@ -30,7 +30,7 @@ export default function ProductCard({
       id: parseInt(categoryID),
       sort: sortOrder ? { priceWithTax: sortOrder } : undefined,
       priceStart: priceRange.start,
-      priceEnd: priceRange.end,
+      priceEnd: priceRange.end * 100,
     },
     onCompleted: (data) => {
       const initialProducts = data?.collection?.productVariants?.items?.map((item: any) => item.product) || [];
@@ -46,7 +46,7 @@ export default function ProductCard({
       id: parseInt(categoryID),
       sort: sortOrder ? { priceWithTax: sortOrder } : undefined,
       priceStart: start,
-      priceEnd: end,
+      priceEnd: end * 100,
     }).then(({ data }) => {
       const updatedProducts = data?.collection?.productVariants?.items?.map((item: any) => item.product) || [];
       setProducts(updatedProducts);
@@ -62,7 +62,7 @@ export default function ProductCard({
         skip: products.length,
         sort: sortOrder ? { priceWithTax: sortOrder } : undefined,
         priceStart: priceRange.start,
-        priceEnd: priceRange.end,
+        priceEnd: priceRange.end * 100,
       },
       updateQuery: (prevResult, { fetchMoreResult }) => {
         if (!fetchMoreResult || !fetchMoreResult.collection || !fetchMoreResult.collection.productVariants ||
