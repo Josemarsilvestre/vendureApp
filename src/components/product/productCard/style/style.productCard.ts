@@ -94,5 +94,55 @@ export default ScaledSheet.create({
     fontSize: moderateScale(14),
     color: "#6B7280",
     height: moderateScale(24),
-  }
+  },
+  modalContainer: {
+    backgroundColor: "#FFFFFF",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 40,
+    paddingBottom: 200,
+  },
+  modalContent: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  modalHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  modalHeaderText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#1F2937",
+  },
+  closeButton: {
+    padding: 5,
+  },
+  rangeContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "80%",
+    marginBottom: 20,
+  },
+  rangeText: {
+    fontSize: 16,
+    color: "#1F2937",
+  },
+  slider: {
+    width: "80%",
+    marginBottom: 20,
+  },
+  applyButton: {
+    backgroundColor: "#1F2937",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  applyButtonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+  },
 });

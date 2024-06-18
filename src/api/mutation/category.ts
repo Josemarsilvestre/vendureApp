@@ -16,10 +16,10 @@ export const GET_ALL_COLLECTIONS_QUERY = gql`
 `; 
 
 export const GET_PRODUCTS_BY_CATEGORY_QUERY = gql`
-  query GetProductsByCategory($take: Int, $skip: Int, $id: ID!) {
+  query GetProductsByCategory($take: Int, $skip: Int, $id: ID!, $sort: ProductVariantSortParameter) {
     collection(id: $id) {
       id
-      productVariants(options: { take: $take, skip: $skip }) {
+      productVariants(options: { take: $take, skip: $skip, sort: $sort }) {
         items {
           id
           name

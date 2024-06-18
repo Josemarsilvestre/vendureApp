@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import { useMutation, useQuery } from "@apollo/client";
 import { moderateScale } from "react-native-size-matters";
+import Modal from "react-native-modal";
+import Slider from "@react-native-community/slider";
 
 import ProductPrice from "../ProductPrice";
 import Icons from "../../common/Icons";
@@ -33,7 +35,15 @@ export default function ProductCard({
   const [addedToCartMap, setAddedToCartMap] = useState<{
     [key: string]: boolean;
   }>({});
-
+  const [sortOrder, setSortOrder] = useState<{ priceWithTax?: "ASC" | "DESC" | undefined }>(
+    { priceWithTax: undefined }
+  );
+  const [sortByPrice, setSortByPrice] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [priceRange, setPriceRange] = useState<{ start: number; end: number }>({
+    start: 0,
+    end: 1000,
+  }); // Valores iniciais do intervalo de preço
   const [addToCart] = useMutation(ADD_TO_CART);
   const { refetch } = useQuery(SHOW_ORDER);
   const [products, setProducts] = useState<Product[]>([]);
@@ -47,6 +57,7 @@ export default function ProductCard({
         take,
         skip: 0,
         id: parseInt(categoryID),
+        sort: sortOrder.priceWithTax ? sortOrder : undefined,
       },
       onCompleted: (data) => {
         if (data) {
@@ -81,7 +92,8 @@ export default function ProductCard({
     fetchMore({
       variables: {
         take,
-        skip: products.length, 
+        skip: products.length,
+        sort: sortOrder.priceWithTax ? sortOrder : undefined,
       },
       updateQuery: (prevResult, { fetchMoreResult }) => {
         if (
@@ -123,6 +135,50 @@ export default function ProductCard({
     scrollViewRef.current?.scrollToOffset({ offset: 0, animated: true });
   };
 
+  const handleSortChange = () => {
+    if (!sortByPrice) {
+      setSortByPrice(true);
+      setSortOrder({ priceWithTax: "ASC" });
+    } else if (sortOrder.priceWithTax === "ASC") {
+      setSortOrder({ priceWithTax: "DESC" });
+    } else {
+      setSortByPrice(false);
+      setSortOrder({ priceWithTax: undefined });
+    }
+  };
+
+  const handleFilterPress = () => {
+    setModalVisible(true);
+  };
+
+  const applyPriceFilter = () => {
+    setModalVisible(false);
+    refetch({
+      take,
+      skip: 0,
+      id: parseInt(categoryID),
+      sort: sortOrder,
+      filter: {
+        price: {
+          between: { start: priceRange.start, end: priceRange.end },
+        },
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (sortByPrice) {
+      refetch({
+        take,
+        skip: 0,
+        id: parseInt(categoryID),
+        sort: sortOrder,
+      });
+    } else {
+      refetch();
+    }
+  }, [sortByPrice, sortOrder]);
+
   useEffect(() => {
     if (data) {
       const initialProducts =
@@ -138,11 +194,24 @@ export default function ProductCard({
       <View style={styles2.infoContainer}>
         <Text style={styles2.infoText}>All products</Text>
 
-        <TouchableOpacity style={styles2.filterContainer}>
-          <Text style={styles2.infoText}>Order by{' '}</Text>
-          <Icons.MaterialCommunityIcons name="sort" size={22} color="#1F2937" />
+        <TouchableOpacity
+          style={styles2.filterContainer}
+          onPress={handleSortChange}
+        >
+          <Text style={styles2.infoText}>Order by </Text>
+          <Icons.MaterialCommunityIcons
+            name={
+              sortByPrice
+                ? sortOrder.priceWithTax === "ASC"
+                  ? "sort-ascending"
+                  : "sort-descending"
+                : "sort"
+            }
+            size={22}
+            color="#1F2937"
+          />
         </TouchableOpacity>
-        <TouchableOpacity style={styles2.filterContainer}>
+        <TouchableOpacity style={styles2.filterContainer} onPress={handleFilterPress}>
           <Text style={styles2.infoText}>Filter</Text>
           <Icons.AntDesign name="filter" size={24} color="#1F2937" />
         </TouchableOpacity>
@@ -169,7 +238,9 @@ export default function ProductCard({
                 }
               >
                 <View style={styles.cardContent} key={items_?.id}>
-                  <View style={[styles.imageContainer, { width: imageWidth }]}>
+                  <View
+                    style={[styles.imageContainer, { width: imageWidth }]}
+                  >
                     <Image
                       source={{
                         uri: item.featuredAsset.source || "",
@@ -235,7 +306,7 @@ export default function ProductCard({
                       fontWeight: "bold",
                       paddingBottom: moderateScale(15),
                     }}
-                  >
+                    >
                     Load More
                   </Text>
                 </TouchableOpacity>
@@ -257,6 +328,54 @@ export default function ProductCard({
             color="#8498b9"
           />
         </TouchableOpacity>
+
+        {/* Modal para o filtro de preço */}
+        <Modal
+          isVisible={modalVisible}
+          onBackdropPress={() => setModalVisible(false)}
+          backdropOpacity={0.5}
+          style={{
+            margin: 0,
+            justifyContent: "flex-end",
+          }}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <View style={styles.modalHeader}>
+                <Text style={styles.modalHeaderText}>Price Range</Text>
+                <TouchableOpacity
+                  onPress={() => setModalVisible(false)}
+                  style={styles.closeButton}
+                >
+                  <Icons.AntDesign name="close" size={24} color="#1F2937" />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.rangeContainer}>
+                <Text style={styles.rangeText}>${priceRange.start}</Text>
+                <Text style={styles.rangeText}>${priceRange.end}</Text>
+              </View>
+              <Slider
+                style={styles.slider}
+                minimumValue={0}
+                maximumValue={1000}
+                step={10}
+                minimumTrackTintColor="#1F2937"
+                maximumTrackTintColor="#CCCCCC"
+                thumbTintColor="#1F2937"
+                value={priceRange.end}
+                onValueChange={(value) =>
+                  setPriceRange({ ...priceRange, end: value })
+                }
+              />
+              <TouchableOpacity
+                onPress={applyPriceFilter}
+                style={styles.applyButton}
+              >
+                <Text style={styles.applyButtonText}>Apply Filter</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </View>
     </View>
   );
