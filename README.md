@@ -75,6 +75,13 @@ To log in, you can use the same methodologies that are on the Vendure website, t
       password: test
    ```
 
+## Useful links
+
+If you are a beginner, these links may be useful to better understand the project.
+
+* [www.vendure.io](https://www.vendure.io/)
+* [Live Demo](https://demo.vendure.io/)
+
 ## Project Structure
 
 The structure of the project is organized as follows:
