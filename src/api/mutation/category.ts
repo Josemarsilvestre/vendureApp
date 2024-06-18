@@ -31,7 +31,7 @@ export const GET_PRODUCTS_BY_CATEGORY_QUERY = gql`
           take: $take
           skip: $skip
           sort: $sort
-          filter: { price: { between: { start: $priceStart, end: $priceEnd } } }
+          filter: { priceWithTax: { between: { start: $priceStart, end: $priceEnd } } }
         }
       ) {
         items {
