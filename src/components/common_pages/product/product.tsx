@@ -65,7 +65,7 @@ export default function ProductScreen({ route, navigation }) {
         ref={scrollViewRef}
         contentContainerStyle={[
           styles.scrollContent,
-          { paddingBottom: insets.bottom },
+          { paddingBottom: insets.bottom - 50 },
         ]}
       >
         <View style={styles.content}>
@@ -93,8 +93,9 @@ export default function ProductScreen({ route, navigation }) {
             categoryID={categoryID}
             title="Similar products"
           />
-          <View style={styles.divider} />
-          <Text style={styles.reviewText}>Recent reviews</Text>
+          {/** 
+           * <View style={styles.divider} />
+           * <Text style={styles.reviewText}>Recent reviews</Text>*/}
         </View>
       </ScrollView>
       <View style={[styles.bottomContainer, { paddingBottom: insets.bottom }]}>
