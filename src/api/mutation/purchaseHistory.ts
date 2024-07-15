@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 export const PURCHASE_HISTORY = gql`
   query CustomerOrders {
     activeCustomer {
-      orders(options: { take: 20 }) {
+      orders(options: { take: 20, sort: { orderPlacedAt: DESC } }) {
         items {
           id
           code
