@@ -14,7 +14,7 @@ import ProductPrice from "./ProductPrice";
 import { moderateScale } from "react-native-size-matters";
 import PageLoading from "../loading/PageLoading";
 import { ProductVariant } from "../../../utils/interface";
-import { GET_PRODUCTS_BY_CATEGORY_QUERY } from "../../api/mutation/category";
+import { GET_SIMILAR_PRODUCTS } from "../../api/mutation/category";
 
 export interface SimilarProductsProps {
   navigation: any;
@@ -30,8 +30,8 @@ const SimilarProducts: React.FC<SimilarProductsProps> = ({
   const windowWidth = useWindowDimensions().width;
   const imageWidth = windowWidth * 0.7;
 
-  const { data, loading, error } = useQuery(GET_PRODUCTS_BY_CATEGORY_QUERY, {
-    variables: { id: parseInt(categoryID), take: 9 },
+  const { data, loading, error } = useQuery(GET_SIMILAR_PRODUCTS, {
+    variables: { id: parseInt(categoryID), take: 9},
   });
 
   if (loading) return <PageLoading />

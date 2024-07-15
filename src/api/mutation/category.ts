@@ -31,9 +31,36 @@ export const GET_PRODUCTS_BY_CATEGORY_QUERY = gql`
           take: $take
           skip: $skip
           sort: $sort
-          filter: { priceWithTax: { between: { start: $priceStart, end: $priceEnd } } }
+          filter: {
+            priceWithTax: { between: { start: $priceStart, end: $priceEnd } }
+          }
         }
       ) {
+        items {
+          id
+          name
+          priceWithTax
+          product {
+            featuredAsset {
+              source
+            }
+            description
+            variants {
+              stockLevel
+              sku
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_SIMILAR_PRODUCTS = gql`
+  query GetSimilarProducts($take: Int, $id: ID!) {
+    collection(id: $id) {
+      id
+      productVariants(options: { take: $take }) {
         items {
           id
           name
