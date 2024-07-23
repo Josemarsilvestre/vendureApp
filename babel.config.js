@@ -3,12 +3,12 @@ module.exports = function (api) {
 
   return {
     presets: [
-      'babel-preset-expo'  // Preset padrão para projetos Expo
+      'babel-preset-expo'
     ],
     plugins: [
-      'react-native-reanimated/plugin',  // Plugin para animações no React Native
+      'react-native-reanimated/plugin',
       [
-        'module:react-native-dotenv',  // Plugin para variáveis de ambiente
+        'module:react-native-dotenv',
         {
           moduleName: '@env',
           path: '.env',
