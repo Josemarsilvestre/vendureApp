@@ -1,9 +1,18 @@
 <h1 style="margin: 30px 0 30px; font-weight: bold;">Vendure App</h1>
 <h2>E-Commerce application with React Native, GraphQL and TypeScript</h4>
 
-Welcome to the React Native eCommerce app inspired by Vendure, an eCommerce platform made for developers who want to create customizable and flexible online stores. This application, "Vendure App", allows developers who use Vendure for the web, to have the same opportunity to use in mobile app.
+It is a complete App developed by React Native (Expo), inspired by Vendure, an eCommerce platform made for developers who want to create customizable and flexible online stores. 
 
-Note: This application is only for client mode, i.e. front-end.
+This app, "Vendure App", uses the Vendure API for products, users and more. Below you have the link to the site in case you feel the need to edit some data, add users or even transform it in your own way.
+
+Note: This application is only for client mode.
+
+## Useful links
+
+You can edit the data in the second link, live demo, in the admin part.
+
+* [www.vendure.io](https://www.vendure.io/)
+* [Live Demo](https://demo.vendure.io/)
 
 ## Feature Demo
 | Module | Home                                                                                        | Home                                                                                       | Furniture                                                                                        |Equipment                                                                                 |
@@ -73,13 +82,6 @@ To log in, you can use the same methodologies that are on the Vendure website, t
       username: test@vendure.io
       password: test
    ```
-
-## Useful links
-
-If you are a beginner, these links may be useful to better understand the project.
-
-* [www.vendure.io](https://www.vendure.io/)
-* [Live Demo](https://demo.vendure.io/)
 
 ## Project Structure
 

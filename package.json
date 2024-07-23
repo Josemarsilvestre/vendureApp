@@ -36,10 +36,12 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@babel/preset-react": "^7.24.7",
     "@tsconfig/react-native": "^3.0.5",
     "@types/babel__core": "^7.20.5",
     "@types/node": "^20.12.5",
     "@types/react": "~18.2.79",
+    "babel-preset-expo": "^11.0.12",
     "react-native-dotenv": "^3.4.11"
   },
   "private": true,
