@@ -1,49 +1,34 @@
-import React from "react";
+import React, { memo } from "react";
 import { Text, View, Image, useWindowDimensions } from "react-native";
-
 import CartButtons from "./cartButtons";
 import { OrderLine } from "../../../utils/interface";
 import formatNumber from "../../../utils/formatNumber";
 import styles from "./style/styles.cart";
 
-interface Order {
-  activeOrder: {
-    total: number;
-    totalWithTax: number;
-    taxSummary: {
-      description: string;
-      taxRate: number;
-      taxBase: number;
-      taxTotal: number;
-    };
-    lines: OrderLine[];
-  };
+interface CartItemProps {
+  item: OrderLine;
   refetchCart: () => void;
 }
 
-export default function CartItem({
-  item,
-  refetchCart,
-}: {
-  item: OrderLine;
-  refetchCart: () => void;
-}) {
+const CartItem = memo(({ item, refetchCart }: CartItemProps) => {
   const windowWidth = useWindowDimensions().width;
   const imageWidth = windowWidth * 0.7;
 
   const unitPriceWithTax = item.productVariant.priceWithTax ?? 0;
   const discountAmountWithTax = item.discounts[0]?.amountWithTax ?? 0;
-
   const totalPriceWithDiscountAndQuantity =
     (unitPriceWithTax - discountAmountWithTax) * item.quantity;
+  const priceWithDiscountAndQuantityFormatted = formatNumber(totalPriceWithDiscountAndQuantity);
+  const totalPriceFormatted = formatNumber(
+    (item.productVariant.priceWithTax ?? 0) * item.quantity
+  );
+  const discountFormatted = formatNumber(discountAmountWithTax);
 
   return (
     <View style={styles.containerItem}>
       <View style={[styles.imageContainer, { width: imageWidth }]}>
         <Image
-          source={{
-            uri: item.featuredAsset?.source || "",
-          }}
+          source={{ uri: item.featuredAsset?.source || "" }}
           style={styles.image}
           resizeMode="cover"
         />
@@ -69,22 +54,19 @@ export default function CartItem({
           </View>
           <View style={styles.infoRow}>
             <Text style={styles.infoText}>
-              Price:{" "}
-              {formatNumber(
-                (item.productVariant.priceWithTax ?? 0) * item.quantity
-              )}
+              Price: {totalPriceFormatted}
             </Text>
             <Text>€</Text>
           </View>
           <View style={styles.infoRow}>
             <Text style={styles.infoText}>
-              Discounts: {formatNumber(item.discounts[0]?.amountWithTax ?? 0)}
+              Discounts: {discountFormatted}
             </Text>
             <Text>€</Text>
           </View>
           <View style={styles.infoRow}>
             <Text style={styles.infoText}>
-              Total: {formatNumber(totalPriceWithDiscountAndQuantity)}
+              Total: {priceWithDiscountAndQuantityFormatted}
             </Text>
             <Text>€</Text>
           </View>
@@ -92,4 +74,6 @@ export default function CartItem({
       </View>
     </View>
   );
-}
+});
+
+export default CartItem;
