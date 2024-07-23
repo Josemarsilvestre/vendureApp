@@ -97,7 +97,3 @@ Contributions are welcome! If you encounter bugs, performance issues, or have su
 
 ## License
 This project is licensed under the MIT License(https://opensource.org/licenses/MIT).
-
-Hello, would you like to develop an eCommerce app without starting from scratch? So, I'm pleased to share an e-commerce application, using react native (Expo), GraphQL and Typescript. This is a customizable app, because it's based on Vendure's API for the web.
-
-For more information, click on the link:
