@@ -9,7 +9,7 @@ Note: This application is only for client mode.
 
 ## Useful links
 
-You can edit the data in the second link, live demo, in the admin part.
+You can edit the data in the second link, live demo, in the ADMIN UI.
 
 * [www.vendure.io](https://www.vendure.io/)
 * [Live Demo](https://demo.vendure.io/)
