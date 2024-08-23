@@ -13,6 +13,7 @@ import PageLoading from "../loading/PageLoading";
 import { GET_CUSTOMER } from "../../api/mutation/customer";
 import { OrderLine } from "../../../utils/interface";
 import styles from "../tab_cart/style/styles.cart";
+import { moderateScale } from "react-native-size-matters";
 
 export default function CartScreen({navigation}) {
   const { data, loading, error, refetch } = useQuery(SHOW_ORDER);
@@ -36,11 +37,11 @@ export default function CartScreen({navigation}) {
         </>
       ) : !order || !order.lines || order.lines.length === 0 ? (
         <>
-          <View style={{ marginTop: insets.top }}>
+          <View style={{ marginTop: moderateScale(50, 0.1) }}>
             <View
               style={[
                 styles.scroolViewContainer,
-                { marginTop: insets.top + 250 },
+                { marginTop: moderateScale(50, 0.1) + 250 },
               ]}
             >
               <View style={styles.text_view}>

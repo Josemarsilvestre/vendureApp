@@ -3,8 +3,7 @@ import {
   View,
   Text,
   ScrollView,
-  TouchableOpacity,
-  StyleSheet,
+  TouchableOpacity
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useQuery, useMutation } from "@apollo/client";
@@ -20,6 +19,7 @@ import { ADD_TO_CART, SHOW_ORDER } from "../../api/mutation/order";
 import styles from "../common_pages/product/styles.product";
 import PageLoading from "../loading/PageLoading";
 import SimilarProducts from "./Similarproducts";
+import { moderateScale } from "react-native-size-matters";
 
 export default function ProductSearchedScreen({ route, navigation }) {
   const { productId, productVariantID, name, price, categoryID } = route.params;
@@ -87,7 +87,7 @@ export default function ProductSearchedScreen({ route, navigation }) {
         ref={scrollViewRef}
         contentContainerStyle={[
           styles.scrollContent,
-          { paddingBottom: insets.bottom - 50 },
+          { paddingBottom: moderateScale(31, 0.1) - 50 },
         ]}
       >
         <View style={styles.content}>
@@ -116,13 +116,13 @@ export default function ProductSearchedScreen({ route, navigation }) {
         </View>
       </ScrollView>
 
-      <View style={[styles.bottomContainer, { paddingBottom: insets.bottom }]}>
+      <View style={[styles.bottomContainer, { paddingBottom: moderateScale(31, 0.1) }]}>
         {addedToCartMap[productVariantID] ? (
           <TouchableOpacity style={styles.addedButton} disabled>
             <Text style={styles.addToCartButtonText}>Added to cart</Text>
             <Icons.Feather
               name="shopping-cart"
-              size={22}
+              size={moderateScale(22, 0.1)}
               style={{ color: "#F59E0B" }}
             />
           </TouchableOpacity>
@@ -134,7 +134,7 @@ export default function ProductSearchedScreen({ route, navigation }) {
             <Text style={styles.addToCartButtonText}>Add to cart</Text>
             <Icons.Feather
               name="shopping-cart"
-              size={22}
+              size={moderateScale(22, 0.1)}
               style={{ color: "#F59E0B" }}
             />
           </TouchableOpacity>
@@ -145,7 +145,7 @@ export default function ProductSearchedScreen({ route, navigation }) {
           >
             <Icons.Feather
               name="heart"
-              size={28}
+              size={moderateScale(28, 0.1)}
               color="#1F2937"
               style={styles.icon}
             />

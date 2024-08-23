@@ -84,7 +84,7 @@ export default function ProfileScreen({ navigation }) {
               <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
                 <Icons.Feather
                   name="settings"
-                  size={30}
+                  size={moderateScale(30, 0.1)}
                   color="black"
                   style={styles.icon}
                 />
@@ -101,7 +101,7 @@ export default function ProfileScreen({ navigation }) {
                 >
                   <item.Icon
                     name={item.IconName}
-                    size={24}
+                    size={moderateScale(24, 0.1)}
                     style={styles.icon}
                   />
                 </BoxLink>
@@ -124,23 +124,23 @@ const styles = StyleSheet.create({
   userInfoContainer: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: moderateScale(16),
+    paddingHorizontal: moderateScale(16, 0.1),
   },
   textContainer: {
     flex: 1,
-    marginLeft: moderateScale(8),
+    marginLeft: moderateScale(8, 0.1),
   },
   name: {
-    fontSize: moderateScale(20),
+    fontSize: moderateScale(20, 0.1),
     fontWeight: "bold",
   },
   platform: {
-    fontSize: moderateScale(16),
+    fontSize: moderateScale(16, 0.1),
     color: "gray",
   },
   linkContainer: {
-    marginTop: moderateScale(25),
-    paddingHorizontal: moderateScale(10),
+    marginTop: moderateScale(25, 0.1),
+    paddingHorizontal: moderateScale(10, 0.1),
   },
   icon: {
     color: "gray",

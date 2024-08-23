@@ -66,12 +66,12 @@ export default function AddressScreen({ navigation }) {
             marginTop: insets.top + 250,
           }}
         >
-          <Text style={{ fontSize: moderateScale(16) }}>
+          <Text style={{ fontSize: moderateScale(16, 0.1) }}>
             No registered address
           </Text>
         </View>
       ) : (
-        <View style={{ marginBottom: moderateScale(40) }}>
+        <View style={{ marginBottom: moderateScale(40, 0.1) }}>
           {activeCustomer.addresses.map((address, index) => (
             <Swipeable
               key={index}
@@ -101,11 +101,11 @@ export default function AddressScreen({ navigation }) {
                 </Text>
                 <Text>{address.postalCode}</Text>
                 <Text>
-                  <Fontisto name="world-o" size={14} color="#000" />{" "}
+                  <Fontisto name="world-o" size={moderateScale(14, 0.1)} color="#000" />{" "}
                   {address.country.name}
                 </Text>
                 <Text>
-                  <Feather name="phone" size={14} color="#000" />{" "}
+                  <Feather name="phone" size={moderateScale(14, 0.1)} color="#000" />{" "}
                   {address.phoneNumber}
                 </Text>
               </Pressable>
@@ -121,26 +121,26 @@ const styles = StyleSheet.create({
   deleteButton: {
     justifyContent: "center",
     alignItems: "center",
-    width: moderateScale(80),
-    marginHorizontal: moderateScale(10),
-    marginTop: moderateScale(10),
-    padding: moderateScale(10),
+    width: moderateScale(80, 0.1),
+    marginHorizontal: moderateScale(10, 0.1),
+    marginTop: moderateScale(10, 0.1),
+    padding: moderateScale(10, 0.1),
     backgroundColor: "red",
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(10, 0.1),
   },
   deleteButtonText: {
     color: "#fff",
     fontWeight: "bold",
   },
   addressContainer: {
-    marginHorizontal: moderateScale(10),
-    marginTop: moderateScale(10),
-    padding: moderateScale(10),
+    marginHorizontal: moderateScale(10, 0.1),
+    marginTop: moderateScale(10, 0.1),
+    padding: moderateScale(10, 0.1),
     backgroundColor: "#d3d3d3",
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(10, 0.1),
   },
   fullName: {
-    fontSize: moderateScale(16),
+    fontSize: moderateScale(16, 0.1),
     fontWeight: "bold",
     color: "#414141",
   },

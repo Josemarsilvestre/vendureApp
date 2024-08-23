@@ -16,7 +16,7 @@ const BoxLink: React.FC<BoxLinkProps> = ({ children, name, style, path, navigati
       <TouchableOpacity style={[styles.container, style]} onPress={() => navigation.navigate(path)}>
         {children} 
         <Text style={styles.name}>{name}</Text> 
-        <Icons.MaterialIcons name="keyboard-arrow-right" size={24} style={styles.icon} />
+        <Icons.MaterialIcons name="keyboard-arrow-right" size={moderateScale(24, 0.1)} style={styles.icon} />
       </TouchableOpacity>
   );
 };
@@ -24,23 +24,23 @@ const BoxLink: React.FC<BoxLinkProps> = ({ children, name, style, path, navigati
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    paddingVertical: moderateScale(13),
-    paddingHorizontal: moderateScale(16),
-    borderBottomWidth: moderateScale(1),
+    paddingVertical: moderateScale(13, 0.1),
+    paddingHorizontal: moderateScale(16, 0.1),
+    borderBottomWidth: moderateScale(1, 0.1),
     borderBottomColor: '#ccc',
   },
   name: {
     flex: 1,
-    marginLeft: moderateScale(40),
-    marginTop: moderateScale(-24),
-    fontSize: moderateScale(16.5),
+    marginLeft: moderateScale(40, 0.1),
+    marginTop: moderateScale(-24, 0.1),
+    fontSize: moderateScale(16.5, 0.1),
     color: '#333',
   },
   icon: {
     flex: 1,
     color: '#333',
-    marginLeft: moderateScale(290),
-    marginTop: moderateScale(-24),
+    textAlign: 'right',
+    marginTop: moderateScale(-24, 0.1),
   },
 });
 

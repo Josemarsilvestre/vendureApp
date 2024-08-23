@@ -53,12 +53,12 @@ export default function Slider(){
 
 const styles = StyleSheet.create({
   container: {
-    margin: moderateScale(6),
-    borderRadius: moderateScale(10),
+    margin: moderateScale(6, 0.1),
+    borderRadius: moderateScale(10, 0.1),
     overflow: 'hidden',
   },
   wrapper: {
-    height: moderateScale(200),
+    height: moderateScale(200, 0.1),
   },
   image: {
     width: '100%',

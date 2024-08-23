@@ -68,27 +68,27 @@ const ShowWrapper: React.FC<ShowWrapperProps> = (props) => {
 
 const styles = StyleSheet.create({
   errorContainer: {
-    paddingVertical: moderateScale(20),
+    paddingVertical: moderateScale(20, 0.1),
     paddingHorizontal: 'auto',
     alignItems: 'center',
   },
   errorText: {
-    fontSize: moderateScale(14),
+    fontSize: moderateScale(14, 0.1),
     color: 'red',
   },
   errorDetails: {
-    marginTop: moderateScale(8),
+    marginTop: moderateScale(8, 0.1),
   },
   retryButton: {
-    marginTop: moderateScale(12),
-    paddingVertical: moderateScale(8),
-    paddingHorizontal: moderateScale(16),
+    marginTop: moderateScale(12, 0.1),
+    paddingVertical: moderateScale(8, 0.1),
+    paddingHorizontal: moderateScale(16, 0.1),
     backgroundColor: 'red',
-    borderRadius: moderateScale(20),
+    borderRadius: moderateScale(20, 0.1),
     alignItems: 'center',
   },
   retryButtonText: {
-    fontSize: moderateScale(14),
+    fontSize: moderateScale(14, 0.1),
     color: 'white',
   },
   loadingContainer: {

@@ -68,7 +68,7 @@ const Item: React.FC<ItemProps> = ({ height, width, animated, style, children })
 
 const styles = StyleSheet.create({
   item: {
-    marginBottom: moderateScale(10),
+    marginBottom: moderateScale(10, 0.1),
   },
 });
 

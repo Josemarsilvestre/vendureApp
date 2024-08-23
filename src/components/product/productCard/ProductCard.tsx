@@ -8,6 +8,7 @@ import { GET_PRODUCTS_BY_CATEGORY_QUERY } from "../../../api/mutation/category";
 import styles2 from "../../common_pages/category/styles.category";
 import { ProductCard as Product } from "../../../../utils/interface";
 import Icons from "../../common/Icons";
+import { moderateScale } from "react-native-size-matters";
 
 export default function ProductCard({
   categoryID,
@@ -118,13 +119,13 @@ export default function ProductCard({
                 ? "sort-descending"
                 : "sort"
             }
-            size={22}
+            size={moderateScale(22, 0.1)} 
             color="#1F2937"
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles2.filterContainer} onPress={() => setModalVisible(true)}>
           <Text style={styles2.infoText}>Filter</Text>
-          <Icons.AntDesign name="filter" size={24} color="#1F2937" />
+          <Icons.AntDesign name="filter" size={moderateScale(24, 0.1)} color="#1F2937" />
         </TouchableOpacity>
       </View>
       <ProductList
@@ -140,7 +141,6 @@ export default function ProductCard({
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
         priceRange={priceRange}
-        setPriceRange={setPriceRange}
         applyPriceFilter={applyPriceFilter}
       />
     </View>

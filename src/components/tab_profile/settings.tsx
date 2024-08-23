@@ -60,8 +60,20 @@ export default function SettingScreen({ navigation }) {
   };
 
   return (
-    <ScrollView>
-      <View style={styles.scrollViewContainer}>
+    <View style={styles.container}>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Settings Page</Text>
+      </View>
+
+      <View
+        style={[
+          styles.bottomContainer,
+          {
+            paddingBottom: moderateScale(31, 0.1),
+            paddingTop: moderateScale(65, 0.1),
+          },
+        ]}
+      >
         <TouchableOpacity
           style={styles.TouchableOpacitybtn}
           onPress={handleLogout}
@@ -69,27 +81,59 @@ export default function SettingScreen({ navigation }) {
           <Text style={styles.TouchableOpacitybtnText}>Logout</Text>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  scrollViewContainer: {
-    margin: moderateScale(18),
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  titleContainer: {
+    flex: 1,
     justifyContent: "center",
-    marginTop: moderateScale(600),
+    alignItems: "center",
+    flexDirection: "row",
+    padding: moderateScale(18, 0.1),
+  },
+  title: {
+    color: "#000",
+    textAlign: "center",
+    fontSize: moderateScale(16, 0.1),
+    marginLeft: moderateScale(10, 0.1),
+  },
+  bottomContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: moderateScale(70, 0.1),
+    borderTopLeftRadius: moderateScale(30, 0.1),
+    borderTopRightRadius: moderateScale(30, 0.1),
+    borderTopWidth: moderateScale(1, 0.1),
+    borderTopColor: "#e0e0e0",
+    backgroundColor: "white",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -3 },
+    shadowOpacity: 0.1,
+    shadowRadius: moderateScale(3, 0.1),
+    elevation: moderateScale(5, 0.1),
   },
   TouchableOpacitybtn: {
-    paddingVertical: moderateScale(12),
-    paddingHorizontal: moderateScale(24),
-    backgroundColor: "#212B36",
-    borderRadius: moderateScale(8),
+    flexDirection: "row",
+    position: "absolute",
+    bottom: moderateScale(28, 0.1),
+    left: moderateScale(20, 0.1),
+    right: moderateScale(20, 0.1),
+    backgroundColor: "#1F2937",
+    borderRadius: moderateScale(8, 0.1),
+    padding: moderateScale(14, 0.1),
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: moderateScale(15),
   },
   TouchableOpacitybtnText: {
-    fontSize: moderateScale(16),
-    color: "#fff",
+    color: "#FFF",
+    fontSize: moderateScale(16, 0.1),
+    marginLeft: moderateScale(5, 0.1),
   },
 });

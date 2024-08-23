@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,16 +9,19 @@ import {
   FlatList,
 } from "react-native";
 import { useQuery } from "@apollo/client";
-
 import { GET_ALL_COLLECTIONS_QUERY } from "../../api/mutation/category";
 import { Category } from "../../../utils/interface";
 import styles from "../common_pages/category/styles.category";
 import PageLoading from "../loading/PageLoading";
+import { moderateScale } from "react-native-size-matters";
 
 export default function CategoryScreen({ navigation }) {
   const [take] = useState(9);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [numColumns, setNumColumns] = useState(2);
+  const [itemWidth, setItemWidth] = useState(moderateScale(186, 0.068));
+
   const flatListRef = useRef<FlatList<Category>>(null);
 
   const { loading, error, fetchMore } = useQuery<{
@@ -49,12 +52,31 @@ export default function CategoryScreen({ navigation }) {
     });
   };
 
+  useEffect(() => {
+    const updateLayout = () => {
+      const screenWidth = Dimensions.get("window").width;
+      const calculatedItemWidth = moderateScale(186, 0.068);
+      const calculatedNumColumns = Math.max(1, Math.floor(screenWidth / calculatedItemWidth));
+      setItemWidth(calculatedItemWidth);
+      setNumColumns(calculatedNumColumns);
+    };
+
+    updateLayout();
+
+    const subscription = Dimensions.addEventListener("change", updateLayout);
+
+    return () => {
+      subscription?.remove();
+    };
+  }, []);
+
   if (loading) return <PageLoading />;
   if (error) return <Text>Erro: {error.message}</Text>;
 
   return (
     <View style={styles.container}>
       <FlatList
+        key={numColumns} // Force re-render when numColumns changes
         ref={flatListRef}
         data={categories}
         renderItem={({ item }) => (
@@ -63,7 +85,7 @@ export default function CategoryScreen({ navigation }) {
             style={[
               styles.categoryItem,
               {
-                width: Dimensions.get("window").width / 2,
+                width: itemWidth,
               },
             ]}
             onPress={() => {
@@ -83,7 +105,7 @@ export default function CategoryScreen({ navigation }) {
           </TouchableOpacity>
         )}
         keyExtractor={(item) => item.id}
-        numColumns={2}
+        numColumns={numColumns}
         showsVerticalScrollIndicator={false}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.1}

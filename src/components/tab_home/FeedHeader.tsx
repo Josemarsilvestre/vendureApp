@@ -31,7 +31,7 @@ const FeedHeader: React.FC<FeedHeaderProps> = ({
           >
             <Icons.EvilIcons
               name="search"
-              size={moderateScale(30)}
+              size={moderateScale(30, 0.1)}
               color="#1F2937"
             />
           </TouchableOpacity>
@@ -39,7 +39,7 @@ const FeedHeader: React.FC<FeedHeaderProps> = ({
             onPress={() => navigation.navigate("Cart")}
             style={styles.cartIconContainer}
           >
-            <Icons.AntDesign name="shoppingcart" size={moderateScale(24)} color="#1F2937" />
+            <Icons.AntDesign name="shoppingcart" size={moderateScale(24, 0.1)} color="#1F2937" />
           </TouchableOpacity>
         </View>
       </View>
@@ -49,17 +49,17 @@ const FeedHeader: React.FC<FeedHeaderProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: moderateScale(10),
-    paddingHorizontal: moderateScale(10),
+    paddingVertical: moderateScale(10, 0.1),
+    paddingHorizontal: moderateScale(10, 0.1),
     backgroundColor: "white",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: moderateScale(2),
+      height: moderateScale(2, 0.1),
     },
-    shadowOpacity: moderateScale(0.25),
-    shadowRadius: moderateScale(3.84),
-    elevation: moderateScale(5),
+    shadowOpacity: moderateScale(0.25, 0.1),
+    shadowRadius: moderateScale(3.84, 0.1),
+    elevation: moderateScale(5, 0.1),
   },
   header: {
     flexDirection: "row",
@@ -72,10 +72,10 @@ const styles = StyleSheet.create({
   },
   cartIconContainer: {
     position: "relative",
-    marginLeft: moderateScale(15),
+    marginLeft: moderateScale(15, 0.1),
   },
   text: {
-    fontSize: moderateScale(16),
+    fontSize: moderateScale(16, 0.01),
     fontWeight: "bold",
   },
 });

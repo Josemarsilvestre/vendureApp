@@ -1,5 +1,4 @@
 import React from "react";
-import { AntDesign } from "@expo/vector-icons";
 import {
   Text,
   View,
@@ -29,22 +28,22 @@ const FeedSectionContainer: React.FC<FeedSectionContainerProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: moderateScale(20),
-    marginLeft: moderateScale(6),
+    marginTop: moderateScale(20, 0.1),
+    marginLeft: moderateScale(6, 0.1),
   },
   titleContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: moderateScale(15),
+    marginBottom: moderateScale(15, 0.1),
   },
   titleText: {
-    fontSize: moderateScale(16),
+    fontSize: moderateScale(16, 0.1),
     fontWeight: "bold",
   },
   contentContainer: {
     flex: 1,
-    minHeight: moderateScale(100),
+    minHeight: moderateScale(100, 0.1),
   },
 });
 

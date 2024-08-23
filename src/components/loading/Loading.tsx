@@ -8,6 +8,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import styles from './style/style.loading';
+import { moderateScale } from 'react-native-size-matters';
 
 interface LoadingProps {
   style?: ViewStyle;
@@ -46,16 +47,16 @@ const Loading: React.FC<LoadingProps> = ({ style }) => {
   return (
     <View style={[styles.constainer_Loading, style]}>
         <Animated.View
-        style={[styles.AnimatedStyle, { left: 8 }, animatedOnePointStyles]}
+        style={[styles.AnimatedStyle, { left: moderateScale(8, 0.1) }, animatedOnePointStyles]}
         />
         <Animated.View
-        style={[styles.AnimatedStyle, { left: 8 }, animatedTwoPointStyles]}
+        style={[styles.AnimatedStyle, { left: moderateScale(8, 0.1) }, animatedTwoPointStyles]}
         />
         <Animated.View
-        style={[styles.AnimatedStyle, { left: 32 }, animatedThreePointStyles]}
+        style={[styles.AnimatedStyle, { left: moderateScale(32, 0.1) }, animatedThreePointStyles]}
         />
         <Animated.View
-        style={[styles.AnimatedStyle, { left: 56 }, animatedFourPointStyles]}
+        style={[styles.AnimatedStyle, { left: moderateScale(56, 0.1) }, animatedFourPointStyles]}
         />
     </View>
 

@@ -5,8 +5,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   Text,
-  Image,
-  useWindowDimensions,
+  Image
 } from "react-native";
 import { ProductCard as Product  } from "../../../../utils/interface";
 import { moderateScale } from "react-native-size-matters";
@@ -43,9 +42,6 @@ const ProductList: React.FC<ProductListProps> = ({
 
   const [addedToCartMap, setAddedToCartMap] = useState<{ [key: string]: boolean }>({});
   const [addToCart] = useMutation(ADD_TO_CART);
-
-  const windowWidth = useWindowDimensions().width;
-  const imageWidth = windowWidth * 0.7;
 
   const handleAddToCart = (itemId: string) => {
     addToCart({ variables: { id_: itemId, quantity_: 1 } });
@@ -87,7 +83,7 @@ const ProductList: React.FC<ProductListProps> = ({
               }
             >
               <View style={styles.cardContent} key={items_?.id}>
-                <View style={[styles.imageContainer, { width: imageWidth }]}>
+                <View style={[styles.imageContainer, { width: moderateScale(250, 0.1) }]}>
                   <Image
                     source={{
                       uri: item.featuredAsset.source || "",
@@ -127,7 +123,7 @@ const ProductList: React.FC<ProductListProps> = ({
                       </Text>
                       <Icons.Feather
                         name="shopping-cart"
-                        size={addedToCartMap[items_.id] ? 14 : 14}
+                        size={addedToCartMap[items_.id] ? moderateScale(14, 0.1) : moderateScale(14, 0.1)}
                         style={styles.addButtonIcon}
                       />
                     </TouchableOpacity>
@@ -137,7 +133,7 @@ const ProductList: React.FC<ProductListProps> = ({
             </TouchableOpacity>
           );
         }}
-        ListHeaderComponent={<View style={{ height: 1 }} />}
+        ListHeaderComponent={<View style={{ height: moderateScale(1, 0.1) }} />}
         showsVerticalScrollIndicator={false}
         ListFooterComponent={
           <View style={{ alignItems: "center" }}>
@@ -163,13 +159,13 @@ const ProductList: React.FC<ProductListProps> = ({
         onPress={handleScrollToTop}
         style={{
           position: "absolute",
-          bottom: moderateScale(20),
-          right: moderateScale(20),
+          bottom: moderateScale(20, 0.1),
+          right: moderateScale(20, 0.1),
         }}
       >
         <Icons.FontAwesome5
           name="arrow-alt-circle-up"
-          size={35}
+          size={moderateScale(35, 0.1)}
           color="#8498b9"
         />
       </TouchableOpacity>

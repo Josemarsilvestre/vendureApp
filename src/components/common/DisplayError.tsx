@@ -22,10 +22,10 @@ const DisplayError: React.FC<DisplayErrorProps> = ({ errors }) => {
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: moderateScale(29),
-    marginTop: moderateScale(7),
-    marginLeft: moderateScale(2),
-    marginBottom: moderateScale(-7)
+    minHeight: moderateScale(29, 0.1),
+    marginTop: moderateScale(7, 0.1),
+    marginLeft: moderateScale(2, 0.1),
+    marginBottom: moderateScale(-7, 0.1)
   },
   errorContainer: {
     minWidth: 'auto',
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: '#ff0000',
-    fontSize: moderateScale(13),
+    fontSize: moderateScale(13, 0.1),
   },
 });
 

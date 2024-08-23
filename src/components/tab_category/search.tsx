@@ -5,7 +5,6 @@ import {
   Pressable,
   TextInput,
   Image,
-  useWindowDimensions,
   TouchableOpacity,
 } from "react-native";
 import { useQuery } from "@apollo/client";
@@ -17,6 +16,7 @@ import ProductPrice from "../product/ProductPrice";
 import ShowWrapper from "../common/ShowWrapper";
 import styles from "./style/styles.search";
 import { SEARCH_QUERY } from "../../api/mutation/search";
+import { moderateScale } from "react-native-size-matters";
 
 interface Product {
   productId: string;
@@ -65,7 +65,7 @@ export default function SearchScreen({ navigation }) {
       <View style={styles.container}>
         <View style={styles.searchBar}>
           <View style={styles.searchIcon}>
-            <Icons.EvilIcons name="search" size={24} color="#1F2937" />
+            <Icons.EvilIcons name="search" size={moderateScale(24, 0.1)} color="#1F2937" />
           </View>
           <TextInput
             style={styles.input}
@@ -75,7 +75,7 @@ export default function SearchScreen({ navigation }) {
             placeholder="Search..."
           />
           <Pressable style={styles.closeIcon} onPress={handleRemoveSearch}>
-            <Icons.AntDesign name="close" size={14} color="#999" />
+            <Icons.AntDesign name="close" size={moderateScale(14, 0.1)} color="#999" />
           </Pressable>
         </View>
         <View style={styles.productList}>
@@ -128,7 +128,7 @@ export default function SearchScreen({ navigation }) {
                           <Text style={styles.ratingText}>{item?.score}</Text>
                           <Icons.AntDesign
                             name="star"
-                            size={15}
+                            size={moderateScale(15, 0.1)}
                             style={styles.starIcon}
                           />
                         </View>

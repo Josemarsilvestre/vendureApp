@@ -12,6 +12,7 @@ import ProductPrice from "../../product/ProductPrice";
 import Similarproducts from "../../product/Similarproducts";
 import { ADD_TO_CART, SHOW_ORDER } from "../../../api/mutation/order";
 import styles from "./styles.product";
+import { moderateScale } from "react-native-size-matters";
 //import Reviews from "./Reviews";
 //import AddToCartOperation from "./AddToCartOperation";
 
@@ -65,7 +66,7 @@ export default function ProductScreen({ route, navigation }) {
         ref={scrollViewRef}
         contentContainerStyle={[
           styles.scrollContent,
-          { paddingBottom: insets.bottom - 50 },
+          { paddingBottom: moderateScale(31, 0.1) - 50 },
         ]}
       >
         <View style={styles.content}>
@@ -98,7 +99,7 @@ export default function ProductScreen({ route, navigation }) {
            * <Text style={styles.reviewText}>Recent reviews</Text>*/}
         </View>
       </ScrollView>
-      <View style={[styles.bottomContainer, { paddingBottom: insets.bottom }]}>
+      <View style={[styles.bottomContainer, { paddingBottom: moderateScale(31, 0.1) }]}>
         <TouchableOpacity
           style={
             addedToCartMap[selectedProducts.id] ? styles.addedButton : styles.addToCartButton
@@ -110,7 +111,7 @@ export default function ProductScreen({ route, navigation }) {
           </Text>
           <Icons.Feather
             name="shopping-cart"
-            size={22}
+            size={moderateScale(22, 0.1)} 
             style={{ color: "#F59E0B" }}
           />
         </TouchableOpacity>
@@ -120,7 +121,7 @@ export default function ProductScreen({ route, navigation }) {
           >
             <Icons.Feather
               name="heart"
-              size={28}
+              size={moderateScale(28, 0.1)}
               color="#1F2937"
               style={styles.icon}
             />

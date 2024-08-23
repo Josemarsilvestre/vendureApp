@@ -29,12 +29,12 @@ export default ImageGallery;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: moderateScale(-14),
-    borderRadius: moderateScale(10),
+    marginTop: moderateScale(-14, 0.1),
+    borderRadius: moderateScale(10, 0.1),
     overflow: "hidden",
   },
   wrapper: {
-    height: moderateScale(200),
+    height: moderateScale(200, 0.1),
   },
   image: {
     width: "100%",

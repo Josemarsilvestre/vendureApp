@@ -49,8 +49,8 @@ const Categories: React.FC<CategoriesProps> = ({ navigation }) => {
             <Text style={styles.text}>{item.name}</Text>
           </TouchableOpacity>
         )}
-        estimatedItemSize={900}
-        estimatedListSize={{ height: 110, width: 100 }}
+        estimatedItemSize={250}
+        estimatedListSize={{ height: 120, width: 100 }}
         showsHorizontalScrollIndicator={false}
       />
     </FeedSectionContainer>
@@ -61,13 +61,13 @@ const styles = StyleSheet.create({
   categoryItem: {
     flexDirection: "column",
     alignItems: "center",
-    marginRight: moderateScale(15),
+    marginRight: moderateScale(15, 0.1),
   },
   imageContainer: {
-    width: moderateScale(70),
-    height: moderateScale(70),
-    borderRadius: moderateScale(35),
-    borderWidth: moderateScale(2),
+    width: moderateScale(70, 0.1),
+    height: moderateScale(70, 0.1),
+    borderRadius: moderateScale(35, 0.1),
+    borderWidth: moderateScale(2, 0.1),
     borderColor: "#d6d6d6",
     overflow: "hidden",
   },
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#4d4d4d",
-    maxWidth: moderateScale(90),
+    maxWidth: moderateScale(90, 0.1),
     textAlign: "center",
   },
 });

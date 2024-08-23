@@ -6,6 +6,7 @@ import { ADJUST_ORDER, REMOVE_ONLY_ORDER_LINE } from "../../api/mutation/order";
 import styles from "./style/styles.cart";
 
 import Icons from "../common/Icons";
+import { moderateScale } from "react-native-size-matters";
 
 interface CartButtonsProps {
   itemID: string;
@@ -44,18 +45,18 @@ const CartButtons: React.FC<CartButtonsProps> = ({ itemID, quantity, refetchCart
   return (
     <View style={styles.container_CartButtons}>
       <TouchableOpacity onPress={increase} style={styles.pressable}>
-        <Icons.AntDesign name="plus" size={20} style={styles.icon_CartButtons} />
+        <Icons.AntDesign name="plus" size={moderateScale(20, 0.1)} style={styles.icon_CartButtons} />
       </TouchableOpacity>
 
       <Text style={styles.quantity}>{quantity}</Text>
 
       {quantity === 1 ? (
         <TouchableOpacity onPress={removeFromCart} style={styles.pressable}>
-          <Icons.AntDesign name="delete" size={20} style={styles.icon_CartButtons} />
+          <Icons.AntDesign name="delete" size={moderateScale(20, 0.1)} style={styles.icon_CartButtons} />
         </TouchableOpacity>
       ) : (
         <TouchableOpacity onPress={decrease} style={styles.pressable}>
-          <Icons.AntDesign name="minus" size={20} style={styles.icon_CartButtons} />
+          <Icons.AntDesign name="minus" size={moderateScale(20, 0.1)} style={styles.icon_CartButtons} />
         </TouchableOpacity>
       )}
     </View>

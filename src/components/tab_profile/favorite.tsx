@@ -4,8 +4,8 @@ import { moderateScale } from "react-native-size-matters";
 export default function FavoriteScreen() {
   return (
     <ScrollView>
-      <View style={{alignItems: "center", justifyContent: "center", marginTop: moderateScale(300)}}>
-        <Text style={{ fontSize: moderateScale(16) }}>Página de Favoritos</Text>
+      <View style={{alignItems: "center", justifyContent: "center", marginTop: moderateScale(300, 0.1)}}>
+        <Text style={{ fontSize: moderateScale(16, 0.1) }}>Página de Favoritos</Text>
       </View>
     </ScrollView>
   )

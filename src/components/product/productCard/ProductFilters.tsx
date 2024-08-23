@@ -5,12 +5,12 @@ import Slider from "@react-native-community/slider";
 
 import Icons from "../../common/Icons";
 import styles from "./style/style.productCard";
+import { moderateScale } from "react-native-size-matters";
 
 interface ProductFiltersProps {
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
   priceRange: { start: number; end: number };
-  setPriceRange: (range: { start: number; end: number }) => void;
   applyPriceFilter: (start: number, end: number) => void;
 }
 
@@ -18,7 +18,6 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
   modalVisible,
   setModalVisible,
   priceRange,
-  setPriceRange,
   applyPriceFilter,
 }) => {
   const [localPriceRange, setLocalPriceRange] = React.useState(priceRange);
@@ -36,10 +35,10 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
     <Modal
       isVisible={modalVisible}
       onBackdropPress={() => setModalVisible(false)}
-      backdropOpacity={0.5}
+      backdropOpacity={moderateScale(0.5, 0.1)}
       style={{
-        margin: 0,
-        justifyContent: "flex-end",
+        margin: moderateScale(0, 0.1),
+        justifyContent: "flex-end"
       }}
     >
       <View style={styles.modalContainer}>
@@ -47,7 +46,7 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
           <View style={styles.modalHeader}>
             <Text style={styles.modalHeaderText}>Price Range</Text>
             <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
-              <Icons.AntDesign name="close" size={24} color="#1F2937" />
+              <Icons.AntDesign name="close" size={moderateScale(24, 0.1)} color="#1F2937" />
             </TouchableOpacity>
           </View>
           <View style={styles.rangeContainer}>

@@ -50,31 +50,31 @@ const SubmitModalBtn: React.FC<SubmitModalBtnProps> = ({ children, ...restProps 
 
 const styles = StyleSheet.create({
   button: {
-    paddingVertical: moderateScale(12),
-    paddingHorizontal: moderateScale(24),
+    paddingVertical: moderateScale(12, 0.1),
+    paddingHorizontal: moderateScale(24, 0.1),
     backgroundColor: "#212B36",
-    borderRadius: moderateScale(8),
+    borderRadius: moderateScale(8, 0.1),
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: moderateScale(15)
+    marginBottom: moderateScale(15, 0.1)
   },
   buttonText: {
-    fontSize: moderateScale(16),
+    fontSize: moderateScale(16, 0.1),
     color: '#fff',
   },
   roundedButton: {
-    borderRadius: moderateScale(20),
+    borderRadius: moderateScale(20, 0.1),
   },
   loginButton: {
     marginHorizontal: 'auto',
-    borderRadius: moderateScale(24),
-    width: moderateScale(120),
+    borderRadius: moderateScale(24, 0.1),
+    width: moderateScale(120, 0.1),
   },
   submitButton: {
     width: '100%',
-    maxWidth: moderateScale(280),
+    maxWidth: moderateScale(280, 0.1),
     marginHorizontal: 'auto',
-    borderRadius: moderateScale(12),
+    borderRadius: moderateScale(12, 0.1),
   },
 });
 

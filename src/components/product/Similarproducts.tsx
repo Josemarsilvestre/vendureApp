@@ -3,7 +3,6 @@ import {
   View,
   Image,
   StyleSheet,
-  useWindowDimensions,
   TouchableOpacity,
   Text,
 } from "react-native";
@@ -27,8 +26,6 @@ const SimilarProducts: React.FC<SimilarProductsProps> = ({
   categoryID,
   title,
 }) => {
-  const windowWidth = useWindowDimensions().width;
-  const imageWidth = windowWidth * 0.7;
 
   const { data, loading, error } = useQuery(GET_SIMILAR_PRODUCTS, {
     variables: { id: parseInt(categoryID), take: 9},
@@ -69,7 +66,7 @@ const SimilarProducts: React.FC<SimilarProductsProps> = ({
                 }}
               >
                 <View
-                  style={[styles.imageContainer, { width: imageWidth }]}
+                  style={[styles.imageContainer, { width: moderateScale(250, 0.1) }]}
                   key={item.id}
                 >
                   <Image
@@ -111,25 +108,25 @@ const SimilarProducts: React.FC<SimilarProductsProps> = ({
 const styles = StyleSheet.create({
   imageContainer: {
     height: "70%",
-    marginRight: moderateScale(-94),
+    marginRight: moderateScale(-94, 0.1),
   },
   image: {
     width: "60%",
     height: "100%",
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(10, 0.1),
   },
   text: {
     color: "#4d4d4d",
-    maxWidth: moderateScale(155),
-    marginTop: moderateScale(3),
+    maxWidth: moderateScale(155, 0.1),
+    marginTop: moderateScale(3, 0.1),
     textAlign: "left",
   },
   priceText: {
-    marginRight: moderateScale(5),
+    marginRight: moderateScale(5, 0.1),
     color: "#4d4d4d",
   },
   priceContainer: {
-    marginTop: moderateScale(-1),
+    marginTop: moderateScale(-1, 0.1),
     flexDirection: "row",
   },
 });

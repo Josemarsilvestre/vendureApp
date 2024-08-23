@@ -3,7 +3,6 @@ import {
   View,
   Image,
   StyleSheet,
-  useWindowDimensions,
   TouchableOpacity,
   Text,
 } from "react-native";
@@ -23,9 +22,6 @@ export interface BannerProps {
 
 const Banner: React.FC<BannerProps> = ({ navigation, query, title }) => {
   const { data, loading, error } = useQuery(query);
-
-  const windowWidth = useWindowDimensions().width;
-  const imageWidth = windowWidth * 0.7;
 
   if (loading || error) {
     return null;
@@ -55,7 +51,7 @@ const Banner: React.FC<BannerProps> = ({ navigation, query, title }) => {
               }}
             >
               <View
-                style={[styles.imageContainer, { width: imageWidth }]}
+                style={[styles.imageContainer, { width: moderateScale(250, 0.1) }]}
                 key={items_.id}
               >
                 <Image
@@ -93,25 +89,25 @@ const Banner: React.FC<BannerProps> = ({ navigation, query, title }) => {
 const styles = StyleSheet.create({
   imageContainer: {
     height: "70%",
-    marginRight: moderateScale(-95),
+    marginRight: moderateScale(-95, 0.1),
   },
   image: {
     width: "60%",
     height: "100%",
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(10, 0.1),
   },
   text: {
     color: "#4d4d4d",
-    maxWidth: moderateScale(155),
-    marginTop: moderateScale(3),
+    maxWidth: moderateScale(155, 0.1),
+    marginTop: moderateScale(3, 0.1),
     textAlign: "left",
   },
   priceText: {
-    marginRight: moderateScale(5),
+    marginRight: moderateScale(5, 0.1),
     color: "#4d4d4d",
   },
   priceContainer: {
-    marginTop: moderateScale(-1),
+    marginTop: moderateScale(-1, 0.1),
     flexDirection: "row",
   },
 });

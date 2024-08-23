@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   priceText: {
-    fontSize: moderateScale(14),
+    fontSize: moderateScale(15, 0.001),
     color: '#333'
   },
 });

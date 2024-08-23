@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View } from "react-native";
 
 import ProductCard from "../../product/productCard/ProductCard";
-import Icons from "../../common/Icons";
 import styles from "./styles.category";
 
 export default function CategorySectionScreen({ route, navigation }) {

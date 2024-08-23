@@ -1,6 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
-import { moderateScale } from "react-native-size-matters";
+import { Text, View } from "react-native";
 import styles from "./style/styles.cart";
 
 import formatNumber from "../../../utils/formatNumber";

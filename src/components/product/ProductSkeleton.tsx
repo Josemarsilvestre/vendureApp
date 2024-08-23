@@ -9,23 +9,26 @@ interface ProductSkeletonProps {
 }
 
 const ProductSkeleton: React.FC<ProductSkeletonProps> = ({ style }) => {
+
+  const heigth_ = moderateScale(24, 0.1);
+
   return (
     <View style={[styles.container, style]}>
       <Skeleton count={10}>
         <Items style={styles.itemContainer}>
           <Item
-            height={84}
-            width={78}
+            height={moderateScale(84, 0.1)}
+            width={moderateScale(78, 0.1)}
             animated="background"
             style={styles.image}
           />
           <View style={styles.textContainer}>
-            <Item height={20} width="100%" animated="background" />
-            <Item height={20} width="70%" animated="background" />
-            <Item height={20} width={28} animated="background" />
+            <Item height={heigth_} width="100%" animated="background" />
+            <Item height={heigth_} width="70%" animated="background" />
+            <Item height={heigth_} width={moderateScale(28, 0.1)} animated="background" />
             <View style={styles.priceContainer}>
-              <Item height={20} width={40} animated="background" />
-              <Item height={20} width={40} animated="background" />
+              <Item height={heigth_} width={moderateScale(40, 0.1)} animated="background" />
+              <Item height={heigth_} width={moderateScale(40, 0.1)} animated="background" />
             </View>
           </View>
         </Items>
@@ -42,10 +45,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: moderateScale(24),
+    marginBottom: moderateScale(24, 0.1),
   },
   image: {
-    borderRadius: moderateScale(8),
+    borderRadius: moderateScale(8, 0.1),
   },
   textContainer: {
     flex: 1,

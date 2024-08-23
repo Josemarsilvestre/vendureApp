@@ -113,7 +113,7 @@ const PersonalInfoScreen = ({navigation}) => {
             </Text>
             <Text
               variant="labelMedium"
-              style={{ marginBottom: moderateScale(15) }}
+              style={{ marginBottom: moderateScale(15, 0.1) }}
             >
               This is the name and number that will be used when you make in-app
               purchases.
@@ -163,35 +163,35 @@ const PersonalInfoScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   scroolViewContainer: {
-    margin: moderateScale(18),
+    margin: moderateScale(18, 0.1),
     justifyContent: "center",
-    marginTop: moderateScale(60),
+    marginTop: moderateScale(60, 0.1),
   },
   formContainer: {
     width: "100%",
-    paddingHorizontal: moderateScale(8),
-    paddingVertical: moderateScale(6),
+    paddingHorizontal: moderateScale(8, 0.1),
+    paddingVertical: moderateScale(6, 0.1),
   },
   title: {
     color: "#212B36",
     fontWeight: "bold",
-    fontSize: moderateScale(16),
-    marginBottom: moderateScale(10),
+    fontSize: moderateScale(16, 0.1),
+    marginBottom: moderateScale(10, 0.1),
   },
   fieldsContainer: {
-    marginTop: moderateScale(5),
+    marginTop: moderateScale(5, 0.1),
   },
   TouchableOpacitybtn: {
-    paddingVertical: moderateScale(12),
-    paddingHorizontal: moderateScale(24),
+    paddingVertical: moderateScale(12, 0.1),
+    paddingHorizontal: moderateScale(24, 0.1),
     backgroundColor: "#212B36",
-    borderRadius: moderateScale(8),
+    borderRadius: moderateScale(8, 0.1),
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: moderateScale(15),
+    marginBottom: moderateScale(15, 0.1),
   },
   TouchableOpacitybtnText: {
-    fontSize: moderateScale(16),
+    fontSize: moderateScale(16, 0.1),
     color: "#fff",
   },
   buttonPressed: {

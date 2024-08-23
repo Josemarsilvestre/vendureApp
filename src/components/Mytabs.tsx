@@ -54,7 +54,7 @@ export default function TabNavigator({ navigation }) {
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color }) => (
-            <Entypo name="home" size={moderateScale(24)} color={color} />
+            <Entypo name="home" size={moderateScale(23, 0.1)} color={color} />
           ),
           header: () => (
             <FeedHeader
@@ -70,16 +70,16 @@ export default function TabNavigator({ navigation }) {
         options={{
           title: "Category",
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name="category" size={moderateScale(24)} color={color} />
+            <MaterialIcons name="category" size={moderateScale(23, 0.1)} color={color} />
           ),
           headerRight: () => (
             <>
               <Icons.EvilIcons
                 name="search"
-                size={moderateScale(35)}
+                size={moderateScale(35, 0.1)}
                 color="#1F2937"
                 onPress={() => navigation.navigate("Search")}
-                style={{ padding: moderateScale(10) }}
+                style={{ padding: moderateScale(10, 0.1) }}
               />
             </>
           ),
@@ -92,7 +92,7 @@ export default function TabNavigator({ navigation }) {
           title: "Cart",
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <Feather name="shopping-cart" size={moderateScale(24)} color={color} />
+            <Feather name="shopping-cart" size={moderateScale(22, 0.1)} color={color} />
           ),
         }}
       />
@@ -101,7 +101,7 @@ export default function TabNavigator({ navigation }) {
         component={ProfileScreen}
         options={{
           tabBarIcon: ({ color }) => (
-            <FontAwesome name="user" size={moderateScale(24)} color={color} />
+            <FontAwesome name="user" size={moderateScale(23, 0.1)} color={color} />
           ),
           headerShown: false,
         }}

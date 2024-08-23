@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { moderateScale } from "react-native-size-matters";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useMutation, useQuery } from "@apollo/client";
 import { FlashList } from "@shopify/flash-list";
 
@@ -26,7 +25,6 @@ import { Address, ShippingMethod, OrderLine } from "../../../utils/interface";
 export default function PaymentScreen({ navigation }) {
   const { data, refetch: refetchCustomer } = useQuery(GET_CUSTOMER);
   const { data: DataOrder, refetch: refetchCart } = useQuery(SHOW_ORDER);
-  const insets = useSafeAreaInsets();
 
   const order = DataOrder?.activeOrder || {};
 
@@ -161,9 +159,9 @@ export default function PaymentScreen({ navigation }) {
               style={{
                 borderWidth: 1,
                 borderColor: "#e0e0e0",
-                borderRadius: 10,
-                paddingVertical: 10,
-                paddingHorizontal: 10,
+                borderRadius: moderateScale(10, 0.1),
+                paddingVertical: moderateScale(10, 0.1),
+                paddingHorizontal: moderateScale(10, 0.1),
               }}
             >
               <Text>
@@ -172,7 +170,7 @@ export default function PaymentScreen({ navigation }) {
               <Text>{activeCustomer?.emailAddress}</Text>
             </View>
 
-            <View style={{ marginBottom: 10 }} />
+            <View style={{ marginBottom: moderateScale(10, 0.1) }} />
 
             <Text style={styles.title}>Shopping</Text>
             <View style={styles.cartItems}>
@@ -186,11 +184,11 @@ export default function PaymentScreen({ navigation }) {
                   />
                 )}
                 estimatedItemSize={900}
-                contentContainerStyle={{ paddingBottom: 0 }}
+                contentContainerStyle={{ paddingBottom: moderateScale(0, 0.1) }}
               />
             </View>
 
-            <View style={{ marginBottom: 10 }} />
+            <View style={{ marginBottom: moderateScale(10, 0.1) }} />
             <Text style={styles.title}>Address</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               {addresses.map((address) => (
@@ -210,11 +208,11 @@ export default function PaymentScreen({ navigation }) {
                   <Text>{address.streetLine1}</Text>
                   <Text>{address.postalCode}</Text>
                   <Text>
-                    <Fontisto name="world-o" size={14} color="#000" />{" "}
+                    <Fontisto name="world-o" size={moderateScale(14, 0.1)} color="#000" />{" "}
                     {address.country.name}
                   </Text>
                   <Text>
-                    <Feather name="phone" size={14} color="#000" />{" "}
+                    <Feather name="phone" size={moderateScale(14, 0.1)} color="#000" />{" "}
                     {address.phoneNumber}
                   </Text>
                 </TouchableOpacity>
@@ -244,11 +242,11 @@ export default function PaymentScreen({ navigation }) {
               </ScrollView>
             </View>
 
-            <View style={{ marginBottom: 10 }} />
+            <View style={{ marginBottom: moderateScale(10, 0.1) }} />
             <Text style={styles.title}>Order Summary</Text>
             <View
               style={{
-                marginTop: moderateScale(8),
+                marginTop: moderateScale(8, 0.1),
               }}
             >
               <View style={styles.infoRow}>
@@ -292,7 +290,7 @@ export default function PaymentScreen({ navigation }) {
         <View
           style={[
             styles.bottomContainer,
-            { paddingBottom: insets.bottom, paddingTop: 65 },
+            { paddingBottom: moderateScale(31, 0.1), paddingTop: moderateScale(65, 0.1) },
           ]}
         >
           <TouchableOpacity
@@ -301,7 +299,7 @@ export default function PaymentScreen({ navigation }) {
           >
             <Icons.MaterialIcons
               name="payment"
-              size={25}
+              size={moderateScale(25, 0.1)}
               style={{ color: "#fff" }}
             />
             <Text style={styles.addToCartButtonText}>Pay</Text>
