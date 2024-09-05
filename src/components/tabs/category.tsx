@@ -21,6 +21,7 @@ export default function CategoryScreen({ navigation }) {
   const [loadingMore, setLoadingMore] = useState(false);
   const [numColumns, setNumColumns] = useState(2);
   const [itemWidth, setItemWidth] = useState(moderateScale(186, 0.1));
+  const [endReachedCalledDuringMomentum, setEndReachedCalledDuringMomentum] = useState(false);
 
   const flatListRef = useRef<FlatList<Category>>(null);
 
@@ -33,23 +34,26 @@ export default function CategoryScreen({ navigation }) {
     },
   });
 
-  const handleLoadMore = () => {
-    setLoadingMore(true);
-    fetchMore({
-      variables: {
-        skip: categories.length,
-        take,
-      },
-      updateQuery: (prev, { fetchMoreResult }) => {
-        if (!fetchMoreResult) return prev;
-        const newCategories = fetchMoreResult.collections.items.filter(
+  const handleLoadMore = async () => {
+    if (!loadingMore) {
+      setLoadingMore(true);
+      try {
+        const { data } = await fetchMore({
+          variables: {
+            skip: categories.length,
+            take,
+          },
+        });
+        const newCategories = data.collections.items.filter(
           (category) => !categories.some((c) => c.id === category.id)
         );
         setCategories((prevCategories) => [...prevCategories, ...newCategories]);
-        setLoadingMore(false);
-        return prev;
-      },
-    });
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+        setLoadingMore(false); // Garantir que o indicador pare de girar
+      }
+    }
   };
 
   useEffect(() => {
@@ -111,8 +115,14 @@ export default function CategoryScreen({ navigation }) {
         keyExtractor={(item) => item.id}
         numColumns={numColumns}
         showsVerticalScrollIndicator={false}
-        onEndReached={handleLoadMore}
         onEndReachedThreshold={0.1}
+        onMomentumScrollBegin={() => setEndReachedCalledDuringMomentum(false)}
+        onEndReached={() => {
+          if (!endReachedCalledDuringMomentum) {
+            handleLoadMore();
+            setEndReachedCalledDuringMomentum(true);
+          }
+        }}
         ListFooterComponent={loadingMore ? <ActivityIndicator size="large" /> : null}
       />
     </View>
