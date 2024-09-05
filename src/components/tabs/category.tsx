@@ -51,7 +51,7 @@ export default function CategoryScreen({ navigation }) {
       } catch (error) {
         console.error("Error:", error);
       } finally {
-        setLoadingMore(false); // Garantir que o indicador pare de girar
+        setLoadingMore(false);
       }
     }
   };
