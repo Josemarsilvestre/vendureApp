@@ -52,7 +52,6 @@ export default function CategoryScreen({ navigation }) {
     });
   };
 
-  // Calcular o número de colunas e largura do item baseado na largura da tela
   useEffect(() => {
     const updateLayout = () => {
       const screenWidth = Dimensions.get("window").width;
@@ -62,13 +61,10 @@ export default function CategoryScreen({ navigation }) {
       setNumColumns(calculatedNumColumns);
     };
 
-    // Atualiza as colunas ao montar o componente
     updateLayout();
 
-    // Adiciona um listener para mudanças de dimensão
     const subscription = Dimensions.addEventListener("change", updateLayout);
 
-    // Remove o listener ao desmontar o componente
     return () => {
       subscription?.remove();
     };
