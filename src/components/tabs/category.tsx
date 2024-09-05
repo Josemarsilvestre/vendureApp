@@ -1,12 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
   Image,
   TouchableOpacity,
-  Dimensions,
   ActivityIndicator,
   FlatList,
+  Dimensions,
 } from "react-native";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_COLLECTIONS_QUERY } from "../../api/mutation/category";
@@ -20,7 +20,7 @@ export default function CategoryScreen({ navigation }) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loadingMore, setLoadingMore] = useState(false);
   const [numColumns, setNumColumns] = useState(2);
-  const [itemWidth, setItemWidth] = useState(moderateScale(186, 0.068));
+  const [itemWidth, setItemWidth] = useState(moderateScale(186, 0.1));
 
   const flatListRef = useRef<FlatList<Category>>(null);
 
@@ -52,19 +52,23 @@ export default function CategoryScreen({ navigation }) {
     });
   };
 
+  // Calcular o número de colunas e largura do item baseado na largura da tela
   useEffect(() => {
     const updateLayout = () => {
       const screenWidth = Dimensions.get("window").width;
-      const calculatedItemWidth = moderateScale(186, 0.068);
-      const calculatedNumColumns = Math.max(1, Math.floor(screenWidth / calculatedItemWidth));
+      const calculatedItemWidth = moderateScale(186, 0.067);
+      const calculatedNumColumns = Math.floor(screenWidth / calculatedItemWidth);
       setItemWidth(calculatedItemWidth);
       setNumColumns(calculatedNumColumns);
     };
 
+    // Atualiza as colunas ao montar o componente
     updateLayout();
 
+    // Adiciona um listener para mudanças de dimensão
     const subscription = Dimensions.addEventListener("change", updateLayout);
 
+    // Remove o listener ao desmontar o componente
     return () => {
       subscription?.remove();
     };
@@ -76,7 +80,7 @@ export default function CategoryScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <FlatList
-        key={numColumns} // Force re-render when numColumns changes
+        key={numColumns}
         ref={flatListRef}
         data={categories}
         renderItem={({ item }) => (
@@ -96,7 +100,11 @@ export default function CategoryScreen({ navigation }) {
           >
             <View style={styles.categoryImageContainer}>
               <Image
-                source={{ uri: item.assets?.[0]?.source ?? 'https://www.arquivomedico.com.br/arquivomedicov3/assets/images/sem_imagem.png' }}
+                source={{
+                  uri:
+                    item.assets?.[0]?.source ??
+                    'https://www.arquivomedico.com.br/arquivomedicov3/assets/images/sem_imagem.png',
+                }}
                 style={styles.categoryImage}
                 resizeMode="cover"
               />
